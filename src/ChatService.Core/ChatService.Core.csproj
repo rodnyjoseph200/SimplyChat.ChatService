@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Simply.Track" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

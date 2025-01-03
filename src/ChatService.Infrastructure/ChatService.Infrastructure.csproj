@@ -12,4 +12,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Simply.Track" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>
