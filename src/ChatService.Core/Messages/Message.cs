@@ -1,17 +1,20 @@
-﻿namespace ChatService.Core.Messages
+﻿using Simply.Track;
+
+namespace ChatService.Core.Messages
 {
     public class Message : MessageBase
     {
-        public string Tracker { get; set; } = string.Empty;
+        public Tracker Tracker { get; init; }
 
-        private Message(string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
+        private Message(Tracker tracker, string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
             : base(chatRoomId, userId, content, createdAt, type)
         {
+            Tracker = tracker;
         }
 
-        public static Message Load(string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
+        public static Message Load(Tracker tracker, string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
         {
-            return new Message(chatRoomId, userId, content, createdAt, type);
+            return new Message(tracker, chatRoomId, userId, content, createdAt, type);
         }
     }
 }

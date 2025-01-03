@@ -1,4 +1,5 @@
 ﻿using ChatService.Core.Users;
+using Simply.Track;
 
 namespace ChatService.Core.ChatRooms;
 
@@ -12,19 +13,17 @@ public class ChatRoom
 
     public IReadOnlyCollection<User> Users => _users.AsReadOnly();
 
-    public string Tracker { get; set; } = string.Empty;
+    public Tracker Tracker { get; init; }
 
-    private ChatRoom(User superUser)
+    private ChatRoom(User superUser, Tracker tracker)
     {
         Id = Guid.NewGuid().ToString();
         SuperUserId = superUser.Id;
         _users = [superUser];
+        Tracker = tracker;
     }
 
-    public static ChatRoom Load(User superUser)
-    {
-        return new ChatRoom(superUser);
-    }
+    public static ChatRoom Load(User superUser, Tracker tracker) => new(superUser, tracker);
 
     public void AddUser(User user)
     {

@@ -1,19 +1,22 @@
-﻿namespace ChatService.Core.Users
+﻿using Simply.Track;
+
+namespace ChatService.Core.Users
 {
     public class User
     {
-        public string Id { get; init; }
-        public string Name { get; private set; }
+        public string Id { get; init; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
-        public string Tracker { get; set; } = string.Empty;
+        public Tracker Tracker { get; init; }
 
-        private User(string username)
+        private User(string username, Tracker tracker)
         {
             Id = Guid.NewGuid().ToString();
+            Tracker = tracker;
             SetName(username);
         }
 
-        public static User Load(string username) => new(username);
+        public static User Load(string username, Tracker tracker) => new(username, tracker);
 
         public void SetName(string username)
         {
