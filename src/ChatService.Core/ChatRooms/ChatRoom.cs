@@ -12,6 +12,8 @@ public class ChatRoom
 
     public IReadOnlyCollection<User> Users => _users.AsReadOnly();
 
+    public string Tracker { get; set; } = string.Empty;
+
     private ChatRoom(User superUser)
     {
         Id = Guid.NewGuid().ToString();
@@ -19,8 +21,16 @@ public class ChatRoom
         _users = [superUser];
     }
 
-    public static ChatRoom Create(User superUser)
+    public static ChatRoom Load(User superUser)
     {
         return new ChatRoom(superUser);
+    }
+
+    public void AddUser(User user)
+    {
+        if (_users.Any(u => u.Id == user.Id))
+            throw new InvalidOperationException("User already exists in the chat room");
+
+        _users.Add(user);
     }
 }

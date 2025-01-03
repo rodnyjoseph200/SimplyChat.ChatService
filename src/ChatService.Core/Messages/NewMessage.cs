@@ -7,5 +7,10 @@ namespace ChatService.Core.Messages
             : base(chatRoomId, userId, content, createdAt, type)
         {
         }
+
+        public static NewMessage Create(string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
+        {
+            return new NewMessage(chatRoomId, userId, content, createdAt, type);
+        }
     }
 }
