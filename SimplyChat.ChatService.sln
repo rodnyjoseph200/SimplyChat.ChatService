@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService.WebSockets.SignalR", "src\Apps\ChatService.WebSockets.SignalR\ChatService.WebSockets.SignalR.csproj", "{43156B55-9653-4664-A911-3DDCBBB5A85A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService.AppHost", "src\Aspire\ChatService.AppHost\ChatService.AppHost.csproj", "{3DF5D9D7-D874-44CD-9CFD-E117573D7FF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService.ServiceDefaults", "src\Aspire\ChatService.ServiceDefaults\ChatService.ServiceDefaults.csproj", "{D803BB96-9241-4111-8A0F-040F0E63601E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{43156B55-9653-4664-A911-3DDCBBB5A85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43156B55-9653-4664-A911-3DDCBBB5A85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43156B55-9653-4664-A911-3DDCBBB5A85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DF5D9D7-D874-44CD-9CFD-E117573D7FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DF5D9D7-D874-44CD-9CFD-E117573D7FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DF5D9D7-D874-44CD-9CFD-E117573D7FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DF5D9D7-D874-44CD-9CFD-E117573D7FF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D803BB96-9241-4111-8A0F-040F0E63601E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D803BB96-9241-4111-8A0F-040F0E63601E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D803BB96-9241-4111-8A0F-040F0E63601E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D803BB96-9241-4111-8A0F-040F0E63601E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +68,7 @@ Global
 		{6CC7039A-62C9-4BFF-94F2-E1CB5870CEA3} = {FAB9262E-3185-46E0-85FC-252CAB9ED201}
 		{88C52C4E-C4BC-463D-8529-1A11560AAA96} = {FAB9262E-3185-46E0-85FC-252CAB9ED201}
 		{43156B55-9653-4664-A911-3DDCBBB5A85A} = {F9423383-F583-4720-86A6-C6C36A2A8D1B}
+		{3DF5D9D7-D874-44CD-9CFD-E117573D7FF3} = {E27AA7E3-CCA1-4968-925A-C9ADAC389FE8}
+		{D803BB96-9241-4111-8A0F-040F0E63601E} = {E27AA7E3-CCA1-4968-925A-C9ADAC389FE8}
 	EndGlobalSection
 EndGlobal
