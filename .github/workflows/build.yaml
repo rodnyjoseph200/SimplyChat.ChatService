@@ -41,7 +41,7 @@ jobs:
         run: dotnet tool install -g dotnet-format
 
       - name: Check Format
-        run: dotnet-format ${{ env.REST_API_PATH }} --verify-no-changes        
+        run: dotnet format ${{ env.REST_API_PATH }} --verify-no-changes --verbosity diagnostic       
 
       - name: Build (warnings as errors)
         run: dotnet build --no-restore -c Release ${{ env.REST_API_PATH }} --warnAsError
