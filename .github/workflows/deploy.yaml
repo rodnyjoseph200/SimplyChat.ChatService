@@ -3,14 +3,13 @@ name: Deploy
 
 on:
   # Trigger when "Build" workflow run is completed
-  workflow_run:
-    workflows: [ Build ]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: [ Build ]
+  #   types: [ completed ]
 
   # Push to main
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
 
   # Manually triggered
   workflow_dispatch:
