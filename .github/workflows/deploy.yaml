@@ -18,6 +18,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      REST_API_IMAGE_NAME: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/simplychat-chatservice-apis-rest
+      REST_API_DIR: src/Apps/ChatService.APIs.REST
+      IMAGE_TAG: ${{ github.sha }}
+
     steps:
 
     - name: Checkout code
@@ -37,15 +43,11 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        IMAGE_NAME=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/simplychat-chatservice-apis-rest
-        IMAGE_TAG=${{ github.sha }}
-        APP_DIR=src/Apps/ChatService.APIs.REST
-
         echo "Building Docker image..."
         docker build \
-          -f $APP_DIR/Dockerfile \
+          -f $REST_API_DIR/Dockerfile \
           -t $IMAGE_NAME:$IMAGE_TAG \
-          $APP_DIR
+          $REST_API_DIR
 
         echo "Pushing Docker image..."
         docker push $IMAGE_NAME:$IMAGE_TAG
@@ -58,7 +60,7 @@ jobs:
         template: ./deploy/azure/bicep/main.bicep
         parameters: |
           environmentName=dev
-          restApiContainerImage=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/simplychat-chatservice-apis-rest:${{ github.sha }}
+          restApiContainerImage=${{ env.REST_API_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           registryServer=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
           registryUsername=${{ secrets.AZURE_REGISTRY_USERNAME }}
           registryPassword=${{ secrets.AZURE_REGISTRY_PASSWORD }}
