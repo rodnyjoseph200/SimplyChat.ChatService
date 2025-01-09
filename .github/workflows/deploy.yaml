@@ -7,9 +7,9 @@ on:
   #   workflows: [ Build ]
   #   types: [ completed ]
 
-  # Push to main
-  # push:
-  #   branches: [ main ]
+  Push to main
+  push:
+    branches: [ main ]
 
   # Manually triggered
   workflow_dispatch:
