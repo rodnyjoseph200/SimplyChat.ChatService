@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  # Pull requests targeting main
+  pull_request:
+    branches: [ main ]
+    
+    # opened: when a PR is created
+    # reopened: when a PR is reopened
+    # synchronize: when commits are pushed to an open PR
+    types: [opened, reopened, synchronize]
+
+  # # Push to main
+  # push:
+  #   branches: [ main ]
+
+  # Manually triggered
+  workflow_dispatch:    
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+
+    env:
+      REST_API_PATH: src/Apps/ChatService.APIs.REST/ChatService.APIs.REST.csproj
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore ${{ env.REST_API_PATH }}
+
+      - name: Install Format Tool
+        run: dotnet tool install -g dotnet-format
+
+      # - name: Check Format
+      #   run: dotnet format ${{ env.REST_API_PATH }} --verify-no-changes --verbosity diagnostic       
+
+      - name: Build (warnings as errors)
+        run: dotnet build --no-restore -c Release ${{ env.REST_API_PATH }} --warnAsError
+
+      #- name: Test
+        # set when tests are available
+        # ex) run: dotnet test --no-build --no-restore -c Release tests/ChatService.Core.UnitTests/ChatService.Core.UnitTests.csproj
+        # ex) run: dotnet test --no-build --no-restore -c Release tests/ChatService.Infrastructure.UnitTests/ChatService.Infrastructure.UnitTests.csproj
