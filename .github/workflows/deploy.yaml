@@ -1,10 +1,19 @@
 name: Deploy
 
 on:
+  # Pull requests targeting main
+  pull_request:
+    branches: [ main ]
+    
+    # opened: when a PR is created
+    # reopened: when a PR is reopened
+    # synchronize: when commits are pushed to an open PR
+    types: [opened, reopened, synchronize]
+    
   # Trigger when "Build" workflow run is completed
-  workflow_run:
-    workflows: [ Build ]
-    types: [ completed ]
+  # workflow_run:
+  #   workflows: [ Build ]
+  #   types: [ completed ]
 
   # Push to main
   push:
