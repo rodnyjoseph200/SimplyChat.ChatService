@@ -1,11 +1,10 @@
-﻿namespace ChatService.Core.Messages
+﻿namespace ChatService.Core.Messages;
+
+public enum MessageTypes
 {
-    public enum MessageTypes
-    {
-        Text,
-        Image,
-        Video,
-        Audio,
-        File
-    }
+    Text,
+    Image,
+    Video,
+    Audio,
+    File
 }
