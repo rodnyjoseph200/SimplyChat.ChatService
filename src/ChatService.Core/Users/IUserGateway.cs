@@ -1,6 +1,5 @@
-﻿namespace ChatService.Core.Users
+﻿namespace ChatService.Core.Users;
+
+internal interface IUserGateway
 {
-    internal interface IUserGateway
-    {
-    }
 }
