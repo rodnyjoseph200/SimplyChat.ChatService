@@ -16,8 +16,6 @@ indent_style = space
 tab_width = 4
 
 # New line preferences
-# Force CRLF line endings for all text files
-text=auto eol=crlf
 end_of_line = crlf
 insert_final_newline = false
 
