@@ -30,16 +30,16 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore
-        run: dotnet restore ${{ env.REST_API_PATH }}
+        run: dotnet restore
 
       - name: Install Format Tool
         run: dotnet tool install -g dotnet-format
 
       - name: Check Format
-        run: dotnet format ${{ env.REST_API_PATH }} --verify-no-changes --verbosity diagnostic --config .editorconfig
+        run: dotnet format --verify-no-changes --verbosity diagnostic --config .editorconfig
 
       - name: Build
-        run: dotnet build --no-restore -c Release ${{ env.REST_API_PATH }} --warnAsError
+        run: dotnet build --no-restore -c Release --warnAsError
 
       #- name: Test
         # set when tests are available
