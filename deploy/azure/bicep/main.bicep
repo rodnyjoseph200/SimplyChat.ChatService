@@ -27,3 +27,5 @@ module restApi './modules/apis-rest.bicep' = {
     registryPassword: registryPassword
   }
 }
+
+//provide outputs

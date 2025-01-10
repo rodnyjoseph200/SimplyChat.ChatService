@@ -3,6 +3,7 @@ param location string
 
 param logAnalyticsWorkspaceName string = 'loganalytics-workspace-${environmentName}'
 param applicationInsightsName string = 'appinsights-${environmentName}'
+param managedEnvironmentName string = 'container-apps-environment-${environmentName}'
 
 // Creates a Log Analytics workspace
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
@@ -29,7 +30,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 // Creates a Managed Environment (Container App Environment)
 resource managedEnvironment 'Microsoft.App/managedEnvironments@2024-10-02-preview' = {
-  name: environmentName
+  name: managedEnvironmentName
   location: location
   properties: {
     appLogsConfiguration: {

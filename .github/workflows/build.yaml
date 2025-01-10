@@ -10,10 +10,6 @@ on:
     # synchronize: when commits are pushed to an open PR
     types: [opened, reopened, synchronize]
 
-  # # Push to main
-  # push:
-  #   branches: [ main ]
-
   # Manually triggered
   workflow_dispatch:    
 
