@@ -1,0 +1,72 @@
+name: Deploy
+
+on: 
+  # Push to main
+  push:
+    branches: [ main ]
+
+  # Manually triggered
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      REST_API_IMAGE_NAME: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/simplychat-chatservice-apis-rest
+      REST_API_DIR: src/Apps/ChatService.APIs.REST
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log into Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Login to ACR'
+        uses: azure/docker-login@v2
+        with:
+          login-server: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          echo "Building Docker image..."
+          docker build \
+            -f $REST_API_DIR/Dockerfile \
+            -t $REST_API_IMAGE_NAME:$IMAGE_TAG \
+            .
+
+          echo "Pushing Docker image..."
+          docker push $REST_API_IMAGE_NAME:$IMAGE_TAG
+
+        #https://github.com/azure/bicep-deploy
+      - name: Deploy Bicep file
+        uses: azure/bicep-deploy@v1
+        with:
+          type: deployment
+          operation: create
+          name: Development
+          scope: resourceGroup
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resource-group-name: ${{ secrets.SIMPLYCHAT_RG_NAME }}
+          template-file: ./deploy/azure/bicep/main.bicep
+          
+          # setup later
+          # action-on-unmanage-resources: delete
+          # action-on-unmanage-resourcegroups: delete
+          # deny none for now (update to denyWriteAndDelete later)
+          # deny-settings-mode: none
+
+          parameters: |
+            {
+              "environmentName": "dev",
+              "restApiContainerImage": "${{ env.REST_API_IMAGE_NAME }}:${{ env.IMAGE_TAG }}",
+              "registryServer": "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}",
+              "registryUsername": "${{ secrets.AZURE_REGISTRY_USERNAME }}",
+              "registryPassword": "${{ secrets.AZURE_REGISTRY_PASSWORD }}"
+            }

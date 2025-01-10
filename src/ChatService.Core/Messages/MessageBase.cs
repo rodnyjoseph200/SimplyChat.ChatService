@@ -1,5 +1,4 @@
 ﻿namespace ChatService.Core.Messages;
-using Simply.Lib;
 
 public abstract class MessageBase
 {
@@ -12,7 +11,7 @@ public abstract class MessageBase
 
     protected MessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
     {
-        Simply.StringIsNullOrWhitespace.ThrowArgumentException(
+        Simply.Lib.Simply.StringIsNullOrWhitespace.ThrowArgumentException(
             (nameof(chatRoomId), chatRoomId),
             (nameof(userId), userId),
             (nameof(content), content));
