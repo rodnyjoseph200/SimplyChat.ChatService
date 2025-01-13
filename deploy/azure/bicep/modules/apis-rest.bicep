@@ -1,5 +1,7 @@
 param location string
 param managedEnvironmentId string
+param appName string
+param serviceName string
 
 param containerImage string
 param registryServer string
@@ -8,11 +10,11 @@ param registryUsername string
 @secure()
 param registryPassword string
 
-var appName = 'rest-api'
+var containerAppName = '${appName}-${serviceName}-rest-api'
 var containerRegistryPasswordName = 'container-registry-password'
 
 resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
-  name: appName
+  name: containerAppName
   location: location
   properties: {
     managedEnvironmentId: managedEnvironmentId
@@ -39,7 +41,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
       containers: [
         {
           image: containerImage
-          name: appName
+          name: containerAppName
         }
       ]
     }

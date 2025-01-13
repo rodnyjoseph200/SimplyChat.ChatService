@@ -9,7 +9,7 @@ public class ChatRoom
 
     public string SuperUserId { get; init; }
 
-    private readonly List<User> _users = [];
+    private List<User> _users = [];
 
     public IReadOnlyCollection<User> Users => _users.AsReadOnly();
 
