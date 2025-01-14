@@ -8,6 +8,9 @@ public abstract class MessageBase
     public string Content { get; protected set; }
     public DateTimeOffset CreatedAt { get; protected set; }
     public MessageTypes Type { get; protected set; }
+    //todo
+    //user base, empty means all users
+    private readonly string[] Visibility = [];
 
     protected MessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
     {
