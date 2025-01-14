@@ -12,7 +12,7 @@ var appName = 'simplychat'
 var serviceName = 'chat-service'
 
 module monitor './modules/shared/monitor.bicep' = {
-  name: 'monitor-and-container-app-environment'
+  name: 'monitor'
   params: {
     environmentName: environmentName
     location: location
