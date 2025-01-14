@@ -69,4 +69,5 @@ jobs:
               "registryServer": "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}",
               "username": "${{ secrets.AZURE_REGISTRY_USERNAME }}",
               "password": "${{ secrets.AZURE_REGISTRY_PASSWORD }}"
+              "objectId": "${{ secrets.AZURE_SERVICE_PRINCIPAL_OBJECT_ID }}"
             }

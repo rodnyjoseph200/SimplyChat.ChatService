@@ -7,6 +7,8 @@ param location string = resourceGroup().location
 param username string
 @secure()
 param password string
+@secure()
+param objectId string
 
 var appName = 'simplychat'
 var serviceName = 'chat-service'
@@ -57,7 +59,7 @@ module keyVault './modules/shared/key-vault.bicep' = {
     appName: appName
     location: location
     environmentName: environmentName
-    objectId: username
+    objectId: objectId
   }
 }
 
