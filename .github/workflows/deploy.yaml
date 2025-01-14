@@ -67,6 +67,6 @@ jobs:
               "environmentName": "dev",
               "restApiContainerImage": "${{ env.REST_API_IMAGE_NAME }}:${{ env.IMAGE_TAG }}",
               "registryServer": "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}",
-              "registryUsername": "${{ secrets.AZURE_REGISTRY_USERNAME }}",
-              "registryPassword": "${{ secrets.AZURE_REGISTRY_PASSWORD }}"
+              "username": "${{ secrets.AZURE_REGISTRY_USERNAME }}",
+              "password": "${{ secrets.AZURE_REGISTRY_PASSWORD }}"
             }
