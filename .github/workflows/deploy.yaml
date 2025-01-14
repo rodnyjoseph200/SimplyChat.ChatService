@@ -3,7 +3,7 @@ name: Deploy
 on: 
   # Push to main
   push:
-    branches: [ main ]
+    branches: [ test-2 ]
 
   # Manually triggered
   workflow_dispatch:
