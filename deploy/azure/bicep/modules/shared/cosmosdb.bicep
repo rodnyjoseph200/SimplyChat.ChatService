@@ -103,7 +103,4 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
   }
 }
 
-output location string = location
-output name string = container.name
-output resourceGroupName string = resourceGroup().name
-output resourceId string = container.id
+output accountName string = account.name

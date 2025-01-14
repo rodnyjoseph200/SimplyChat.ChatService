@@ -1,0 +1,20 @@
+param keyVaultName string
+param cosmosAccountName string
+
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+  name: keyVaultName
+}
+
+resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' existing = {
+  name: cosmosAccountName
+}
+
+var cosmosDbConnectionString = 'AccountEndpoint=${cosmosAccount.properties.documentEndpoint};AccountKey=${listKeys(cosmosAccount.id, '2023-04-15').primaryMasterKey};'
+
+resource cosmosDbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyVault
+  name: 'cosmosDbConnectionString'
+  properties: {
+    value: cosmosDbConnectionString
+  }
+}
