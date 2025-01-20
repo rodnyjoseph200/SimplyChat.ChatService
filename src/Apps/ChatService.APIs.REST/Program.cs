@@ -13,12 +13,13 @@ var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
+// todo rod - uncomment after testing
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    _ = app.UseSwagger();
-    _ = app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    _ = app.UseSwagger();
+//    _ = app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
 
