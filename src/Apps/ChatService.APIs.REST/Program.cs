@@ -20,6 +20,8 @@ app.MapDefaultEndpoints();
 //    _ = app.UseSwagger();
 //    _ = app.UseSwaggerUI();
 //}
+_ = app.UseSwagger();
+_ = app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\Aspire\ChatService.ServiceDefaults\ChatService.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\v1\" />
+  </ItemGroup>
+
 </Project>
