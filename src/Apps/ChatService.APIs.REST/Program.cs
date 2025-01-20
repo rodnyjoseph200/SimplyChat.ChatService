@@ -1,32 +1,43 @@
+using ChatService.APIs.REST;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
-
-// Add services to the container.
+builder.Services
+    .AddApiCors()
+    .AddVersioning()
+    .AddEndpointsApiExplorer()
+    .AddSwagger();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.AddServiceDefaults();
 
 var app = builder.Build();
 
-app.MapDefaultEndpoints();
+var serviceProvider = app.Services;
+var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 
-// todo rod - uncomment after testing
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    _ = app.UseSwagger();
-//    _ = app.UseSwaggerUI();
-//}
-_ = app.UseSwagger();
-_ = app.UseSwaggerUI();
+try
+{
+    _ = app.MapDefaultEndpoints();
 
-app.UseHttpsRedirection();
+    if (!app.Environment.IsProduction())
+    {
+        _ = app.UseDeveloperExceptionPage();
+        _ = app.UseSwagger();
+        _ = app.UseSwaggerUI();
+    }
 
-app.UseAuthorization();
+    _ = app.UseHttpsRedirection();
 
-app.MapControllers();
+    _ = app.UseCors("CorsPolicy");
 
-app.Run();
+    _ = app.UseAuthorization();
+
+    _ = app.MapControllers();
+
+    app.Run();
+}
+catch (Exception e)
+{
+    logger.LogError(e, "Could not run service");
+}

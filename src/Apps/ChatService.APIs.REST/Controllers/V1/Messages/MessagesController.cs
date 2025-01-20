@@ -1,40 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+namespace ChatService.APIs.REST.Controllers.V1.Messages;
 
-namespace ChatService.APIs.REST.Controllers;
-
-[Route("api/[controller]")]
 [ApiController]
-public class ChatRoomController : ControllerBase
+[ApiVersion("1.0")]
+[Route("api/chat-service/v{version:apiVersion}/[controller]")]
+public class MessagesController : ControllerBase
 {
-    // GET: api/<Session>
+    // GET: api/<MessagesController>
     [HttpGet]
     public IEnumerable<string> Get()
     {
         return new string[] { "value1", "value2" };
     }
 
-    // GET api/<Session>/5
+    // GET api/<MessagesController>/5
     [HttpGet("{id}")]
     public string Get(int id)
     {
         return "value";
     }
 
-    // POST api/<Session>
+    // POST api/<MessagesController>
     [HttpPost]
     public void Post([FromBody] string value)
     {
     }
 
-    // PUT api/<Session>/5
+    // PUT api/<MessagesController>/5
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] string value)
     {
     }
 
-    // DELETE api/<Session>/5
+    // DELETE api/<MessagesController>/5
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

@@ -2,7 +2,7 @@
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ChatService.APIs.REST.Controllers;
+namespace ChatService.APIs.REST.Controllers.V1.Admin;
 
 [Route("api/[controller]")]
 [ApiController]
