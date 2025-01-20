@@ -10,4 +10,10 @@
     <PackageReference Include="Simply.Track" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Alerts\" />
+    <Folder Include="Events\" />
+    <Folder Include="Secrets\" />
+  </ItemGroup>
+
 </Project>

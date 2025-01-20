@@ -1,5 +1,5 @@
 ﻿namespace ChatService.Core.ChatRooms;
 
-internal class ChatRoomService
+internal class ChatRoomService : IChatRoomService
 {
 }

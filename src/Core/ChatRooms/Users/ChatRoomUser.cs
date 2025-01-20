@@ -1,22 +1,19 @@
-﻿using Simply.Track;
+﻿namespace ChatService.Core.ChatRooms.Users;
 
-namespace ChatService.Core.Users;
-
-public class User
+public class ChatRoomUser
 {
-    public string Id { get; init; } = string.Empty;
+    public string Id { get; init; }
     public string Name { get; private set; } = string.Empty;
 
-    public Tracker Tracker { get; init; }
-
-    private User(string username, Tracker tracker)
+    private ChatRoomUser(string username)
     {
+        // todo - don't set guid
         Id = Guid.NewGuid().ToString();
-        Tracker = tracker;
         SetName(username);
     }
 
-    public static User Load(string username, Tracker tracker) => new(username, tracker);
+    // fix
+    public static ChatRoomUser Load(string username) => new(username);
 
     public void SetName(string username)
     {

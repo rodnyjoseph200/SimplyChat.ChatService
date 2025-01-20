@@ -1,31 +1,34 @@
-﻿using ChatService.Core.Users;
+﻿using ChatService.Core.ChatRooms.Users;
 using Simply.Track;
 
 namespace ChatService.Core.ChatRooms;
 
+//Todo update and fix this model
 public class ChatRoom
 {
+    public Tracker Tracker { get; init; }
+
     public string Id { get; init; }
 
     public string SuperUserId { get; init; }
 
-    private List<User> _users = [];
+    private readonly List<ChatRoomUser> _users = [];
 
-    public IReadOnlyCollection<User> Users => _users.AsReadOnly();
+    public IReadOnlyCollection<ChatRoomUser> Users => _users.AsReadOnly();
 
-    public Tracker Tracker { get; init; }
-
-    private ChatRoom(User superUser, Tracker tracker)
+    private ChatRoom(ChatRoomUser superUser, Tracker tracker)
     {
+        // todo - don't set guid
         Id = Guid.NewGuid().ToString();
         SuperUserId = superUser.Id;
         _users = [superUser];
         Tracker = tracker;
     }
 
-    public static ChatRoom Load(User superUser, Tracker tracker) => new(superUser, tracker);
+    //fix
+    public static ChatRoom Load(ChatRoomUser superUser, Tracker tracker) => new(superUser, tracker);
 
-    public void AddUser(User user)
+    public void AddUser(ChatRoomUser user)
     {
         if (_users.Any(u => u.Id == user.Id))
             throw new InvalidOperationException("User already exists in the chat room");
