@@ -1,18 +1,19 @@
-﻿namespace ChatService.Core.Messages;
+﻿using ChatService.Core.Messages;
 
-public abstract class MessageBase
+namespace ChatService.Core.ChatMessages.Models;
+
+public abstract class ChatMessageBase
 {
-    public string Id { get; protected set; }
     public string ChatRoomId { get; protected set; }
     public string UserId { get; protected set; }
     public string Content { get; protected set; }
     public DateTimeOffset CreatedAt { get; protected set; }
-    public MessageTypes Type { get; protected set; }
+    public ChatMessageTypes Type { get; protected set; }
     //todo
     //user base, empty means all users
     private readonly string[] Visibility = [];
 
-    protected MessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, int type)
+    protected ChatMessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
     {
         Simply.Lib.Simply.StringIsNullOrWhitespace.ThrowArgumentException(
             (nameof(chatRoomId), chatRoomId),
@@ -22,14 +23,14 @@ public abstract class MessageBase
         if (createdAt == default)
             throw new ArgumentException($"{nameof(createdAt)} is required.");
 
-        if (!Enum.IsDefined(typeof(MessageTypes), type))
-            throw new ArgumentException($"{nameof(type)} {type} is invalid.");
+        //if (!Enum.IsDefined(typeof(ChatMessageTypes), type))
+        //    throw new ArgumentException($"{nameof(type)} {type} is invalid.");
 
-        Id = Guid.NewGuid().ToString();
         ChatRoomId = chatRoomId;
         UserId = userId;
         Content = content;
         CreatedAt = createdAt;
-        Type = (MessageTypes)type;
+        //Type = (ChatMessageTypes)type;
+        Type = type;
     }
 }

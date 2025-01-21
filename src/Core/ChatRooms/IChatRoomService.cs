@@ -1,5 +1,12 @@
-﻿namespace ChatService.Core.ChatRooms;
+﻿using ChatService.Core.ChatRooms.Commands;
+using ChatService.Core.ChatRooms.Models;
 
-internal interface IChatRoomService
+namespace ChatService.Core.ChatRooms;
+
+public interface IChatRoomService
 {
+    Task<ChatRoom?> Get(string id);
+    Task<ChatRoom> Create(CreateChatRoomCommand command);
+    Task Update(UpdateChatRoomCommand command);
+    Task Delete(DeleteChatRoomCommand command);
 }

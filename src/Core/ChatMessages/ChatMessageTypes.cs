@@ -1,6 +1,6 @@
 ﻿namespace ChatService.Core.Messages;
 
-public enum MessageTypes
+public enum ChatMessageTypes
 {
     Text,
     Image,

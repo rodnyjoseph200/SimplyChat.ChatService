@@ -4,31 +4,30 @@ namespace ChatService.Core.Users;
 
 public class User
 {
-    public string Id { get; init; } = string.Empty;
+    public string Id { get; init; }
     public string Name { get; private set; } = string.Empty;
-
     public Tracker Tracker { get; init; }
 
-    private User(string username, Tracker tracker)
+    private User(string id, string name, Tracker tracker)
     {
-        Id = Guid.NewGuid().ToString();
+        Id = id;
         Tracker = tracker;
-        SetName(username);
+        SetName(name);
     }
 
-    public static User Load(string username, Tracker tracker) => new(username, tracker);
+    public static User Load(string id, string name, Tracker tracker) => new(id, name, tracker);
 
-    public void SetName(string username)
+    public void SetName(string name)
     {
-        ValidateName(username);
-        Name = username.Trim().ToLower();
+        ValidateName(name);
+        Name = name.Trim().ToLower();
     }
 
-    public static void ValidateName(string username)
+    public static void ValidateName(string name)
     {
-        if (string.IsNullOrWhiteSpace(username))
-            throw new ArgumentException($"{nameof(username)} is required");
-        if (username.Length > 20)
-            throw new ArgumentException($"{nameof(username)} is too long");
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException($"{nameof(name)} is required");
+        if (name.Length > 20)
+            throw new ArgumentException($"{nameof(name)} is too long");
     }
 }

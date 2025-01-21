@@ -1,5 +1,5 @@
 ﻿namespace ChatService.Core.Users;
 
-internal interface IUserGateway
+internal interface IUserRepository
 {
 }
