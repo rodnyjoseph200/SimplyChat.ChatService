@@ -20,11 +20,13 @@ param tenantId string = subscription().tenantId
 @description('Specifies the permissions to keys in the vault. Valid values are: all, encrypt, decrypt, wrapKey, unwrapKey, sign, verify, get, list, create, update, import, delete, backup, restore, recover, and purge.')
 param keysPermissions array = [
   'list'
+  'get'
 ]
 
 @description('Specifies the permissions to secrets in the vault. Valid values are: all, get, list, set, delete, backup, restore, recover, and purge.')
 param secretsPermissions array = [
   'list'
+  'get'
 ]
 
 @description('Specifies whether the key vault is a standard vault or a premium vault.')

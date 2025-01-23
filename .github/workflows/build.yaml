@@ -17,9 +17,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    env:
-      REST_API_PATH: src/Apps/ChatService.APIs.REST/ChatService.APIs.REST.csproj
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,7 +38,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore -c Release --warnAsError
 
-      #- name: Test
-        # set when tests are available
-        # ex) run: dotnet test --no-build --no-restore -c Release tests/ChatService.Core.UnitTests/ChatService.Core.UnitTests.csproj
-        # ex) run: dotnet test --no-build --no-restore -c Release tests/ChatService.Infrastructure.UnitTests/ChatService.Infrastructure.UnitTests.csproj
+      - name: Tests
+        run: |
+          dotnet test --no-build --no-restore -c Release tests/ChatService.Core.UnitTests/ChatService.Core.UnitTests.csproj
+          dotnet test --no-build --no-restore -c Release tests/ChatService.Infrastructure.UnitTests/ChatService.Infrastructure.UnitTests.csproj
