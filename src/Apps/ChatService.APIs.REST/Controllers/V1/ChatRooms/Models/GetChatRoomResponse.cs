@@ -46,4 +46,3 @@ public class ChatRoomUserSettingsResponse
     public static ChatRoomUserSettingsResponse Convert(ChatRoomUserSettings userSettings) =>
         new(userSettings);
 }
-
