@@ -1,16 +1,16 @@
-﻿namespace ChatService.Core.ChatRooms.Commands;
+﻿namespace ChatService.Core.Chatrooms.Commands;
 
-public class DeleteChatRoomCommand
+public class DeleteChatroomCommand
 {
-    public string ChatRoomId { get; init; }
+    public string ChatroomId { get; init; }
 
-    private DeleteChatRoomCommand(string chatroomId)
+    private DeleteChatroomCommand(string chatroomId)
     {
         if (string.IsNullOrWhiteSpace(chatroomId))
             throw new ArgumentException($"{nameof(chatroomId)} is required");
 
-        ChatRoomId = chatroomId;
+        ChatroomId = chatroomId;
     }
 
-    public static DeleteChatRoomCommand Create(string chatroomId) => new(chatroomId);
+    public static DeleteChatroomCommand Create(string chatroomId) => new(chatroomId);
 }

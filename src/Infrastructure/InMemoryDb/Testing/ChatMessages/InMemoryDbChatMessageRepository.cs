@@ -25,10 +25,10 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         return chatMessage;
     }
 
-    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
+    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatroomId(string chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
-        var chatMessages = InMemoryDbChatMessagesStore.InMemoryDbChatMessages.Where(x => x.ChatRoomId == chatroomId)?.ToArray();
+        var chatMessages = InMemoryDbChatMessagesStore.InMemoryDbChatMessages.Where(x => x.ChatroomId == chatroomId)?.ToArray();
 
         if (chatMessages is not null && chatMessages.Length is not 0)
             _logger.LogInformation("Chat messages found");
@@ -43,7 +43,7 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
 
         var chatMessage = ChatMessage.Load(
             Tracker.LoadTracking(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false,
-            null, null, null, null), Guid.NewGuid().ToString(), newChatMessage.ChatRoomId,
+            null, null, null, null), Guid.NewGuid().ToString(), newChatMessage.ChatroomId,
             newChatMessage.UserId, newChatMessage.Content, newChatMessage.CreatedAt, newChatMessage.Type);
 
         InMemoryDbChatMessagesStore.Add(chatMessage);

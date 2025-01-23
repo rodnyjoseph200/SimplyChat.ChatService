@@ -1,4 +1,4 @@
-﻿namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
+﻿namespace ChatService.APIs.REST.Controllers.V1.Chatrooms.Models.Messages;
 
 public class DeleteChatMessageRequest
 {

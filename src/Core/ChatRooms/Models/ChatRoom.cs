@@ -1,14 +1,14 @@
 ﻿using Simply.Track;
 
-namespace ChatService.Core.ChatRooms.Models;
+namespace ChatService.Core.Chatrooms.Models;
 
-public class Chatroom : ChatRoomBase
+public class Chatroom : ChatroomBase
 {
     public string Id { get; init; }
 
     public Tracker Tracker { get; init; }
 
-    private Chatroom(string id, List<ChatRoomUser> users, Tracker tracker) : base(users)
+    private Chatroom(string id, List<ChatroomUser> users, Tracker tracker) : base(users)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException($"{nameof(id)} is required");
@@ -17,9 +17,9 @@ public class Chatroom : ChatRoomBase
         Tracker = tracker;
     }
 
-    public static Chatroom Load(string id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
+    public static Chatroom Load(string id, List<ChatroomUser> users, Tracker tracker) => new(id, users, tracker);
 
-    public void AddUser(ChatRoomUser user)
+    public void AddUser(ChatroomUser user)
     {
         if (_users.Any(u => u.Id == user.Id))
             throw new InvalidOperationException($"{nameof(user)} {user.Id} already exists in the chat room");

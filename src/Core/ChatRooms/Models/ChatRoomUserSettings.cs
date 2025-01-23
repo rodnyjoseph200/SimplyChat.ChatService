@@ -1,14 +1,14 @@
-﻿namespace ChatService.Core.ChatRooms.Models;
+﻿namespace ChatService.Core.Chatrooms.Models;
 
-public class ChatRoomUserSettings
+public class ChatroomUserSettings
 {
-    public ChatRoomColorSchemes Scheme { get; private set; }
+    public ChatroomColorSchemes Scheme { get; private set; }
 
-    private ChatRoomUserSettings(ChatRoomColorSchemes scheme) => Scheme = scheme;
+    private ChatroomUserSettings(ChatroomColorSchemes scheme) => Scheme = scheme;
 
-    public static ChatRoomUserSettings Create(ChatRoomColorSchemes scheme = ChatRoomColorSchemes.Light) => new(scheme);
+    public static ChatroomUserSettings Create(ChatroomColorSchemes scheme = ChatroomColorSchemes.Light) => new(scheme);
 
-    public static ChatRoomUserSettings Load(ChatRoomColorSchemes scheme) => new(scheme);
+    public static ChatroomUserSettings Load(ChatroomColorSchemes scheme) => new(scheme);
 
-    public void SetScheme(ChatRoomColorSchemes scheme) => Scheme = scheme;
+    public void SetScheme(ChatroomColorSchemes scheme) => Scheme = scheme;
 }

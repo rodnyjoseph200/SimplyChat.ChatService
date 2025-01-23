@@ -1,49 +1,48 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models;
 
-namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
+namespace ChatService.APIs.REST.Controllers.V1.Chatrooms.Models;
 
-public class GetChatRoomResponse
+public class GetChatroomResponse
 {
-    public string ChatRoomId { get; set; }
-    public ChatRoomUsersResponse[] Users { get; set; }
+    public string ChatroomId { get; set; }
+    public ChatroomUsersResponse[] Users { get; set; }
 
-    public GetChatRoomResponse(Chatroom chatRoom)
+    public GetChatroomResponse(Chatroom chatroom)
     {
-        ChatRoomId = chatRoom.Id;
-        Users = chatRoom.Users.Select(ChatRoomUsersResponse.Convert).ToArray();
+        ChatroomId = chatroom.Id;
+        Users = chatroom.Users.Select(ChatroomUsersResponse.Convert).ToArray();
     }
 
-    public static GetChatRoomResponse Convert(Chatroom chatRooms) =>
-        new(chatRooms);
+    public static GetChatroomResponse Convert(Chatroom chatrooms) =>
+        new(chatrooms);
 }
 
-public class ChatRoomUsersResponse
+public class ChatroomUsersResponse
 {
     public string Id { get; set; }
-    public ChatRoomUserSettingsResponse Settings { get; set; }
+    public ChatroomUserSettingsResponse Settings { get; set; }
     public bool IsSuperUser { get; set; }
 
-    public ChatRoomUsersResponse(ChatRoomUser chatRoomUser)
+    public ChatroomUsersResponse(ChatroomUser chatroomUser)
     {
-        Id = chatRoomUser.Id;
-        Settings = ChatRoomUserSettingsResponse.Convert(chatRoomUser.Settings);
-        IsSuperUser = chatRoomUser.IsSuperUser;
+        Id = chatroomUser.Id;
+        Settings = ChatroomUserSettingsResponse.Convert(chatroomUser.Settings);
+        IsSuperUser = chatroomUser.IsSuperUser;
     }
 
-    public static ChatRoomUsersResponse Convert(ChatRoomUser chatRoomUser) =>
-        new(chatRoomUser);
+    public static ChatroomUsersResponse Convert(ChatroomUser chatroomUser) =>
+        new(chatroomUser);
 }
 
-public class ChatRoomUserSettingsResponse
+public class ChatroomUserSettingsResponse
 {
     public string ColorSchemes { get; set; }
 
-    public ChatRoomUserSettingsResponse(ChatRoomUserSettings userSettings)
+    public ChatroomUserSettingsResponse(ChatroomUserSettings userSettings)
     {
         ColorSchemes = userSettings.Scheme.ToString();
     }
 
-    public static ChatRoomUserSettingsResponse Convert(ChatRoomUserSettings userSettings) =>
+    public static ChatroomUserSettingsResponse Convert(ChatroomUserSettings userSettings) =>
         new(userSettings);
 }
-

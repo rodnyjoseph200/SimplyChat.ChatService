@@ -1,6 +1,6 @@
-﻿namespace ChatService.Core.ChatRooms;
+﻿namespace ChatService.Core.Chatrooms;
 
-public enum ChatRoomColorSchemes
+public enum ChatroomColorSchemes
 {
     Light,
     Dark

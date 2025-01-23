@@ -1,16 +1,16 @@
-﻿namespace ChatService.Core.ChatRooms.Commands;
+﻿namespace ChatService.Core.Chatrooms.Commands;
 
-public class UpdateChatRoomCommand
+public class UpdateChatroomCommand
 {
-    public string ChatRoomId { get; init; }
+    public string ChatroomId { get; init; }
 
-    private UpdateChatRoomCommand(string chatRoomId)
+    private UpdateChatroomCommand(string chatroomId)
     {
-        ChatRoomId = chatRoomId;
+        ChatroomId = chatroomId;
     }
 
-    public static UpdateChatRoomCommand Create(string chatRoomId)
+    public static UpdateChatroomCommand Create(string chatroomId)
     {
-        return new UpdateChatRoomCommand(chatRoomId);
+        return new UpdateChatroomCommand(chatroomId);
     }
 }

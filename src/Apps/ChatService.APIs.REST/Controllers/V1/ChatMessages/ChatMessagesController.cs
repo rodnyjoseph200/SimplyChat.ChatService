@@ -1,5 +1,5 @@
 ﻿using Asp.Versioning;
-using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
+using ChatService.APIs.REST.Controllers.V1.Chatrooms.Models.Messages;
 using ChatService.Core.ChatMessages;
 using Microsoft.AspNetCore.Mvc;
 

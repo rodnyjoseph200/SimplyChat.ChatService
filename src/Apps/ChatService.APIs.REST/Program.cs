@@ -1,6 +1,6 @@
 using ChatService.APIs.REST;
 using ChatService.Core.ChatMessages;
-using ChatService.Core.ChatRooms;
+using ChatService.Core.Chatrooms;
 using ChatService.Infrastructure.InMemoryDb.Testing.ChatMessages;
 using ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
 
@@ -18,7 +18,7 @@ builder.AddServiceDefaults();
 builder.Services.AddSingleton<IChatMessageRepository, InMemoryDbChatMessageRepository>();
 builder.Services.AddSingleton<IChatMessageService, ChatMessageService>();
 builder.Services.AddSingleton<IChatroomRepository, InMemoryDbChatroomRepository>();
-builder.Services.AddSingleton<IChatRoomService, ChatRoomService>();
+builder.Services.AddSingleton<IChatroomService, ChatroomService>();
 
 var app = builder.Build();
 

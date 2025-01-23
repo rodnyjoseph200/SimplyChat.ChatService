@@ -1,6 +1,6 @@
 ﻿using ChatService.Core.ChatMessages.Commands;
 using ChatService.Core.ChatMessages.Models;
-using ChatService.Core.ChatRooms;
+using ChatService.Core.Chatrooms;
 using Microsoft.Extensions.Logging;
 
 namespace ChatService.Core.ChatMessages;
@@ -9,13 +9,13 @@ public class ChatMessageService : IChatMessageService
 {
     private readonly ILogger _logger;
     private readonly IChatMessageRepository _chatMessageRepository;
-    private readonly IChatRoomService _chatRoomService;
+    private readonly IChatroomService _chatroomService;
 
-    public ChatMessageService(ILogger<ChatRoomService> logger, IChatMessageRepository chatMessageRepository, IChatRoomService chatRoomService)
+    public ChatMessageService(ILogger<ChatroomService> logger, IChatMessageRepository chatMessageRepository, IChatroomService chatroomService)
     {
         _logger = logger;
         _chatMessageRepository = chatMessageRepository;
-        _chatRoomService = chatRoomService;
+        _chatroomService = chatroomService;
     }
 
     public async Task<ChatMessage?> Get(string id)
@@ -37,15 +37,15 @@ public class ChatMessageService : IChatMessageService
         }
     }
 
-    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
+    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatroomId(string chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
 
         try
         {
-            //todo use chatRoomService to get chatroom by id
+            //todo use chatroomService to get chatroom by id
             //if not exists, throw exception. Else, get chat messages
-            var chatMessages = await _chatMessageRepository.GetByChatRoomId(chatroomId);
+            var chatMessages = await _chatMessageRepository.GetByChatroomId(chatroomId);
             if (chatMessages.Count is not 0)
                 _logger.LogInformation("Chat messages found");
 
@@ -64,9 +64,9 @@ public class ChatMessageService : IChatMessageService
 
         try
         {
-            //todo use chatRoomService to get chatroom by id
+            //todo use chatroomService to get chatroom by id
             //if not exists, throw exception. Else, create chat message
-            var newChatMessage = NewChatMessage.Create(command.ChatRoomId, command.UserId, command.Content, command.CreatedAt, command.Type);
+            var newChatMessage = NewChatMessage.Create(command.ChatroomId, command.UserId, command.Content, command.CreatedAt, command.Type);
             var chatMessage = _chatMessageRepository.Create(newChatMessage);
             _logger.LogInformation("Chat message created");
             return chatMessage;

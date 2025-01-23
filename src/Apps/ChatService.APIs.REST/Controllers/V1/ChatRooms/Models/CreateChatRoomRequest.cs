@@ -1,11 +1,11 @@
-﻿using ChatService.Core.ChatRooms.Commands;
+﻿using ChatService.Core.Chatrooms.Commands;
 
-namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
+namespace ChatService.APIs.REST.Controllers.V1.Chatrooms.Models;
 
-public class CreateChatRoomRequest
+public class CreateChatroomRequest
 {
     public required string username { get; set; }
 
-    public static CreateChatRoomCommand Convert(CreateChatRoomRequest request) =>
-        CreateChatRoomCommand.Create(request.username);
+    public static CreateChatroomCommand Convert(CreateChatroomRequest request) =>
+        CreateChatroomCommand.Create(request.username);
 }

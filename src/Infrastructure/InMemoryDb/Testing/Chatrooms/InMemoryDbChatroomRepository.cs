@@ -1,5 +1,5 @@
-﻿using ChatService.Core.ChatRooms;
-using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms;
+using ChatService.Core.Chatrooms.Models;
 using Microsoft.Extensions.Logging;
 using Simply.Track;
 
@@ -24,14 +24,14 @@ public class InMemoryDbChatroomRepository : IChatroomRepository
         return chatroom;
     }
 
-    public async Task<Chatroom> Create(NewChatroom newChatRoom)
+    public async Task<Chatroom> Create(NewChatroom newChatroom)
     {
         _logger.LogInformation("Creating chatroom");
 
-        var chatroomUserSettings = ChatRoomUserSettings.Load(ChatRoomColorSchemes.Light);
-        var chatroomUser = ChatRoomUser.Load(Guid.NewGuid().ToString(), chatroomUserSettings, isSuperUser: true);
+        var chatroomUserSettings = ChatroomUserSettings.Load(ChatroomColorSchemes.Light);
+        var chatroomUser = ChatroomUser.Load(Guid.NewGuid().ToString(), chatroomUserSettings, isSuperUser: true);
 
-        var chatroom = Chatroom.Load(Guid.NewGuid().ToString(), new List<ChatRoomUser>() { chatroomUser },
+        var chatroom = Chatroom.Load(Guid.NewGuid().ToString(), new List<ChatroomUser>() { chatroomUser },
             Tracker.LoadTracking(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false, null, null, null, null));
 
         InMemoryDbChatroomsStore.Add(chatroom);
@@ -41,11 +41,11 @@ public class InMemoryDbChatroomRepository : IChatroomRepository
         return chatroom;
     }
 
-    public async Task Update(Chatroom chatRoom)
+    public async Task Update(Chatroom chatroom)
     {
         _logger.LogInformation("Updating chatroom");
-        InMemoryDbChatroomsStore.Remove(chatRoom.Id);
-        InMemoryDbChatroomsStore.Add(chatRoom);
+        InMemoryDbChatroomsStore.Remove(chatroom.Id);
+        InMemoryDbChatroomsStore.Add(chatroom);
         _logger.LogInformation("Chatroom updated");
 
         await Task.CompletedTask;

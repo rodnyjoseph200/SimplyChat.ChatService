@@ -1,22 +1,22 @@
-﻿namespace ChatService.Core.ChatRooms.Models;
+﻿namespace ChatService.Core.Chatrooms.Models;
 
-public abstract class ChatRoomBase
+public abstract class ChatroomBase
 {
-    private protected List<ChatRoomUser> _users = [];
+    private protected List<ChatroomUser> _users = [];
 
-    public IReadOnlyCollection<ChatRoomUser> Users => _users.AsReadOnly();
+    public IReadOnlyCollection<ChatroomUser> Users => _users.AsReadOnly();
 
-    public ChatRoomBase(string userId)
+    public ChatroomBase(string userId)
     {
         if (string.IsNullOrWhiteSpace(userId))
             throw new ArgumentException($"{nameof(userId)} is required");
 
-        var user = ChatRoomUser.CreateSuperUser(userId, ChatRoomUserSettings.Create());
+        var user = ChatroomUser.CreateSuperUser(userId, ChatroomUserSettings.Create());
 
         _users = [user];
     }
 
-    public ChatRoomBase(List<ChatRoomUser> users) => _users = users.Count != 0 ?
+    public ChatroomBase(List<ChatroomUser> users) => _users = users.Count != 0 ?
         throw new ArgumentException("At least one user is required") :
         users;
 }

@@ -21,7 +21,7 @@ public class AzureCosmosDbChatMessageRepository : IChatMessageRepository
         throw new NotImplementedException();
     }
 
-    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
+    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatroomId(string chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
         await Task.CompletedTask;

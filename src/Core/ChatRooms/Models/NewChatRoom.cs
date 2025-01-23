@@ -1,6 +1,6 @@
-﻿namespace ChatService.Core.ChatRooms.Models;
+﻿namespace ChatService.Core.Chatrooms.Models;
 
-public class NewChatroom : ChatRoomBase
+public class NewChatroom : ChatroomBase
 {
     private NewChatroom(string username) : base(username)
     {

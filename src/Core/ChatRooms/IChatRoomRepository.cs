@@ -1,11 +1,11 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models;
 
-namespace ChatService.Core.ChatRooms;
+namespace ChatService.Core.Chatrooms;
 
 public interface IChatroomRepository
 {
     Task<Chatroom?> Get(string id);
-    Task<Chatroom> Create(NewChatroom newChatRoom);
-    Task Update(Chatroom chatRoom);
-    Task Delete(string chatRoomId);
+    Task<Chatroom> Create(NewChatroom newChatroom);
+    Task Update(Chatroom chatroom);
+    Task Delete(string chatroomId);
 }

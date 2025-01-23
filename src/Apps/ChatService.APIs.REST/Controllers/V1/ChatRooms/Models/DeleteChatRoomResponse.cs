@@ -1,5 +1,5 @@
-﻿namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
+﻿namespace ChatService.APIs.REST.Controllers.V1.Chatrooms.Models;
 
-public class DeleteChatRoomResponse
+public class DeleteChatroomResponse
 {
 }

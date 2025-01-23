@@ -1,19 +1,19 @@
-﻿using ChatService.Core.ChatRooms.Commands;
-using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Commands;
+using ChatService.Core.Chatrooms.Models;
 using Microsoft.Extensions.Logging;
 
-namespace ChatService.Core.ChatRooms;
+namespace ChatService.Core.Chatrooms;
 
-public class ChatRoomService : IChatRoomService
+public class ChatroomService : IChatroomService
 {
-    private readonly ILogger<ChatRoomService> _logger;
-    private readonly IChatroomRepository _chatRoomRepository;
+    private readonly ILogger<ChatroomService> _logger;
+    private readonly IChatroomRepository _chatroomRepository;
 
     //todo later - inject user service
-    public ChatRoomService(ILogger<ChatRoomService> logger, IChatroomRepository chatRoomRepository)
+    public ChatroomService(ILogger<ChatroomService> logger, IChatroomRepository chatroomRepository)
     {
         _logger = logger;
-        _chatRoomRepository = chatRoomRepository;
+        _chatroomRepository = chatroomRepository;
     }
 
     public async Task<Chatroom?> Get(string id)
@@ -25,7 +25,7 @@ public class ChatRoomService : IChatRoomService
 
         try
         {
-            var chatroom = await _chatRoomRepository.Get(id);
+            var chatroom = await _chatroomRepository.Get(id);
 
             if (chatroom is not null)
                 _logger.LogInformation("Chatroom found");
@@ -39,14 +39,14 @@ public class ChatRoomService : IChatRoomService
         }
     }
 
-    public async Task<Chatroom> Create(CreateChatRoomCommand command)
+    public async Task<Chatroom> Create(CreateChatroomCommand command)
     {
         _logger.LogInformation("Creating chatroom");
 
         try
         {
-            var newChatRoom = NewChatroom.Create(command.Username);
-            var chatroom = await _chatRoomRepository.Create(newChatRoom);
+            var newChatroom = NewChatroom.Create(command.Username);
+            var chatroom = await _chatroomRepository.Create(newChatroom);
             _logger.LogInformation("Chatroom created");
             return chatroom;
         }
@@ -57,18 +57,18 @@ public class ChatRoomService : IChatRoomService
         }
     }
 
-    public async Task Update(UpdateChatRoomCommand command)
+    public async Task Update(UpdateChatroomCommand command)
     {
         _logger.LogInformation("Updating chatroom");
 
         try
         {
-            var chatRoom = await _chatRoomRepository.Get(command.ChatRoomId) ??
+            var chatroom = await _chatroomRepository.Get(command.ChatroomId) ??
             throw new Exception("Chatroom not found");
 
             //todo - perform updates
 
-            await _chatRoomRepository.Update(chatRoom);
+            await _chatroomRepository.Update(chatroom);
             _logger.LogInformation("Chatroom updated");
         }
         catch (Exception ex)
@@ -78,16 +78,16 @@ public class ChatRoomService : IChatRoomService
         }
     }
 
-    public async Task Delete(DeleteChatRoomCommand command)
+    public async Task Delete(DeleteChatroomCommand command)
     {
         _logger.LogInformation("Deleting chatroom");
 
         try
         {
-            var chatRoom = await _chatRoomRepository.Get(command.ChatRoomId) ??
+            var chatroom = await _chatroomRepository.Get(command.ChatroomId) ??
             throw new Exception("Chatroom not found");
 
-            await _chatRoomRepository.Delete(command.ChatRoomId);
+            await _chatroomRepository.Delete(command.ChatroomId);
             _logger.LogInformation("Chatroom deleted");
         }
         catch (Exception ex)

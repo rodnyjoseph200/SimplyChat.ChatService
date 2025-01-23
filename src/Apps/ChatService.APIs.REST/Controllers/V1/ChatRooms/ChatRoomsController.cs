@@ -1,54 +1,54 @@
 ﻿using Asp.Versioning;
-using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
-using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
+using ChatService.APIs.REST.Controllers.V1.Chatrooms.Models;
+using ChatService.APIs.REST.Controllers.V1.Chatrooms.Models.Messages;
 using ChatService.Core.ChatMessages;
-using ChatService.Core.ChatRooms;
+using ChatService.Core.Chatrooms;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ChatService.APIs.REST.Controllers.V1.ChatRooms;
+namespace ChatService.APIs.REST.Controllers.V1.Chatrooms;
 
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/chat-service/v{version:apiVersion}/[controller]")]
-public class ChatRoomsController : ControllerBase
+public class ChatroomsController : ControllerBase
 {
-    private readonly ILogger<ChatRoomsController> _logger;
-    private readonly IChatRoomService _chatRoomService;
+    private readonly ILogger<ChatroomsController> _logger;
+    private readonly IChatroomService _chatroomService;
     private readonly IChatMessageService _chatMessageService;
 
-    public ChatRoomsController(ILogger<ChatRoomsController> logger, IChatRoomService chatRoomService, IChatMessageService messageService)
+    public ChatroomsController(ILogger<ChatroomsController> logger, IChatroomService chatroomService, IChatMessageService messageService)
     {
         _logger = logger;
-        _chatRoomService = chatRoomService;
+        _chatroomService = chatroomService;
         _chatMessageService = messageService;
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<GetChatRoomResponse>> GetChatRoom(string id)
+    public async Task<ActionResult<GetChatroomResponse>> GetChatroom(string id)
     {
         _logger.LogInformation("Received request to get chatroom by id");
 
         if (string.IsNullOrWhiteSpace(id))
             return BadRequest($"{nameof(id)} is required");
 
-        var chatroom = await _chatRoomService.Get(id);
+        var chatroom = await _chatroomService.Get(id);
 
         return chatroom is null ? NotFound() :
-            GetChatRoomResponse.Convert(chatroom);
+            GetChatroomResponse.Convert(chatroom);
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateChatRoom([FromBody] CreateChatRoomRequest request)
+    public async Task<ActionResult> CreateChatroom([FromBody] CreateChatroomRequest request)
     {
         _logger.LogInformation("Received request to create chatroom");
 
-        var command = CreateChatRoomRequest.Convert(request);
-        var chatroom = await _chatRoomService.Create(command);
+        var command = CreateChatroomRequest.Convert(request);
+        var chatroom = await _chatroomService.Create(command);
         return Ok(chatroom.Id);
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateChatRoom([FromBody] UpdateChatRoomRequest request)
+    public async Task<ActionResult> UpdateChatroom([FromBody] UpdateChatroomRequest request)
     {
         _logger.LogInformation("Received request to update chatroom");
         await Task.CompletedTask;
@@ -56,7 +56,7 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpDelete("{chatroomId}")]
-    public async Task<ActionResult> DeleteChatRoom(int chatroomId)
+    public async Task<ActionResult> DeleteChatroom(int chatroomId)
     {
         _logger.LogInformation("Received request to delete chatroom");
         await Task.CompletedTask;
@@ -71,7 +71,7 @@ public class ChatRoomsController : ControllerBase
         if (string.IsNullOrWhiteSpace(chatroomId))
             return BadRequest($"{nameof(chatroomId)} is required");
 
-        var chatMessages = await _chatMessageService.GetByChatRoomId(chatroomId);
+        var chatMessages = await _chatMessageService.GetByChatroomId(chatroomId);
 
         //todo rod
         await Task.CompletedTask;

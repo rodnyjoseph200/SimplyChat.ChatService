@@ -4,7 +4,7 @@ namespace ChatService.Core.ChatMessages.Models;
 
 public abstract class ChatMessageBase
 {
-    public string ChatRoomId { get; protected set; }
+    public string ChatroomId { get; protected set; }
     public string UserId { get; protected set; }
     public string Content { get; protected set; }
     public DateTimeOffset CreatedAt { get; protected set; }
@@ -13,10 +13,10 @@ public abstract class ChatMessageBase
     //user base, empty means all users
     private readonly string[] Visibility = [];
 
-    protected ChatMessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
+    protected ChatMessageBase(string chatroomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
     {
         Simply.Lib.X.StringIsNullOrWhitespace.ThrowArgumentException(
-            (nameof(chatRoomId), chatRoomId),
+            (nameof(chatroomId), chatroomId),
             (nameof(userId), userId),
             (nameof(content), content));
 
@@ -26,7 +26,7 @@ public abstract class ChatMessageBase
         //if (!Enum.IsDefined(typeof(ChatMessageTypes), type))
         //    throw new ArgumentException($"{nameof(type)} {type} is invalid.");
 
-        ChatRoomId = chatRoomId;
+        ChatroomId = chatroomId;
         UserId = userId;
         Content = content;
         CreatedAt = createdAt;

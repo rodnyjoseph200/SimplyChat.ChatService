@@ -1,10 +1,10 @@
-﻿namespace ChatService.Core.ChatRooms.Commands;
+﻿namespace ChatService.Core.Chatrooms.Commands;
 
-public class CreateChatRoomCommand
+public class CreateChatroomCommand
 {
     public string Username { get; init; }
 
-    private CreateChatRoomCommand(string username)
+    private CreateChatroomCommand(string username)
     {
         if (string.IsNullOrWhiteSpace(username))
             throw new ArgumentException($"{nameof(username)} is required");
@@ -12,5 +12,5 @@ public class CreateChatRoomCommand
         Username = username;
     }
 
-    public static CreateChatRoomCommand Create(string username) => new(username);
+    public static CreateChatroomCommand Create(string username) => new(username);
 }

@@ -1,4 +1,4 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models;
 
 namespace ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
 
