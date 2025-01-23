@@ -9,20 +9,22 @@ public class ChatMessageService : IChatMessageService
 {
     private readonly ILogger _logger;
     private readonly IChatMessageRepository _chatMessageRepository;
+    private readonly IChatRoomService _chatRoomService;
 
-    public ChatMessageService(ILogger<ChatRoomService> logger, IChatMessageRepository chatMessageRepository)
+    public ChatMessageService(ILogger<ChatRoomService> logger, IChatMessageRepository chatMessageRepository, IChatRoomService chatRoomService)
     {
         _logger = logger;
         _chatMessageRepository = chatMessageRepository;
+        _chatRoomService = chatRoomService;
     }
 
-    public async Task<ChatMessage?> Get(string chatMessagId)
+    public async Task<ChatMessage?> Get(string id)
     {
         _logger.LogInformation("Getting chat message by chatMessageId");
 
         try
         {
-            var chatMessage = await _chatMessageRepository.Get(chatMessagId);
+            var chatMessage = await _chatMessageRepository.Get(id);
             if (chatMessage is not null)
                 _logger.LogInformation("Chat message found");
 
@@ -41,6 +43,8 @@ public class ChatMessageService : IChatMessageService
 
         try
         {
+            //todo use chatRoomService to get chatroom by id
+            //if not exists, throw exception. Else, get chat messages
             var chatMessages = await _chatMessageRepository.GetByChatRoomId(chatroomId);
             if (chatMessages.Count is not 0)
                 _logger.LogInformation("Chat messages found");
@@ -60,6 +64,8 @@ public class ChatMessageService : IChatMessageService
 
         try
         {
+            //todo use chatRoomService to get chatroom by id
+            //if not exists, throw exception. Else, create chat message
             var newChatMessage = NewChatMessage.Create(command.ChatRoomId, command.UserId, command.Content, command.CreatedAt, command.Type);
             var chatMessage = _chatMessageRepository.Create(newChatMessage);
             _logger.LogInformation("Chat message created");
@@ -78,8 +84,7 @@ public class ChatMessageService : IChatMessageService
 
         try
         {
-            var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId);
-            if (chatMessage is null)
+            var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
                 throw new Exception("Chat message not found");
 
             chatMessage.UpdateContent(command.Content);
@@ -100,8 +105,7 @@ public class ChatMessageService : IChatMessageService
 
         try
         {
-            var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId);
-            if (chatMessage is null)
+            var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
                 throw new Exception("Chat message not found");
 
             await _chatMessageRepository.Delete(command.ChatMessageId);

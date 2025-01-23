@@ -2,10 +2,10 @@
 
 namespace ChatService.Core.ChatRooms;
 
-public interface IChatRoomRepository
+public interface IChatroomRepository
 {
-    Task<ChatRoom> Create(NewChatRoom newChatRoom);
-    Task<ChatRoom?> Get(string id);
-    Task Update(ChatRoom chatRoom);
+    Task<Chatroom?> Get(string id);
+    Task<Chatroom> Create(NewChatroom newChatRoom);
+    Task Update(Chatroom chatRoom);
     Task Delete(string chatRoomId);
 }

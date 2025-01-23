@@ -5,8 +5,8 @@ namespace ChatService.Core.ChatRooms;
 
 public interface IChatRoomService
 {
-    Task<ChatRoom?> Get(string id);
-    Task<ChatRoom> Create(CreateChatRoomCommand command);
+    Task<Chatroom?> Get(string id);
+    Task<Chatroom> Create(CreateChatRoomCommand command);
     Task Update(UpdateChatRoomCommand command);
     Task Delete(DeleteChatRoomCommand command);
 }

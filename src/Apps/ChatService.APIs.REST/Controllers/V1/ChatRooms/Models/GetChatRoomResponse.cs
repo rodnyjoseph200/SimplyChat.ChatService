@@ -7,13 +7,13 @@ public class GetChatRoomResponse
     public string ChatRoomId { get; set; }
     public ChatRoomUsersResponse[] Users { get; set; }
 
-    public GetChatRoomResponse(ChatRoom chatRoom)
+    public GetChatRoomResponse(Chatroom chatRoom)
     {
         ChatRoomId = chatRoom.Id;
         Users = chatRoom.Users.Select(ChatRoomUsersResponse.Convert).ToArray();
     }
 
-    public static GetChatRoomResponse Convert(ChatRoom chatRooms) =>
+    public static GetChatRoomResponse Convert(Chatroom chatRooms) =>
         new(chatRooms);
 }
 

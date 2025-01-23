@@ -17,9 +17,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    env:
-      REST_API_PATH: src/Apps/ChatService.APIs.REST/ChatService.APIs.REST.csproj
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3

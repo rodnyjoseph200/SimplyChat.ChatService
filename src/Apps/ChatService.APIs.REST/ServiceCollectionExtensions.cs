@@ -15,8 +15,8 @@ public static class ServiceCollectionExtensions
                     //.WithOrigins("http://localhost:3000")
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
+                    .AllowAnyHeader();
+                //.AllowCredentials();
             });
         });
         return services;

@@ -15,7 +15,7 @@ public abstract class ChatMessageBase
 
     protected ChatMessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
     {
-        Simply.Lib.Simply.StringIsNullOrWhitespace.ThrowArgumentException(
+        Simply.Lib.X.StringIsNullOrWhitespace.ThrowArgumentException(
             (nameof(chatRoomId), chatRoomId),
             (nameof(userId), userId),
             (nameof(content), content));

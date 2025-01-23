@@ -6,16 +6,17 @@ namespace ChatService.Core.ChatRooms;
 
 public class ChatRoomService : IChatRoomService
 {
-    private readonly IChatRoomRepository _chatRoomRepository;
     private readonly ILogger<ChatRoomService> _logger;
+    private readonly IChatroomRepository _chatRoomRepository;
 
-    public ChatRoomService(ILogger<ChatRoomService> logger, IChatRoomRepository chatRoomRepository)
+    //todo later - inject user service
+    public ChatRoomService(ILogger<ChatRoomService> logger, IChatroomRepository chatRoomRepository)
     {
         _logger = logger;
         _chatRoomRepository = chatRoomRepository;
     }
 
-    public async Task<ChatRoom?> Get(string id)
+    public async Task<Chatroom?> Get(string id)
     {
         _logger.LogInformation("Getting chatroom by id");
 
@@ -38,13 +39,13 @@ public class ChatRoomService : IChatRoomService
         }
     }
 
-    public async Task<ChatRoom> Create(CreateChatRoomCommand command)
+    public async Task<Chatroom> Create(CreateChatRoomCommand command)
     {
         _logger.LogInformation("Creating chatroom");
 
         try
         {
-            var newChatRoom = NewChatRoom.Create(command.Username);
+            var newChatRoom = NewChatroom.Create(command.Username);
             var chatroom = await _chatRoomRepository.Create(newChatRoom);
             _logger.LogInformation("Chatroom created");
             return chatroom;

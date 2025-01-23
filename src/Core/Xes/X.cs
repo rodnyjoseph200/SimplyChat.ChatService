@@ -3,7 +3,7 @@
 /// <summary>
 /// Move to NuGet package
 /// </summary>
-public static partial class Simply
+public static partial class X
 {
     public static class StringIsNullOrWhitespace
     {

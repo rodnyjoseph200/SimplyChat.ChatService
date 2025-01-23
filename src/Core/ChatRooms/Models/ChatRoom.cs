@@ -2,13 +2,13 @@
 
 namespace ChatService.Core.ChatRooms.Models;
 
-public class ChatRoom : ChatRoomBase
+public class Chatroom : ChatRoomBase
 {
     public string Id { get; init; }
 
     public Tracker Tracker { get; init; }
 
-    private ChatRoom(string id, List<ChatRoomUser> users, Tracker tracker) : base(users)
+    private Chatroom(string id, List<ChatRoomUser> users, Tracker tracker) : base(users)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException($"{nameof(id)} is required");
@@ -17,7 +17,7 @@ public class ChatRoom : ChatRoomBase
         Tracker = tracker;
     }
 
-    public static ChatRoom Load(string id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
+    public static Chatroom Load(string id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
 
     public void AddUser(ChatRoomUser user)
     {
