@@ -1,4 +1,4 @@
-﻿namespace ChatService.Core.Simply.Lib;
+﻿namespace ChatService.Core.Xes;
 
 /// <summary>
 /// Move to NuGet package
@@ -17,7 +17,9 @@ public static partial class X
             var errMsg = args.Where(x => string.IsNullOrWhiteSpace(x.Item2))
                 .Select(x => $"{x.Item1} is required.")
                 .ToList();
-            throw new ArgumentException(string.Join(" ", errMsg));
+
+            if (errMsg.Count > 0)
+                throw new ArgumentException(string.Join(" ", errMsg));
         }
     }
 }

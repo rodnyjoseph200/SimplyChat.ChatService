@@ -1,5 +1,5 @@
 ﻿using Asp.Versioning;
-using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
+using ChatService.APIs.REST.Controllers.V1.ChatMessages.Models;
 using ChatService.Core.ChatMessages;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,46 +13,39 @@ public class ChatMessagesController : ControllerBase
     private readonly ILogger<ChatMessagesController> _logger;
     private readonly IChatMessageService _chatMessageService;
 
-    //todo - remove IChatMessageService
-    public ChatMessagesController(ILogger<ChatMessagesController> logger, IChatMessageService messageService)
+    public ChatMessagesController(ILogger<ChatMessagesController> logger, IChatMessageService chatMessageService)
     {
         _logger = logger;
-        _chatMessageService = messageService;
+        _chatMessageService = chatMessageService;
     }
 
     [HttpGet("{messageId}")]
-    public async Task<ActionResult<GetChatMessageResponse>> GetChatMessage(string messageId)
+    public async Task<ActionResult<GetChatMessageResponse>> Get(string messageId)
     {
         _logger.LogInformation("Received request to get chat message by messageId");
-
-        if (string.IsNullOrWhiteSpace(messageId))
-            return BadRequest($"{nameof(messageId)} is required");
-
         var chatMessage = await _chatMessageService.Get(messageId);
-
-        //todo rod
-        //return chatMessage is null ? NotFound() :
-        //    GetChatMessageResponse.Convert(chatMessage);
-
-        await Task.CompletedTask;
-        return Ok();
+        _logger.LogInformation("Request to get chat message by messageId completed");
+        return chatMessage is null ? NotFound() :
+            GetChatMessageResponse.Convert(chatMessage);
     }
 
-    [HttpPut("messages")]
-    public async Task<ActionResult> UpdateChatMessage([FromBody] UpdateChatMessageRequest request)
+    [HttpPut()]
+    public async Task<ActionResult> Update([FromBody] UpdateChatMessageRequest request)
     {
         _logger.LogInformation("Received request to update chat message");
-
-        await Task.CompletedTask;
+        var command = UpdateChatMessageRequest.Convert(request);
+        await _chatMessageService.Update(command);
+        _logger.LogInformation("Request to update chat message completed");
         return NoContent();
     }
 
-    [HttpDelete("messages")]
-    public async Task<ActionResult> DeleteChatMessage([FromBody] DeleteChatMessageRequest request)
+    [HttpDelete()]
+    public async Task<ActionResult> Delete([FromBody] DeleteChatMessageRequest request)
     {
         _logger.LogInformation("Received request to delete chat message");
-
-        await Task.CompletedTask;
+        var command = DeleteChatMessageRequest.Convert(request);
+        await _chatMessageService.Delete(command);
+        _logger.LogInformation("Request to delete chat message completed");
         return NoContent();
     }
 }

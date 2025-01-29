@@ -1,13 +1,16 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using ChatService.Core.ChatRooms.Models;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
 
 public class GetChatRoomResponse
 {
-    public string ChatRoomId { get; set; }
-    public ChatRoomUsersResponse[] Users { get; set; }
+    [Required]
+    public string ChatRoomId { get; init; }
+    [Required]
+    public ChatRoomUsersResponse[] Users { get; init; }
 
-    public GetChatRoomResponse(Chatroom chatRoom)
+    private GetChatRoomResponse(Chatroom chatRoom)
     {
         ChatRoomId = chatRoom.Id;
         Users = chatRoom.Users.Select(ChatRoomUsersResponse.Convert).ToArray();
@@ -19,13 +22,19 @@ public class GetChatRoomResponse
 
 public class ChatRoomUsersResponse
 {
-    public string Id { get; set; }
-    public ChatRoomUserSettingsResponse Settings { get; set; }
-    public bool IsSuperUser { get; set; }
+    [Required]
+    public string Id { get; init; }
+    [Required]
+    public string Username { get; init; }
+    [Required]
+    public ChatRoomUserSettingsResponse Settings { get; init; }
+    [Required]
+    public bool IsSuperUser { get; init; }
 
-    public ChatRoomUsersResponse(ChatRoomUser chatRoomUser)
+    private ChatRoomUsersResponse(ChatRoomUser chatRoomUser)
     {
         Id = chatRoomUser.Id;
+        Username = chatRoomUser.Username;
         Settings = ChatRoomUserSettingsResponse.Convert(chatRoomUser.Settings);
         IsSuperUser = chatRoomUser.IsSuperUser;
     }
@@ -36,9 +45,10 @@ public class ChatRoomUsersResponse
 
 public class ChatRoomUserSettingsResponse
 {
-    public string ColorSchemes { get; set; }
+    [Required]
+    public string ColorSchemes { get; init; }
 
-    public ChatRoomUserSettingsResponse(ChatRoomUserSettings userSettings)
+    private ChatRoomUserSettingsResponse(ChatRoomUserSettings userSettings)
     {
         ColorSchemes = userSettings.Scheme.ToString();
     }
