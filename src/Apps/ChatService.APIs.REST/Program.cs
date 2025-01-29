@@ -10,7 +10,9 @@ builder.Services
     .AddApiCors()
     .AddVersioning()
     .AddEndpointsApiExplorer()
-    .AddSwagger();
+    .AddSwagger()
+    .AddExceptionHandler<CustomHttpExceptionHandler>()
+    .AddProblemDetails();
 
 builder.Services.AddControllers();
 builder.AddServiceDefaults();
@@ -28,10 +30,10 @@ var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 try
 {
     _ = app.MapDefaultEndpoints();
+    _ = app.UseExceptionHandler();
 
     if (!app.Environment.IsProduction())
     {
-        _ = app.UseDeveloperExceptionPage();
         _ = app.UseSwagger();
         _ = app.UseSwaggerUI();
     }

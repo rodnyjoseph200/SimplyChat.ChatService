@@ -2,9 +2,9 @@
 
 public class NewChatroom : ChatRoomBase
 {
-    private NewChatroom(string username) : base(username)
+    private NewChatroom(ChatRoomUser chatroomUser) : base(chatroomUser)
     {
     }
 
-    public static NewChatroom Create(string username) => new(username);
+    public static NewChatroom Create(ChatRoomUser chatroomUser) => new(chatroomUser);
 }

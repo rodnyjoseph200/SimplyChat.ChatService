@@ -8,6 +8,9 @@ public class Chatroom : ChatRoomBase
 
     public Tracker Tracker { get; init; }
 
+    public ChatRoomUser SuperUser => _users.SingleOrDefault(u => u.IsSuperUser) ??
+        throw new InvalidOperationException("Super user does not exist in the chat room");
+
     private Chatroom(string id, List<ChatRoomUser> users, Tracker tracker) : base(users)
     {
         if (string.IsNullOrWhiteSpace(id))

@@ -6,17 +6,12 @@ public abstract class ChatRoomBase
 
     public IReadOnlyCollection<ChatRoomUser> Users => _users.AsReadOnly();
 
-    public ChatRoomBase(string userId)
+    protected ChatRoomBase(ChatRoomUser chatRoomUser)
     {
-        if (string.IsNullOrWhiteSpace(userId))
-            throw new ArgumentException($"{nameof(userId)} is required");
-
-        var user = ChatRoomUser.CreateSuperUser(userId, ChatRoomUserSettings.Create());
-
-        _users = [user];
+        _users = [chatRoomUser];
     }
 
-    public ChatRoomBase(List<ChatRoomUser> users) => _users = users.Count != 0 ?
+    protected ChatRoomBase(List<ChatRoomUser> users) => _users = users.Count is 0 ?
         throw new ArgumentException("At least one user is required") :
         users;
 }

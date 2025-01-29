@@ -29,7 +29,7 @@ public class InMemoryDbChatroomRepository : IChatroomRepository
         _logger.LogInformation("Creating chatroom");
 
         var chatroomUserSettings = ChatRoomUserSettings.Load(ChatRoomColorSchemes.Light);
-        var chatroomUser = ChatRoomUser.Load(Guid.NewGuid().ToString(), chatroomUserSettings, isSuperUser: true);
+        var chatroomUser = ChatRoomUser.Load(newChatRoom.Users.Single().Id, newChatRoom.Users.Single().Username, chatroomUserSettings, isSuperUser: true);
 
         var chatroom = Chatroom.Load(Guid.NewGuid().ToString(), new List<ChatRoomUser>() { chatroomUser },
             Tracker.LoadTracking(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false, null, null, null, null));

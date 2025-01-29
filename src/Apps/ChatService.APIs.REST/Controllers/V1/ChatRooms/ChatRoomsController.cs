@@ -3,6 +3,7 @@ using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
 using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
 using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatRooms;
+using ChatService.Core.ChatRooms.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms;
@@ -24,47 +25,52 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<GetChatRoomResponse>> GetChatRoom(string id)
+    public async Task<ActionResult<GetChatRoomResponse>> Get(string id)
     {
         _logger.LogInformation("Received request to get chatroom by id");
-
-        if (string.IsNullOrWhiteSpace(id))
-            return BadRequest($"{nameof(id)} is required");
-
         var chatroom = await _chatRoomService.Get(id);
+        _logger.LogInformation("Request to get chatroom by id completed");
 
         return chatroom is null ? NotFound() :
             GetChatRoomResponse.Convert(chatroom);
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateChatRoom([FromBody] CreateChatRoomRequest request)
+    public async Task<ActionResult<CreateChatMessageResponse>> Create([FromBody] CreateChatRoomRequest request)
     {
         _logger.LogInformation("Received request to create chatroom");
-
         var command = CreateChatRoomRequest.Convert(request);
         var chatroom = await _chatRoomService.Create(command);
-        return Ok(chatroom.Id);
+
+        _logger.LogInformation("Request to create chatroom completed");
+        var response = CreateChatRoomResponse.Convert(chatroom, chatroom.SuperUser);
+        return Ok(response);
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateChatRoom([FromBody] UpdateChatRoomRequest request)
+    public async Task<ActionResult> Update([FromBody] UpdateChatRoomRequest request)
     {
         _logger.LogInformation("Received request to update chatroom");
-        await Task.CompletedTask;
+        var command = UpdateChatRoomRequest.Convert(request);
+        await _chatRoomService.Update(command);
+
+        _logger.LogInformation("Request to update chatroom completed");
         return NoContent();
     }
 
-    [HttpDelete("{chatroomId}")]
-    public async Task<ActionResult> DeleteChatRoom(int chatroomId)
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(string id)
     {
         _logger.LogInformation("Received request to delete chatroom");
-        await Task.CompletedTask;
+        var command = DeleteChatRoomCommand.Create(id);
+        await _chatRoomService.Delete(command);
+
+        _logger.LogInformation("Request to delete chatroom completed");
         return NoContent();
     }
 
     [HttpGet("{chatroomId}/messages")]
-    public async Task<ActionResult<GetChatMessagesResponse>> GetChatMessages(string chatroomId)
+    public async Task<ActionResult<GetChatMessagesByChatroomIdResponse>> GetChatMessages(string chatroomId)
     {
         _logger.LogInformation("Received request to get chat messages by chatroomId");
 
@@ -72,23 +78,22 @@ public class ChatRoomsController : ControllerBase
             return BadRequest($"{nameof(chatroomId)} is required");
 
         var chatMessages = await _chatMessageService.GetByChatRoomId(chatroomId);
-
-        //todo rod
-        await Task.CompletedTask;
-        return Ok();
+        var response = GetChatMessagesByChatroomIdResponse.Convert(chatroomId, chatMessages);
+        return Ok(response);
     }
 
     [HttpPost("{chatroomId}/messages")]
-    public async Task<ActionResult> CreateChatMessage(string chatroomId, [FromBody] CreateChatMessageRequest request)
+    public async Task<ActionResult<CreateChatMessageResponse>> CreateChatMessage(string chatroomId, [FromBody] CreateChatMessageRequest request)
     {
         _logger.LogInformation("Received request to create chat message");
 
         if (string.IsNullOrWhiteSpace(chatroomId))
             return BadRequest($"{nameof(chatroomId)} is required");
 
-        //todo rod
-        await Task.CompletedTask;
-        return Ok();
+        var command = CreateChatMessageRequest.Convert(chatroomId, request);
+        var chatMessage = await _chatMessageService.Create(command);
+        var response = CreateChatMessageResponse.Convert(chatMessage);
+        return Ok(response);
     }
 
     //todo

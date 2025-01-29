@@ -1,6 +1,8 @@
 ﻿using ChatService.Core.ChatMessages.Commands;
 using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.ChatRooms;
+using ChatService.Core.ChatRooms.Models;
+using ChatService.Core.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace ChatService.Core.ChatMessages;
@@ -22,100 +24,66 @@ public class ChatMessageService : IChatMessageService
     {
         _logger.LogInformation("Getting chat message by chatMessageId");
 
-        try
-        {
-            var chatMessage = await _chatMessageRepository.Get(id);
-            if (chatMessage is not null)
-                _logger.LogInformation("Chat message found");
+        if (string.IsNullOrWhiteSpace(id))
+            throw new ArgumentException($"{nameof(id)} is required");
 
-            return chatMessage;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Could not get chat message");
-            throw;
-        }
+        var chatMessage = await _chatMessageRepository.Get(id);
+        if (chatMessage is not null)
+            _logger.LogInformation("Chat message found");
+
+        return chatMessage;
     }
 
     public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
 
-        try
-        {
-            //todo use chatRoomService to get chatroom by id
-            //if not exists, throw exception. Else, get chat messages
-            var chatMessages = await _chatMessageRepository.GetByChatRoomId(chatroomId);
-            if (chatMessages.Count is not 0)
-                _logger.LogInformation("Chat messages found");
+        if (string.IsNullOrWhiteSpace(chatroomId))
+            throw new ArgumentException($"{nameof(chatroomId)} is required");
 
-            return chatMessages;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Could not get chat messages");
-            throw;
-        }
+        var chatroom = await _chatRoomService.Get(chatroomId) ?? throw new ResourceNotFoundException(nameof(Chatroom));
+
+        var chatMessages = await _chatMessageRepository.GetByChatRoomId(chatroom.Id);
+        if (chatMessages.Count is not 0)
+            _logger.LogInformation("Chat messages found");
+
+        return chatMessages;
     }
 
-    public Task<ChatMessage> Create(CreateChatMessageCommand command)
+    public async Task<ChatMessage> Create(CreateChatMessageCommand command)
     {
         _logger.LogInformation("Creating chat message");
 
-        try
-        {
-            //todo use chatRoomService to get chatroom by id
-            //if not exists, throw exception. Else, create chat message
-            var newChatMessage = NewChatMessage.Create(command.ChatRoomId, command.UserId, command.Content, command.CreatedAt, command.Type);
-            var chatMessage = _chatMessageRepository.Create(newChatMessage);
-            _logger.LogInformation("Chat message created");
-            return chatMessage;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Could not create chat message");
-            throw;
-        }
+        var chatroom = await _chatRoomService.Get(command.ChatroomId) ?? throw new ResourceNotFoundException(nameof(Chatroom));
+
+        var newChatMessage = NewChatMessage.Create(command.ChatroomId, command.UserId, command.Content, command.CreatedAt, command.Type);
+        var chatMessage = await _chatMessageRepository.Create(newChatMessage);
+        _logger.LogInformation("Chat message created");
+        return chatMessage;
     }
 
     public async Task Update(UpdateChatMessageCommand command)
     {
         _logger.LogInformation("Updating chat message");
 
-        try
-        {
-            var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
-                throw new Exception("Chat message not found");
+        var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
+            throw new Exception("Chat message not found");
 
-            chatMessage.UpdateContent(command.Content);
+        chatMessage.UpdateContent(command.Content);
 
-            await _chatMessageRepository.Update(chatMessage);
-            _logger.LogInformation("Chat message updated");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Could not update chat message");
-            throw;
-        }
+        await _chatMessageRepository.Update(chatMessage);
+        _logger.LogInformation("Chat message updated");
     }
 
     public async Task Delete(DeleteChatMessageCommand command)
     {
         _logger.LogInformation("Deleting chat message");
 
-        try
-        {
-            var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
-                throw new Exception("Chat message not found");
+        var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
+            throw new Exception("Chat message not found");
 
-            await _chatMessageRepository.Delete(command.ChatMessageId);
-            _logger.LogInformation("Chat message deleted");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Could not delete chat message");
-            throw;
-        }
+        await _chatMessageRepository.Delete(command.ChatMessageId);
+        _logger.LogInformation("Chat message deleted");
     }
 
 }
