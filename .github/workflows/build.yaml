@@ -1,4 +1,4 @@
-name: Build
+name: Build and Test
 
 on:
   # Pull requests targeting main
@@ -40,5 +40,4 @@ jobs:
 
       - name: Tests
         run: |
-          dotnet test --no-build --no-restore -c Release tests/ChatService.Core.UnitTests/ChatService.Core.UnitTests.csproj
-          dotnet test --no-build --no-restore -c Release tests/ChatService.Infrastructure.UnitTests/ChatService.Infrastructure.UnitTests.csproj
+          dotnet test --no-build --no-restore -c Release tests/UnitTests/ChatService.Core.Tests/ChatService.Core.Tests.csproj
