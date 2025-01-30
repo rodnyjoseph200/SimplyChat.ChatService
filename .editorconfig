@@ -607,7 +607,7 @@ csharp_using_directive_placement = outside_namespace:warning
 # 
 #     base() { }
 # Option 2 (false): no blank lines
-csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false:warning
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
 
 # csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental allows or disallows blank lines after => token.
 # Example:
@@ -616,7 +616,7 @@ csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimenta
 # 
 #     42;
 # Option 2 (false): no blank line
-csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = false:warning
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
 
 # csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental allows blank lines in ternary expressions after ? or :.
 # Example:
@@ -627,7 +627,7 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 # 
 #     "No";
 # Option 2 (false): no blank lines
-csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = false:warning
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true
 
 # csharp_style_allow_blank_lines_between_consecutive_braces_experimental allows or disallows blank lines between braces.
 # Example:
@@ -1020,6 +1020,12 @@ trim_trailing_whitespace = true:warning
 # Option 2: using System; // if not used
 dotnet_diagnostic.IDE0005.severity = warning
 
+# All naming options have rule ID IDE1006 and title Naming rule violation. 
+# IDE1006 sets how strict the IDE enforces naming violations
+# CURRENTLY NOT FULLY SUPPORTED
+# ERROR MESSAGE: Unable to fix IDE1006. Code fix NamingStyleCodeFixProvider doesn't support Fix All in Solution
+dotnet_diagnostic.IDE1006.severity = suggestion
+
 # dotnet_diagnostic.CS8019.severity configures severity for unnecessary usings (C# compiler).
 # Example:
 # Option 1: remove unused usings
@@ -1036,7 +1042,8 @@ dotnet_diagnostic.IDE0079.severity = warning
 # Example:
 # Option 1: throw new ArgumentNullException(nameof(parameterName));
 # Option 2: throw new ArgumentNullException("parameterName");
-dotnet_diagnostic.IDE0130.severity = warning
+# CURRENTLY CAUSES A System.NotSupportedException WHEN SET TO "warning"
+dotnet_diagnostic.IDE0130.severity = suggestion
 
 # dotnet_diagnostic.CS1591.severity configures severity for missing XML comment warnings.
 # Example:

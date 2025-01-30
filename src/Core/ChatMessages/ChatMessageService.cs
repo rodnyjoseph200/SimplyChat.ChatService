@@ -85,5 +85,4 @@ public class ChatMessageService : IChatMessageService
         await _chatMessageRepository.Delete(command.ChatMessageId);
         _logger.LogInformation("Chat message deleted");
     }
-
 }
