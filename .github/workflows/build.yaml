@@ -40,4 +40,4 @@ jobs:
 
       - name: Tests
         run: |
-          dotnet test --no-build --no-restore -c Release tests/UnitTests/ChatService.Core.Tests/ChatService.Core.Tests.csproj
+          dotnet test --no-build --no-restore -c Release tests/ChatService.Core.Tests/ChatService.Core.Tests.csproj
