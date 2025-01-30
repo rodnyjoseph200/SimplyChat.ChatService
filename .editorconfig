@@ -84,7 +84,7 @@ dotnet_style_predefined_type_for_locals_parameters_members = true
 # dotnet_style_predefined_type_for_member_access specifies to use language keywords when accessing static members of a type.
 # Example:
 # [TRUE]: string.Empty
-# Option 2: String.Empty
+# [FALSE]: String.Empty
 dotnet_style_predefined_type_for_member_access = true
 
 # dotnet_style_parentheses_in_arithmetic_binary_operators enforces parentheses around arithmetic expressions for clarity.
@@ -120,13 +120,13 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members
 # dotnet_style_coalesce_expression prefers '??' operator instead of conditional expressions for null checks.
 # Example:
 # [TRUE]: var result = value ?? "default";
-# Option 2: var result = value != null ? value : "default";
+# [FALSE]: var result = value != null ? value : "default";
 dotnet_style_coalesce_expression = true:warning
 
 # dotnet_style_collection_initializer enforces using collection initializers where possible.
 # Example:
 # [TRUE]: var list = new List<int> { 1, 2, 3 };
-# Option 2:
+# [FALSE]
 # var list = new List<int>();
 # list.Add(1);
 # list.Add(2);
@@ -136,7 +136,7 @@ dotnet_style_collection_initializer = true
 # dotnet_style_explicit_tuple_names ensures tuple fields have explicit names when declared.
 # Example:
 # [TRUE]: (int Id, string Name) person = (1, "John");
-# Option 2: (int, string) person = (1, "John");
+# [FALSE]: (int, string) person = (1, "John");
 dotnet_style_explicit_tuple_names = true
 
 # dotnet_style_namespace_match_folder enforces that namespaces match the folder structure.
@@ -144,19 +144,19 @@ dotnet_style_explicit_tuple_names = true
 # [TRUE]
 # (placed in folder MyProject/Utilities)
 # namespace MyProject.Utilities { }
-# Option 2: namespace SomeRandomName { }
+# [FALSE]: namespace SomeRandomName { }
 dotnet_style_namespace_match_folder = true:warning
 
 # dotnet_style_null_propagation prefers the null-conditional operator ?. over explicit null checks.
 # Example:
 # [TRUE]: var length = str?.Length;
-# Option 2: var length = str == null ? null : str.Length;
+# [FALSE]: var length = str == null ? null : str.Length;
 dotnet_style_null_propagation = true:warning
 
 # dotnet_style_object_initializer enforces using object initializers where possible.
 # Example:
 # [TRUE]: var person = new Person { Name = "Alice", Age = 30 };
-# Option 2:
+# [FALSE]
 # var person = new Person();
 # person.Name = "Alice";
 # person.Age = 30;
@@ -192,7 +192,7 @@ dotnet_style_prefer_collection_expression = when_types_loosely_match
 # dotnet_style_prefer_compound_assignment prefers operators like += or *= over explicit expansions.
 # Example:
 # [TRUE]: x += 1;
-# Option 2: x = x + 1;
+# [FALSE]: x = x + 1;
 dotnet_style_prefer_compound_assignment = true:warning
 
 # dotnet_style_prefer_conditional_expression_over_assignment prefers conditional expressions instead of if statements for assignments.
@@ -225,37 +225,37 @@ dotnet_style_prefer_foreach_explicit_cast_in_source = when_strongly_typed
 # dotnet_style_prefer_inferred_anonymous_type_member_names prefers omitting property names if they match.
 # Example:
 # [TRUE]: var anon = new { FirstName, LastName };
-# Option 2: var anon = new { FirstName = FirstName, LastName = LastName };
+# [FALSE]: var anon = new { FirstName = FirstName, LastName = LastName };
 dotnet_style_prefer_inferred_anonymous_type_member_names = true
 
 # dotnet_style_prefer_inferred_tuple_names prefers omitting tuple element names if they match.
 # Example:
 # [TRUE]: var person = (firstName, lastName);
-# Option 2: var person = (firstName: firstName, lastName: lastName);
+# [FALSE]: var person = (firstName: firstName, lastName: lastName);
 dotnet_style_prefer_inferred_tuple_names = true
 
 # dotnet_style_prefer_is_null_check_over_reference_equality_method prefers using "is null" instead of ReferenceEquals(obj, null).
 # Example:
 # [TRUE]: if (obj is null) { ... }
-# Option 2: if (ReferenceEquals(obj, null)) { ... }
+# [FALSE]: if (ReferenceEquals(obj, null)) { ... }
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
 
 # dotnet_style_prefer_simplified_boolean_expressions prefers shorter boolean forms.
 # Example:
 # [TRUE]: if (flag) { ... }
-# Option 2: if (flag == true) { ... }
+# [FALSE]: if (flag == true) { ... }
 dotnet_style_prefer_simplified_boolean_expressions = true:warning
 
 # dotnet_style_prefer_simplified_interpolation prefers simpler string interpolation forms.
 # Example:
 # [TRUE]: $"Hello {name}"
-# Option 2: $"Hello {name.ToString()}"
+# [FALSE]: $"Hello {name.ToString()}"
 dotnet_style_prefer_simplified_interpolation = true:warning
 
 # dotnet_style_readonly_field enforces using 'readonly' for fields that are never modified after construction.
 # Example:
 # [TRUE]: private readonly int _count = 0;
-# Option 2: private int _count = 0;
+# [FALSE]: private int _count = 0;
 dotnet_style_readonly_field = true
 
 # dotnet_code_quality_unused_parameters configures how unused parameters are handled.
@@ -273,7 +273,7 @@ dotnet_remove_unnecessary_suppression_exclusions = none
 # dotnet_style_allow_multiple_blank_lines_experimental controls whether multiple consecutive blank lines are allowed.
 # Example:
 # [TRUE]: can have multiple blank lines
-# Option 2: single blank lines only
+# [FALSE]: single blank lines only
 dotnet_style_allow_multiple_blank_lines_experimental = false:warning
 
 # dotnet_style_allow_statement_immediately_after_block_experimental controls whether statements can appear on the same line as a closing brace.
@@ -283,7 +283,7 @@ dotnet_style_allow_multiple_blank_lines_experimental = false:warning
 # {
 #     DoSomething();
 # } DoSomethingElse();
-# Option 2:
+# [FALSE]
 # if (condition)
 # {
 #     DoSomething();
@@ -298,31 +298,31 @@ dotnet_style_allow_statement_immediately_after_block_experimental = false:warnin
 # csharp_style_var_elsewhere controls whether to use var for all variables, except built-in types or apparent cases.
 # Example:
 # [TRUE]: int x = 0;
-# Option 2: var x = 0;
+# [FALSE]: var x = 0;
 csharp_style_var_elsewhere = false
 
 # csharp_style_var_for_built_in_types enforces the use of 'var' for built-in types.
 # Example:
 # [TRUE]: var x = 0;
-# Option 2: int x = 0;
+# [FALSE]: int x = 0;
 csharp_style_var_for_built_in_types = true:warning
 
 # csharp_style_var_when_type_is_apparent enforces using 'var' when the type is obvious from the right side of the assignment.
 # Example:
 # [TRUE]: var stream = new MemoryStream();
-# Option 2: MemoryStream stream = new MemoryStream();
+# [FALSE]: MemoryStream stream = new MemoryStream();
 csharp_style_var_when_type_is_apparent = true:warning
 
 # csharp_style_expression_bodied_accessors enforces using expression bodies for accessors.
 # Example:
 # [TRUE]: public int Age => _age;
-# Option 2: public int Age { get { return _age; } }
+# [FALSE]: public int Age { get { return _age; } }
 csharp_style_expression_bodied_accessors = true:silent
 
 # csharp_style_expression_bodied_constructors enforces using expression bodies for constructors.
 # Example:
 # [TRUE]: public Person() => Name = "Unknown";
-# Option 2:
+# [FALSE]
 # public Person()
 # {
 #     Name = "Unknown";
@@ -332,7 +332,7 @@ csharp_style_expression_bodied_constructors = true:silent
 # csharp_style_expression_bodied_indexers enforces expression bodies for indexers.
 # Example:
 # [TRUE]: public int this[int index] => _items[index];
-# Option 2:
+# [FALSE]
 # public int this[int index]
 # {
 #     get { return _items[index]; }
@@ -342,7 +342,7 @@ csharp_style_expression_bodied_indexers = true:suggestion
 # csharp_style_expression_bodied_lambdas enforces using expression bodies for lambdas.
 # Example:
 # [TRUE]: var func = x => x * 2;
-# Option 2:
+# [FALSE]
 # var func = x =>
 # {
 #     return x * 2;
@@ -352,7 +352,7 @@ csharp_style_expression_bodied_lambdas = true:suggestion
 # csharp_style_expression_bodied_local_functions enforces using expression bodies for local functions.
 # Example:
 # [TRUE]: int Sum(int a, int b) => a + b;
-# Option 2:
+# [FALSE]
 # int Sum(int a, int b)
 # {
 #     return a + b;
@@ -362,7 +362,7 @@ csharp_style_expression_bodied_local_functions = true:silent
 # csharp_style_expression_bodied_methods enforces using expression bodies for methods.
 # Example:
 # [TRUE]: public int GetValue() => 42;
-# Option 2:
+# [FALSE]
 # public int GetValue()
 # {
 #     return 42;
@@ -372,7 +372,7 @@ csharp_style_expression_bodied_methods = true:silent
 # csharp_style_expression_bodied_operators enforces using expression bodies for operator overloads.
 # Example:
 # [TRUE]: public static Vector operator +(Vector a, Vector b) => new(a.X + b.X, a.Y + b.Y);
-# Option 2:
+# [FALSE]
 # public static Vector operator +(Vector a, Vector b)
 # {
 #     return new Vector(a.X + b.X, a.Y + b.Y);
@@ -382,7 +382,7 @@ csharp_style_expression_bodied_operators = true:silent
 # csharp_style_expression_bodied_properties enforces using expression bodies for properties.
 # Example:
 # [TRUE]: public int MyProperty => _myField;
-# Option 2:
+# [FALSE]
 # public int MyProperty
 # {
 #     get { return _myField; }
@@ -392,7 +392,7 @@ csharp_style_expression_bodied_properties = true:suggestion
 # csharp_style_pattern_matching_over_as_with_null_check prefers pattern matching instead of 'as' + null check.
 # Example:
 # [TRUE]: if (obj is MyClass c) { ... }
-# Option 2:
+# [FALSE]
 # var c = obj as MyClass;
 # if (c != null) { ... }
 csharp_style_pattern_matching_over_as_with_null_check = true:warning
@@ -400,52 +400,52 @@ csharp_style_pattern_matching_over_as_with_null_check = true:warning
 # csharp_style_pattern_matching_over_is_with_cast_check prefers pattern matching over 'is' + cast.
 # Example:
 # [TRUE]: if (obj is MyClass c) { ... }
-# Option 2:
+# [FALSE]
 # if (obj is MyClass) { var c = (MyClass)obj; ... }
 csharp_style_pattern_matching_over_is_with_cast_check = true:warning
 
 # csharp_style_prefer_extended_property_pattern prefers using the extended property pattern in switch or if statements.
 # Example:
 # [TRUE]: if (obj is { Property: 10 }) ...
-# Option 2: if (obj is MyClass { Property: 10 }) ...
+# [FALSE]: if (obj is MyClass { Property: 10 }) ...
 csharp_style_prefer_extended_property_pattern = true
 
 # csharp_style_prefer_not_pattern prefers 'not' pattern instead of '!' when matching conditions.
 # Example:
 # [TRUE]: if (obj is not null) { ... }
-# Option 2: if (!(obj is null)) { ... }
+# [FALSE]: if (!(obj is null)) { ... }
 csharp_style_prefer_not_pattern = true:warning
 
 # csharp_style_prefer_pattern_matching prefers pattern matching expressions overall when possible.
 # Example:
 # [TRUE]: if (obj is MyClass c) { ... }
-# Option 2: if (obj is MyClass) { var c = (MyClass)obj; ... }
+# [FALSE]: if (obj is MyClass) { var c = (MyClass)obj; ... }
 csharp_style_prefer_pattern_matching = true:warning
 
 # csharp_style_prefer_switch_expression prefers switch expressions over switch statements when possible.
 # Example:
 # [TRUE]: return input switch { 1 => "one", 2 => "two", _ => "other" };
-# Option 2:
+# [FALSE]
 # switch (input) { case 1: return "one"; case 2: return "two"; default: return "other"; }
 csharp_style_prefer_switch_expression = true
 
 # csharp_style_conditional_delegate_call prefers ?. syntax over null checks when invoking delegates.
 # Example:
 # [TRUE]: MyEvent?.Invoke(this, EventArgs.Empty);
-# Option 2:
+# [FALSE]
 # if (MyEvent != null) { MyEvent(this, EventArgs.Empty); }
 csharp_style_conditional_delegate_call = true
 
 # csharp_prefer_static_anonymous_function prefers marking anonymous functions as static when they don't capture outer variables.
 # Example:
 # [TRUE]: Func<int, int> sq = static x => x * x;
-# Option 2: Func<int, int> sq = x => x * x;
+# [FALSE]: Func<int, int> sq = x => x * x;
 csharp_prefer_static_anonymous_function = true
 
 # csharp_prefer_static_local_function prefers marking local functions as static when they don't capture outer variables.
 # Example:
 # [TRUE]: static int Add(int a, int b) => a + b;
-# Option 2: int Add(int a, int b) => a + b;
+# [FALSE]: int Add(int a, int b) => a + b;
 csharp_prefer_static_local_function = true
 
 # csharp_preferred_modifier_order enforces the order of modifiers for types and members.
@@ -457,13 +457,13 @@ csharp_preferred_modifier_order = public,private,protected,internal,static,exter
 # csharp_style_prefer_readonly_struct enforces 'readonly struct' for structures that do not mutate their state.
 # Example:
 # [TRUE]: public readonly struct MyStruct { ... }
-# Option 2: public struct MyStruct { ... }
+# [FALSE]: public struct MyStruct { ... }
 csharp_style_prefer_readonly_struct = true
 
 # csharp_style_prefer_readonly_struct_member enforces 'readonly' on struct members where possible.
 # Example:
 # [TRUE]: public readonly int GetValue() => _value;
-# Option 2: public int GetValue() => _value;
+# [FALSE]: public int GetValue() => _value;
 csharp_style_prefer_readonly_struct_member = true
 
 # csharp_prefer_braces enforces using braces for if/else/for/while/etc.
@@ -473,7 +473,7 @@ csharp_style_prefer_readonly_struct_member = true
 # {
 #     DoSomething();
 # }
-# Option 2:
+# [FALSE]
 # if (condition) DoSomething();
 csharp_prefer_braces = false:suggestion
 
@@ -481,7 +481,7 @@ csharp_prefer_braces = false:suggestion
 # Example:
 # [TRUE]
 # using var file = new FileStream(...);
-# Option 2:
+# [FALSE]
 # using (var file = new FileStream(...)) { ... }
 csharp_prefer_simple_using_statement = true:warning
 
@@ -491,13 +491,13 @@ csharp_style_namespace_declarations = file_scoped:warning
 # csharp_style_prefer_method_group_conversion prefers using method groups over lambda expressions when they are equivalent.
 # Example:
 # [TRUE]: list.ForEach(Console.WriteLine);
-# Option 2: list.ForEach(x => Console.WriteLine(x));
+# [FALSE]: list.ForEach(x => Console.WriteLine(x));
 csharp_style_prefer_method_group_conversion = true:warning
 
 # csharp_style_prefer_primary_constructors prefers using primary constructors where possible.
 # Example:
 # [TRUE]: public class Person(string name) { }
-# Option 2: public class Person { public Person(string name) { } }
+# [FALSE]: public class Person { public Person(string name) { } }
 csharp_style_prefer_primary_constructors = false:suggestion
 
 # csharp_style_prefer_top_level_statements prefers top-level statements over explicit Program class.
@@ -506,26 +506,26 @@ csharp_style_prefer_top_level_statements = true:suggestion
 # csharp_prefer_simple_default_expression prefers the 'default' literal over explicit type or constructor calls.
 # Example:
 # [TRUE]: default
-# Option 2: default(int)
+# [FALSE]: default(int)
 csharp_prefer_simple_default_expression = true:warning
 
 # csharp_style_deconstructed_variable_declaration prefers the syntax 'var (x, y)' for deconstructing variables.
 # Example:
 # [TRUE]: var (x, y) = GetValues();
-# Option 2:
+# [FALSE]
 # (int x, int y) = GetValues();
 csharp_style_deconstructed_variable_declaration = true:suggestion
 
 # csharp_style_implicit_object_creation_when_type_is_apparent prefers using 'new()' in object creation when the type is known from context.
 # Example:
 # [TRUE]: List<int> numbers = new();
-# Option 2: List<int> numbers = new List<int>();
+# [FALSE]: List<int> numbers = new List<int>();
 csharp_style_implicit_object_creation_when_type_is_apparent = true:warning
 
 # csharp_style_inlined_variable_declaration prefers declaring variables inline where they're used.
 # Example:
 # [TRUE]: if (int.TryParse(str, out int x)) { ... }
-# Option 2:
+# [FALSE]
 # int x;
 # if (int.TryParse(str, out x)) { ... }
 csharp_style_inlined_variable_declaration = true:warning
@@ -533,31 +533,31 @@ csharp_style_inlined_variable_declaration = true:warning
 # csharp_style_prefer_index_operator prefers using the ^ operator for indexing from the end.
 # Example:
 # [TRUE]: var lastItem = array[^1];
-# Option 2: var lastItem = array[array.Length - 1];
+# [FALSE]: var lastItem = array[array.Length - 1];
 csharp_style_prefer_index_operator = true:suggestion
 
 # csharp_style_prefer_local_over_anonymous_function prefers local functions to anonymous lambdas when possible.
 # Example:
 # [TRUE]: int Sum(int a, int b) => a + b;
-# Option 2: Func<int, int, int> sum = (a, b) => a + b;
+# [FALSE]: Func<int, int, int> sum = (a, b) => a + b;
 csharp_style_prefer_local_over_anonymous_function = true:warning
 
 # csharp_style_prefer_null_check_over_type_check prefers '== null' or 'is null' checks rather than 'is SomeType'.
 # Example:
 # [TRUE]: if (obj is null) { ... }
-# Option 2: if (!(obj is SomeType)) { ... } 
+# [FALSE]: if (!(obj is SomeType)) { ... } 
 csharp_style_prefer_null_check_over_type_check = true:warning
 
 # csharp_style_prefer_range_operator prefers using the .. operator for slicing.
 # Example:
 # [TRUE]: var slice = array[1..3];
-# Option 2: var slice = array.Skip(1).Take(2);
+# [FALSE]: var slice = array.Skip(1).Take(2);
 csharp_style_prefer_range_operator = true:warning
 
 # csharp_style_prefer_tuple_swap prefers the tuple swap (x, y) = (y, x) instead of temp variables.
 # Example:
 # [TRUE]: (x, y) = (y, x);
-# Option 2:
+# [FALSE]
 # var temp = x;
 # x = y;
 # y = temp;
@@ -566,13 +566,13 @@ csharp_style_prefer_tuple_swap = true:warning
 # csharp_style_prefer_utf8_string_literals prefers the 'u8' suffix for UTF-8 string literals in C# 11+.
 # Example:
 # [TRUE]: "Hello"u8
-# Option 2: Encoding.UTF8.GetBytes("Hello")
+# [FALSE]: Encoding.UTF8.GetBytes("Hello")
 csharp_style_prefer_utf8_string_literals = true:warning
 
 # csharp_style_throw_expression prefers the throw expression form in place of separate if checks.
 # Example:
 # [TRUE]: var person = value ?? throw new ArgumentNullException(nameof(value));
-# Option 2:
+# [FALSE]
 # if (value == null) throw new ArgumentNullException(nameof(value));
 csharp_style_throw_expression = true:warning
 
@@ -584,13 +584,13 @@ csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 
 # csharp_style_unused_value_expression_statement_preference defines how to handle unused value expression statements (discard or remove).
 # Example:
-# [TRUE]: _ = SomeMethod();
+# Option 1: _ = SomeMethod();
 # Option 2: SomeMethod(); // if it's not used
 csharp_style_unused_value_expression_statement_preference = discard_variable:warning
 
 # csharp_using_directive_placement enforces the placement of 'using' directives (inside or outside namespace).
 # Example:
-# [TRUE] (outside_namespace):
+# Option 1 (outside_namespace):
 # using System;
 # namespace MyNamespace;
 # Option 2 (inside_namespace):
@@ -606,7 +606,7 @@ csharp_using_directive_placement = outside_namespace:warning
 # public MyClass() :
 # 
 #     base() { }
-# Option 2 (false): no blank lines
+# [FALSE] (false): no blank lines
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
 
 # csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental allows or disallows blank lines after => token.
@@ -615,7 +615,7 @@ csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimenta
 # public int GetValue() =>
 # 
 #     42;
-# Option 2 (false): no blank line
+# [FALSE] (false): no blank line
 csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
 
 # csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental allows blank lines in ternary expressions after ? or :.
@@ -626,7 +626,7 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 #     "Yes" :
 # 
 #     "No";
-# Option 2 (false): no blank lines
+# [FALSE] (false): no blank lines
 csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true
 
 # csharp_style_allow_blank_lines_between_consecutive_braces_experimental allows or disallows blank lines between braces.
@@ -637,14 +637,14 @@ csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental
 #     {
 #     }
 # }
-# Option 2 (false): no blank lines
+# [FALSE] (false): no blank lines
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:warning
 
 # csharp_style_allow_embedded_statements_on_same_line_experimental allows or disallows embedded statements on the same line.
 # Example:
 # [TRUE]
 # if (x) { y++; } 
-# Option 2 (false):
+# [FALSE] (false):
 # if (x)
 # {
 #     y++;
@@ -664,7 +664,7 @@ csharp_style_allow_embedded_statements_on_same_line_experimental = false:warning
 # catch
 # {
 # }
-# Option 2: try { } catch { }
+# [FALSE]: try { } catch { }
 csharp_new_line_before_catch = true:warning
 
 # csharp_new_line_before_else enforces a new line before 'else'.
@@ -676,7 +676,7 @@ csharp_new_line_before_catch = true:warning
 # else
 # {
 # }
-# Option 2: if (condition) { } else { }
+# [FALSE]: if (condition) { } else { }
 csharp_new_line_before_else = true:warning
 
 # csharp_new_line_before_finally enforces a new line before 'finally'.
@@ -688,7 +688,7 @@ csharp_new_line_before_else = true:warning
 # finally
 # {
 # }
-# Option 2: try { } finally { }
+# [FALSE]: try { } finally { }
 csharp_new_line_before_finally = true:warning
 
 # csharp_new_line_before_members_in_anonymous_types enforces new lines before members in anonymous types.
@@ -697,7 +697,7 @@ csharp_new_line_before_finally = true:warning
 #     Name = "Alice", 
 #     Age = 30 
 # }
-# Option 2: new { Name = "Alice", Age = 30 }
+# [FALSE]: new { Name = "Alice", Age = 30 }
 csharp_new_line_before_members_in_anonymous_types = true
 
 # csharp_new_line_before_members_in_object_initializers enforces new lines before members in object initializers.
@@ -706,7 +706,7 @@ csharp_new_line_before_members_in_anonymous_types = true
 #     Name = "Bob", 
 #     Age = 20 
 # }
-# Option 2: new Person { Name = "Bob", Age = 20 }
+# [FALSE]: new Person { Name = "Bob", Age = 20 }
 csharp_new_line_before_members_in_object_initializers = true
 
 # csharp_new_line_before_open_brace enforces a new line before opening braces in all possible constructs.
@@ -725,7 +725,7 @@ csharp_new_line_before_open_brace = all
 # var result = from x in collection
 #              where x > 0
 #              select x;
-# Option 2: from x in collection where x > 0 select x;
+# [FALSE]: from x in collection where x > 0 select x;
 csharp_new_line_between_query_expression_clauses = true:warning
 
 # csharp_indent_block_contents enforces indentation of block contents.
@@ -734,7 +734,7 @@ csharp_new_line_between_query_expression_clauses = true:warning
 # {
 #     statement;
 # }
-# Option 2:
+# [FALSE]
 # {
 # statement;
 # }
@@ -747,7 +747,7 @@ csharp_indent_block_contents = true:warning
 #     {
 #         statement;
 #     }
-# Option 2 (false):
+# [FALSE] (false):
 # if (condition)
 # {
 #     statement;
@@ -763,7 +763,7 @@ csharp_indent_braces = false:warning
 #         DoSomething();
 #         break;
 # }
-# Option 2:
+# [FALSE]
 # switch (value)
 # {
 # case 1:
@@ -800,7 +800,7 @@ csharp_indent_labels = one_less_than_current
 #     case 1:
 #         break;
 # }
-# Option 2:
+# [FALSE]
 # switch (value)
 # {
 # case 1:
@@ -811,19 +811,19 @@ csharp_indent_switch_labels = true:warning
 # csharp_space_after_cast controls spacing after cast operators.
 # Example:
 # [TRUE]: (int) x
-# Option 2: (int)x
+# [FALSE]: (int)x
 csharp_space_after_cast = false
 
 # csharp_space_after_colon_in_inheritance_clause controls spacing after ':' in base class or interface list.
 # Example:
 # [TRUE]: class Derived : Base
-# Option 2: class Derived :Base
+# [FALSE]: class Derived :Base
 csharp_space_after_colon_in_inheritance_clause = true:warning
 
 # csharp_space_after_comma controls spacing after commas.
 # Example:
 # [TRUE]: var tuple = (1, 2);
-# Option 2: var tuple = (1,2);
+# [FALSE]: var tuple = (1,2);
 csharp_space_after_comma = true:warning
 
 # csharp_space_after_dot controls spacing after a dot.
@@ -835,13 +835,13 @@ csharp_space_after_dot = false:warning
 # csharp_space_after_keywords_in_control_flow_statements enforces spacing after if, for, while, etc.
 # Example:
 # [TRUE]: if (condition) { ... }
-# Option 2: if(condition) { ... }
+# [FALSE]: if(condition) { ... }
 csharp_space_after_keywords_in_control_flow_statements = true:warning
 
 # csharp_space_after_semicolon_in_for_statement enforces a space after semicolons in for statements.
 # Example:
 # [TRUE]: for (int i = 0; i < 10; i++)
-# Option 2: for (int i = 0;i<10;i++)
+# [FALSE]: for (int i = 0;i<10;i++)
 csharp_space_after_semicolon_in_for_statement = true:warning
 
 # csharp_space_around_binary_operators controls spacing around binary operators.
@@ -853,49 +853,49 @@ csharp_space_around_binary_operators = before_and_after
 # csharp_space_around_declaration_statements controls spacing around declaration statements (like local variables).
 # Example:
 # [TRUE]: int  x   =  0;
-# Option 2: int x = 0;
+# [FALSE]: int x = 0;
 csharp_space_around_declaration_statements = false:warning
 
 # csharp_space_before_colon_in_inheritance_clause controls spacing before ':' in base class/interface list.
 # Example:
 # [TRUE]: class Derived : Base
-# Option 2: class Derived: Base
+# [FALSE]: class Derived: Base
 csharp_space_before_colon_in_inheritance_clause = true:warning
 
 # csharp_space_before_comma controls spacing before commas.
 # Example:
 # [TRUE]: (1 , 2)
-# Option 2: (1, 2)
+# [FALSE]: (1, 2)
 csharp_space_before_comma = false:warning
 
 # csharp_space_before_dot controls spacing before a dot.
 # Example:
 # [TRUE]: obj .Property
-# Option 2: obj.Property
+# [FALSE]: obj.Property
 csharp_space_before_dot = false:warning
 
 # csharp_space_before_open_square_brackets controls spacing before '[' in attributes or indexers.
 # Example:
 # [TRUE]: [ Obsolete]
-# Option 2: [Obsolete]
+# [FALSE]: [Obsolete]
 csharp_space_before_open_square_brackets = false:warning
 
 # csharp_space_before_semicolon_in_for_statement controls spacing before semicolons in for statements.
 # Example:
 # [TRUE]: for (int i = 0 ; i < 10 ; i++)
-# Option 2: for (int i = 0; i < 10; i++)
+# [FALSE]: for (int i = 0; i < 10; i++)
 csharp_space_before_semicolon_in_for_statement = false:warning
 
 # csharp_space_between_empty_square_brackets controls spacing between empty brackets [].
 # Example:
 # [TRUE]: new int[ 0 ]
-# Option 2: new int[0]
+# [FALSE]: new int[0]
 csharp_space_between_empty_square_brackets = false:warning
 
 # csharp_space_between_method_call_empty_parameter_list_parentheses controls spacing in empty parameter lists.
 # Example:
 # [TRUE]: Method( )
-# Option 2: Method()
+# [FALSE]: Method()
 csharp_space_between_method_call_empty_parameter_list_parentheses = false:warning
 
 # csharp_space_between_method_call_name_and_opening_parenthesis controls spacing between method name and '('.
@@ -1011,7 +1011,7 @@ dotnet_naming_style.begins_with_i.capitalization = pascal_case
 # trim_trailing_whitespace enforces removing trailing whitespace at end of lines.
 # Example:
 # [TRUE]: "Line with no trailing spaces"
-# Option 2: "Line with trailing spaces   "
+# [FALSE]: "Line with trailing spaces   "
 trim_trailing_whitespace = true:warning
 
 # dotnet_diagnostic.IDE0005.severity configures severity for unnecessary usings (Roslyn analyzers).
@@ -1054,7 +1054,7 @@ dotnet_diagnostic.CS1591.severity = silent
 # csharp_prefer_system_threading_lock enforces using lock keyword from System.Threading (i.e., 'lock') where appropriate.
 # Example:
 # [TRUE]: lock (locker) { ... }
-# Option 2: Monitor.Enter(locker); // manually
+# [FALSE]: Monitor.Enter(locker); // manually
 csharp_prefer_system_threading_lock = true:suggestion
 
 [*.{cs,vb}]
@@ -1062,26 +1062,26 @@ csharp_prefer_system_threading_lock = true:suggestion
 # dotnet_style_coalesce_expression prefers ?? operator for null checks.
 # Example:
 # [TRUE]: var result = value ?? "default";
-# Option 2: var result = value != null ? value : "default";
+# [FALSE]: var result = value != null ? value : "default";
 dotnet_style_coalesce_expression = true:warning
 
 # dotnet_style_null_propagation prefers ?. null propagation over explicit null checks.
 # Example:
 # [TRUE]: var length = str?.Length;
-# Option 2: var length = str == null ? 0 : str.Length;
+# [FALSE]: var length = str == null ? 0 : str.Length;
 dotnet_style_null_propagation = true:warning
 
 # dotnet_style_prefer_is_null_check_over_reference_equality_method prefers 'is null' over ReferenceEquals(obj, null).
 # Example:
 # [TRUE] if (obj is null) { ... }
-# Option 2: if (ReferenceEquals(obj, null)) { ... }
+# [FALSE]: if (ReferenceEquals(obj, null)) { ... }
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
 
 # dotnet_style_prefer_auto_properties prefers auto-properties over backing fields.
 # Example:
 # [TRUE]:
 # public int Age { get; set; }
-# Option 2:
+# [FALSE]
 # private int _age;
 # public int Age { get => _age; set => _age = value; }
 dotnet_style_prefer_auto_properties = true:silent
@@ -1106,17 +1106,17 @@ end_of_line = crlf
 # dotnet_style_object_initializer prefers object initializers when possible.
 # Example:
 # [TRUE]: new Person { Name = "Alice" }
-# Option 2: var person = new Person(); person.Name = "Alice";
+# [FALSE]: var person = new Person(); person.Name = "Alice";
 dotnet_style_object_initializer = true:suggestion
 
 # dotnet_style_collection_initializer prefers collection initializers when possible.
 # Example:
 # [TRUE]: var list = new List<int> { 1, 2 };
-# Option 2: var list = new List<int>(); list.Add(1); list.Add(2);
+# [FALSE]: var list = new List<int>(); list.Add(1); list.Add(2);
 dotnet_style_collection_initializer = true:suggestion
 
 # dotnet_style_prefer_simplified_boolean_expressions prefers shorter boolean checks.
 # Example:
 # [TRUE]: if (flag) { ... }
-# Option 2: if (flag == true) { ... }
+# [FALSE]: if (flag == true) { ... }
 dotnet_style_prefer_simplified_boolean_expressions = true:warning
