@@ -67,7 +67,7 @@ public class ChatMessageService : IChatMessageService
         _logger.LogInformation("Updating chat message");
 
         var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
-            throw new Exception("Chat message not found");
+            throw new ResourceNotFoundException(nameof(ChatMessage));
 
         chatMessage.UpdateContent(command.Content);
 
@@ -80,7 +80,7 @@ public class ChatMessageService : IChatMessageService
         _logger.LogInformation("Deleting chat message");
 
         var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
-            throw new Exception("Chat message not found");
+            throw new ResourceNotFoundException(nameof(ChatMessage));
 
         await _chatMessageRepository.Delete(command.ChatMessageId);
         _logger.LogInformation("Chat message deleted");

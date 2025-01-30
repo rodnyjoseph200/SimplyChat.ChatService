@@ -1,5 +1,6 @@
 ﻿using ChatService.Core.ChatRooms.Commands;
 using ChatService.Core.ChatRooms.Models;
+using ChatService.Core.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace ChatService.Core.ChatRooms;
@@ -51,7 +52,7 @@ public class ChatRoomService : IChatRoomService
         _logger.LogInformation("Updating chatroom");
 
         var chatRoom = await _chatRoomRepository.Get(command.ChatRoomId) ??
-        throw new Exception("Chatroom not found");
+        throw new ResourceNotFoundException(nameof(Chatroom));
 
         //todo - perform updates
 
@@ -64,7 +65,7 @@ public class ChatRoomService : IChatRoomService
         _logger.LogInformation("Deleting chatroom");
 
         var chatRoom = await _chatRoomRepository.Get(command.ChatRoomId) ??
-        throw new Exception("Chatroom not found");
+        throw new ResourceNotFoundException(nameof(Chatroom));
 
         await _chatRoomRepository.Delete(command.ChatRoomId);
         _logger.LogInformation("Chatroom deleted");
