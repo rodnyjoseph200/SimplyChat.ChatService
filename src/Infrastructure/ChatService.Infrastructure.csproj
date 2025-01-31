@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Azure\CosmosDB\Users\" />
     <Folder Include="Azure\NewFolder\" />
-    <Folder Include="InMemoryDb\Testing\Users\" />
     <Folder Include="Slack\" />
   </ItemGroup>
 
