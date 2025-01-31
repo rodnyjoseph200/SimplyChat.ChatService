@@ -68,8 +68,8 @@ public class ChatRoomService_Get_Tests : ChatRoomServiceTestBase
             null,
             null);
 
-        var chatroomUser = ChatRoomUser.CreateSuperUser("userId", "username");
-        var chatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatroomUser }, tracker);
+        var chatroomUser = ChatRoomUser.CreateSuperUser("username");
+        var chatroom = Chatroom.Load(chatroomId, [chatroomUser], tracker);
 
         _ = _chatRoomRepositoryMock
             .Setup(x => x.Get(chatroomId))
@@ -100,20 +100,19 @@ public class ChatRoomService_Create_Tests : ChatRoomServiceTestBase
             null,
             null);
 
-        var userId = "userId";
         var chatroomId = "chatroomId";
-        var chatroomUser = ChatRoomUser.CreateSuperUser(userId, createCommand.Username);
-        var mockChatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatroomUser }, tracker);
+        var chatroomUser = ChatRoomUser.CreateSuperUser(createCommand.Username);
+        var chatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatroomUser }, tracker);
 
         _ = _chatRoomRepositoryMock
             .Setup(x => x.Create(It.IsAny<NewChatroom>()))
-            .ReturnsAsync(mockChatroom);
+            .ReturnsAsync(chatroom);
 
         var result = await _chatRoomService.Create(createCommand);
         _ = result.Should().NotBeNull();
         _ = result.Id.Should().Be(chatroomId);
         _ = result.Users.Should().HaveCount(1);
-        _ = result.Users.First()!.Id.Should().Be(userId);
+        _ = result.Users.First()!.Id.Should().Be(chatroomUser.Id);
         _ = result.Users.First()!.Username.Should().Be(username);
 
         _chatRoomRepositoryMock.Verify(x => x.Create(It.IsAny<NewChatroom>()), Times.Once);
@@ -152,7 +151,7 @@ public class ChatRoomService_Update_Tests : ChatRoomServiceTestBase
             null,
             null);
 
-        var chatroomUser = ChatRoomUser.CreateSuperUser("userId", "username");
+        var chatroomUser = ChatRoomUser.CreateSuperUser("username");
         var existingChatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatroomUser }, existingTracker);
 
         _ = _chatRoomRepositoryMock
@@ -200,7 +199,7 @@ public class ChatRoomService_Delete_Tests : ChatRoomServiceTestBase
             null,
             null);
 
-        var chatroomUser = ChatRoomUser.CreateSuperUser("userId", "username");
+        var chatroomUser = ChatRoomUser.CreateSuperUser("username");
         var existingChatroom = Chatroom.Load(deleteCommand.ChatRoomId, new List<ChatRoomUser> { chatroomUser }, tracker);
 
         _ = _chatRoomRepositoryMock

@@ -10,7 +10,6 @@ public class ChatRoomService : IChatRoomService
     private readonly ILogger<ChatRoomService> _logger;
     private readonly IChatroomRepository _chatRoomRepository;
 
-    //todo later - inject user service
     public ChatRoomService(ILogger<ChatRoomService> logger, IChatroomRepository chatRoomRepository)
     {
         _logger = logger;
@@ -38,8 +37,7 @@ public class ChatRoomService : IChatRoomService
     {
         _logger.LogInformation("Creating chatroom");
 
-        //todo create user using user service
-        var user = ChatRoomUser.CreateSuperUser(Guid.NewGuid().ToString(), command.Username);
+        var user = ChatRoomUser.CreateSuperUser(command.Username);
 
         var newChatRoom = NewChatroom.Create(user);
         var chatroom = await _chatRoomRepository.Create(newChatRoom);

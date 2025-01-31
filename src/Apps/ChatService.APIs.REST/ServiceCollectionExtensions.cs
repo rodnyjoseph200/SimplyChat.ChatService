@@ -2,13 +2,14 @@
 
 namespace ChatService.APIs.REST;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApiCors(this IServiceCollection services)
+    internal const string CORS_POLICY_NAME = "CorsPolicy";
+    internal static IServiceCollection AddCorsPolicy(this IServiceCollection services)
     {
-        _ = services.AddCors(options =>
+        return services.AddCors(options =>
         {
-            options.AddPolicy("CorsPolicy", builder =>
+            options.AddPolicy(CORS_POLICY_NAME, builder =>
             {
                 _ = builder
                     // todo rod - include frontend url
@@ -19,10 +20,9 @@ public static class ServiceCollectionExtensions
                 //.AllowCredentials();
             });
         });
-        return services;
     }
 
-    public static IServiceCollection AddVersioning(this IServiceCollection services)
+    internal static IServiceCollection AddVersioning(this IServiceCollection services)
     {
         _ = services
         .AddApiVersioning(options =>
@@ -44,10 +44,12 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddSwagger(this IServiceCollection services)
+    internal static IServiceCollection AddSwagger(this IServiceCollection services)
     {
-        _ = services
-            .AddSwaggerGen();
-        return services;
+        return services.
+            AddSwaggerGen(options =>
+            {
+                options.EnableAnnotations();
+            });
     }
 }

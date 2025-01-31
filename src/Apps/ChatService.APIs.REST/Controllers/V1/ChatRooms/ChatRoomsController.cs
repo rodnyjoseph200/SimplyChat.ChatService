@@ -5,6 +5,7 @@ using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Commands;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms;
 
@@ -25,6 +26,10 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Get Chatroom by ID", Description = "Gets a chatroom by its ID")]
     public async Task<ActionResult<GetChatRoomResponse>> Get(string id)
     {
         _logger.LogInformation("Received request to get chatroom by id");
@@ -36,7 +41,11 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateChatMessageResponse>> Create([FromBody] CreateChatRoomRequest request)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Create Chatroom", Description = "Creates a Chatroom")]
+    public async Task<ActionResult<CreateChatRoomResponse>> Create([FromBody] CreateChatRoomRequest request)
     {
         _logger.LogInformation("Received request to create chatroom");
         var command = CreateChatRoomRequest.Convert(request);
@@ -44,10 +53,15 @@ public class ChatRoomsController : ControllerBase
 
         _logger.LogInformation("Request to create chatroom completed");
         var response = CreateChatRoomResponse.Convert(chatroom, chatroom.SuperUser);
-        return Ok(response);
+        return response;
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Update Chatroom", Description = "Updates a Chatroom")]
     public async Task<ActionResult> Update([FromBody] UpdateChatRoomRequest request)
     {
         _logger.LogInformation("Received request to update chatroom");
@@ -59,6 +73,10 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Delete Chatroom", Description = "Deletes a Chatroom")]
     public async Task<ActionResult> Delete(string id)
     {
         _logger.LogInformation("Received request to delete chatroom");
@@ -70,6 +88,10 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpGet("{chatroomId}/messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Get Chat Messages by Chatroom ID", Description = "Gets Chat Messages by Chatroom ID")]
     public async Task<ActionResult<GetChatMessagesByChatroomIdResponse>> GetChatMessages(string chatroomId)
     {
         _logger.LogInformation("Received request to get chat messages by chatroomId");
@@ -83,6 +105,10 @@ public class ChatRoomsController : ControllerBase
     }
 
     [HttpPost("{chatroomId}/messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Create Chat Message", Description = "Creates Chat Message")]
     public async Task<ActionResult<CreateChatMessageResponse>> CreateChatMessage(string chatroomId, [FromBody] CreateChatMessageRequest request)
     {
         _logger.LogInformation("Received request to create chat message");

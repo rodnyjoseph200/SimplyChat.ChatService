@@ -41,7 +41,7 @@ public class ChatMessageService : IChatMessageService
         if (string.IsNullOrWhiteSpace(chatroomId))
             throw new ArgumentException($"{nameof(chatroomId)} is required");
 
-        var chatroom = await _chatRoomService.Get(chatroomId) ?? throw new ResourceNotFoundException(nameof(Chatroom));
+        var chatroom = await _chatRoomService.Get(chatroomId) ?? throw new BadRequestException($"{nameof(Chatroom)} not found");
 
         var chatMessages = await _chatMessageRepository.GetByChatRoomId(chatroom.Id);
         if (chatMessages.Count is not 0)
@@ -54,7 +54,7 @@ public class ChatMessageService : IChatMessageService
     {
         _logger.LogInformation("Creating chat message");
 
-        var chatroom = await _chatRoomService.Get(command.ChatroomId) ?? throw new ResourceNotFoundException(nameof(Chatroom));
+        var chatroom = await _chatRoomService.Get(command.ChatroomId) ?? throw new BadRequestException($"{nameof(Chatroom)} not found");
 
         var newChatMessage = NewChatMessage.Create(command.ChatroomId, command.UserId, command.Content, command.CreatedAt, command.Type);
         var chatMessage = await _chatMessageRepository.Create(newChatMessage);
