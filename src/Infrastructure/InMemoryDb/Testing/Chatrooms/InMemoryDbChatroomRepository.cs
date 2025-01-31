@@ -1,9 +1,12 @@
 ﻿using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Simply.Track;
 
 namespace ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
+
+[Service]
 public class InMemoryDbChatroomRepository : IChatroomRepository
 {
     private readonly ILogger<InMemoryDbChatroomRepository> _logger;

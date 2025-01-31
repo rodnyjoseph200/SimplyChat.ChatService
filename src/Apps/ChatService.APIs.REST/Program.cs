@@ -1,10 +1,10 @@
 using ChatService.APIs.REST;
-using ChatService.Core.ChatMessages;
-using ChatService.Core.ChatRooms;
-using ChatService.Infrastructure.InMemoryDb.Testing.ChatMessages;
-using ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Automatic service discovery (annotated with a Service attribute)
+// Adds services (singleton by default) with no need for manual registration
+builder.Services.AddServices();
 
 builder.Services
     .AddCorsPolicy()
@@ -16,11 +16,6 @@ builder.Services
 
 builder.Services.AddControllers();
 builder.AddServiceDefaults();
-
-builder.Services.AddSingleton<IChatMessageRepository, InMemoryDbChatMessageRepository>();
-builder.Services.AddSingleton<IChatMessageService, ChatMessageService>();
-builder.Services.AddSingleton<IChatroomRepository, InMemoryDbChatroomRepository>();
-builder.Services.AddSingleton<IChatRoomService, ChatRoomService>();
 
 var app = builder.Build();
 
