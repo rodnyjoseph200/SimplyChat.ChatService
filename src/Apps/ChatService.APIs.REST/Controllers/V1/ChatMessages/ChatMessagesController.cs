@@ -2,6 +2,7 @@
 using ChatService.APIs.REST.Controllers.V1.ChatMessages.Models;
 using ChatService.Core.ChatMessages;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatMessages;
 
@@ -20,6 +21,10 @@ public class ChatMessagesController : ControllerBase
     }
 
     [HttpGet("{messageId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Get Chat Message by ID", Description = "Gets a Chat Message by its ID")]
     public async Task<ActionResult<GetChatMessageResponse>> Get(string messageId)
     {
         _logger.LogInformation("Received request to get chat message by messageId");
@@ -30,6 +35,11 @@ public class ChatMessagesController : ControllerBase
     }
 
     [HttpPut()]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Update Chat Message", Description = "Updates a Chat Message")]
     public async Task<ActionResult> Update([FromBody] UpdateChatMessageRequest request)
     {
         _logger.LogInformation("Received request to update chat message");
@@ -40,6 +50,11 @@ public class ChatMessagesController : ControllerBase
     }
 
     [HttpDelete()]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation(Summary = "Delete Chat Message", Description = "Deletes a Chat Message")]
     public async Task<ActionResult> Delete([FromBody] DeleteChatMessageRequest request)
     {
         _logger.LogInformation("Received request to delete chat message");

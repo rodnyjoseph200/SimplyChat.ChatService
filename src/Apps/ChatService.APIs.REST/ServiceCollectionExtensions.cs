@@ -6,7 +6,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApiCors(this IServiceCollection services)
     {
-        _ = services.AddCors(options =>
+        return services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", builder =>
             {
@@ -19,7 +19,6 @@ public static class ServiceCollectionExtensions
                 //.AllowCredentials();
             });
         });
-        return services;
     }
 
     public static IServiceCollection AddVersioning(this IServiceCollection services)
@@ -46,8 +45,10 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {
-        _ = services
-            .AddSwaggerGen();
-        return services;
+        return services.
+            AddSwaggerGen(options =>
+            {
+                options.EnableAnnotations();
+            });
     }
 }
