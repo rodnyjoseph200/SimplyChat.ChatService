@@ -7,6 +7,7 @@ public class CreateChatRoomResponse
 {
     [Required]
     public string ChatroomId { get; init; }
+    [Required]
     public string SuperUserId { get; set; }
     [Required]
     public string SuperUserName { get; init; }
