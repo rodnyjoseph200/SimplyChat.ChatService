@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace ChatService.APIs.REST;
 
-public class CustomHttpExceptionHandler : IExceptionHandler
+internal class CustomHttpExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<CustomHttpExceptionHandler> _logger;
-    public CustomHttpExceptionHandler(ILogger<CustomHttpExceptionHandler> logger) => _logger = logger;
+    internal CustomHttpExceptionHandler(ILogger<CustomHttpExceptionHandler> logger) => _logger = logger;
 
     public ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
     {

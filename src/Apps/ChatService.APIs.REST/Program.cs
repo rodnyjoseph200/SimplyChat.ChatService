@@ -7,7 +7,7 @@ using ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddApiCors()
+    .AddCorsPolicy()
     .AddVersioning()
     .AddEndpointsApiExplorer()
     .AddSwagger()
@@ -34,15 +34,15 @@ try
 
     if (!app.Environment.IsProduction())
     {
-        _ = app.UseSwagger();
-        _ = app.UseSwaggerUI();
+        _ = app
+        .UseSwagger()
+        .UseSwaggerUI();
     }
 
-    _ = app.UseHttpsRedirection();
-
-    _ = app.UseCors("CorsPolicy");
-
-    _ = app.UseAuthorization();
+    _ = app
+    .UseHttpsRedirection()
+    .UseCors(ServiceCollectionExtensions.CORS_POLICY_NAME)
+    .UseAuthorization();
 
     _ = app.MapControllers();
 
