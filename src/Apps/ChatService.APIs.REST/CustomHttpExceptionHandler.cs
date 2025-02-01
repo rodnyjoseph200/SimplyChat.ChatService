@@ -7,7 +7,7 @@ namespace ChatService.APIs.REST;
 internal class CustomHttpExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<CustomHttpExceptionHandler> _logger;
-    internal CustomHttpExceptionHandler(ILogger<CustomHttpExceptionHandler> logger) => _logger = logger;
+    public CustomHttpExceptionHandler(ILogger<CustomHttpExceptionHandler> logger) => _logger = logger;
 
     public ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
     {

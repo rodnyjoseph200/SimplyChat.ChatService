@@ -1,10 +1,12 @@
 ﻿using ChatService.Core.ChatRooms.Commands;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Core.Exceptions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace ChatService.Core.ChatRooms;
 
+[Service]
 public class ChatRoomService : IChatRoomService
 {
     private readonly ILogger<ChatRoomService> _logger;

@@ -3,10 +3,12 @@ using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Core.Exceptions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace ChatService.Core.ChatMessages;
 
+[Service]
 public class ChatMessageService : IChatMessageService
 {
     private readonly ILogger _logger;
