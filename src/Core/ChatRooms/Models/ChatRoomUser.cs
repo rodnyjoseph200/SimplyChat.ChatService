@@ -17,7 +17,7 @@ public class ChatRoomUser
 
     private static string GenerateId() => Guid.NewGuid().ToString();
 
-    public static ChatRoomUser Create(string username, bool isSuperUser = false) => new(GenerateId(), username, ChatRoomUserSettings.Create(ChatRoomColorSchemes.Light), false);
+    public static ChatRoomUser Create(string username, bool isSuperUser = false) => new(GenerateId(), username, ChatRoomUserSettings.Create(ChatRoomColorSchemes.Light), isSuperUser);
 
     public static ChatRoomUser CreateSuperUser(string username) => Create(username, true);
 
