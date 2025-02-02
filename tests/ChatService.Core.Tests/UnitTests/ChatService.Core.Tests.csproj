@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Benchmarks\" />
-    <Folder Include="UnitTests\ChatMessages\" />
+    <Compile Remove="Benchmarks\**" />
+    <Compile Remove="UnitTests\**" />
+    <EmbeddedResource Remove="Benchmarks\**" />
+    <EmbeddedResource Remove="UnitTests\**" />
+    <None Remove="Benchmarks\**" />
+    <None Remove="UnitTests\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\ChatService.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\Core\ChatService.Core.csproj" />
   </ItemGroup>
 
 </Project>
