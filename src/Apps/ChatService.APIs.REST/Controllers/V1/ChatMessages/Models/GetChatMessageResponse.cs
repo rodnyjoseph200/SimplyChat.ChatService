@@ -14,7 +14,9 @@ public class GetChatMessageResponse
     public string UserId { get; init; }
     [Required]
     public string Content { get; init; }
+    [Required]
     public DateTimeOffset CreatedAt { get; init; }
+    [Required]
     public ChatMessageTypes Type { get; init; }
 
     private GetChatMessageResponse(string chatMessageId, string chatroomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)

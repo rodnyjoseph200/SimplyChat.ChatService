@@ -1,10 +1,12 @@
-﻿using ChatService.Core.ChatMessages.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.Messages;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
 
 public class GetChatMessagesByChatroomIdResponse
 {
+    [Required]
     public required string ChatRoomId { get; set; }
     public required IReadOnlyCollection<ChatMessageResponse> ChatMessages { get; set; }
 
