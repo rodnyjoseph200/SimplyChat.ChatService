@@ -1,4 +1,5 @@
-﻿using ChatService.Core.ChatRooms.Commands;
+﻿using ChatService.Core.Chatrooms.SourceGeneration;
+using ChatService.Core.ChatRooms.Commands;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Core.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,7 @@ public class ChatRoomService : IChatRoomService
 
     public async Task<Chatroom?> Get(string id)
     {
-        _logger.LogInformation("Getting chatroom by id");
+        LogInfo.GettingChatroomById(_logger);
 
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException($"{nameof(id)} is required");
@@ -28,28 +29,28 @@ public class ChatRoomService : IChatRoomService
         var chatroom = await _chatRoomRepository.Get(id);
 
         if (chatroom is not null)
-            _logger.LogInformation("Chatroom found");
+            LogInfo.ChatroomFound(_logger);
         else
-            _logger.LogInformation("Chatroom not found");
+            LogInfo.ChatroomNotfound(_logger);
 
         return chatroom;
     }
 
     public async Task<Chatroom> Create(CreateChatRoomCommand command)
     {
-        _logger.LogInformation("Creating chatroom");
+        LogInfo.CreatingChatroom(_logger);
 
         var user = ChatRoomUser.CreateSuperUser(command.Username);
-
         var newChatRoom = NewChatroom.Create(user);
         var chatroom = await _chatRoomRepository.Create(newChatRoom);
-        _logger.LogInformation("Chatroom created");
+
+        LogInfo.ChatroomCreated(_logger);
         return chatroom;
     }
 
     public async Task Update(UpdateChatRoomCommand command)
     {
-        _logger.LogInformation("Updating chatroom");
+        LogInfo.UpdatingChatroom(_logger);
 
         var chatRoom = await _chatRoomRepository.Get(command.ChatRoomId) ??
         throw new ResourceNotFoundException(nameof(Chatroom));
@@ -57,17 +58,17 @@ public class ChatRoomService : IChatRoomService
         //todo - perform updates
 
         await _chatRoomRepository.Update(chatRoom);
-        _logger.LogInformation("Chatroom updated");
+        LogInfo.ChatroomUpdated(_logger);
     }
 
     public async Task Delete(DeleteChatRoomCommand command)
     {
-        _logger.LogInformation("Deleting chatroom");
+        LogInfo.DeletingChatroom(_logger);
 
         var chatRoom = await _chatRoomRepository.Get(command.ChatRoomId) ??
         throw new ResourceNotFoundException(nameof(Chatroom));
 
         await _chatRoomRepository.Delete(command.ChatRoomId);
-        _logger.LogInformation("Chatroom deleted");
+        LogInfo.ChatroomDeleted(_logger);
     }
 }
