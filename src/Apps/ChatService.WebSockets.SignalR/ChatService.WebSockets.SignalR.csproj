@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <PackageReference Include="Devlooped.Extensions.DependencyInjection.Attributed" >
+    <PackageReference Include="Devlooped.Extensions.DependencyInjection.Attributed">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Simply.Log" />
   </ItemGroup>
 
 </Project>

@@ -24,7 +24,7 @@ public class ChatMessageService : IChatMessageService
 
     public async Task<ChatMessage?> Get(string id)
     {
-        _logger.LogInformation("Getting chat message by chatMessageId");
+        _logger.LogInformation("Getting chat message by id");
 
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException($"{nameof(id)} is required");
@@ -58,7 +58,7 @@ public class ChatMessageService : IChatMessageService
 
         var chatroom = await _chatRoomService.Get(command.ChatroomId) ?? throw new BadRequestException($"{nameof(Chatroom)} not found");
 
-        var newChatMessage = NewChatMessage.Create(command.ChatroomId, command.UserId, command.Content, command.CreatedAt, command.Type);
+        var newChatMessage = NewChatMessage.Create(chatroom.Id, command.UserId, command.Content, command.CreatedAt, command.Type);
         var chatMessage = await _chatMessageRepository.Create(newChatMessage);
         _logger.LogInformation("Chat message created");
         return chatMessage;

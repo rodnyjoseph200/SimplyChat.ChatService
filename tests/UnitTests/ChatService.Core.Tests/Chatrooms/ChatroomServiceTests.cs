@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Simply.Track;
 
-namespace ChatService.Core.Tests.UnitTests.Chatrooms;
+namespace ChatService.Core.Tests.Chatrooms;
 
 public abstract class ChatRoomServiceTestBase
 {
@@ -62,11 +62,7 @@ public class ChatRoomService_Get_Tests : ChatRoomServiceTestBase
             "createdBy",
             DateTimeOffset.UtcNow,
             "updatedBy",
-            false,
-            null,
-            null,
-            null,
-            null);
+            false);
 
         var chatroomUser = ChatRoomUser.CreateSuperUser("username");
         var chatroom = Chatroom.Load(chatroomId, [chatroomUser], tracker);
@@ -94,11 +90,7 @@ public class ChatRoomService_Create_Tests : ChatRoomServiceTestBase
             "createdBy",
             DateTimeOffset.UtcNow,
             "updatedBy",
-            false,
-            null,
-            null,
-            null,
-            null);
+            false);
 
         var chatroomId = "chatroomId";
         var chatroomUser = ChatRoomUser.CreateSuperUser(createCommand.Username);
@@ -145,11 +137,7 @@ public class ChatRoomService_Update_Tests : ChatRoomServiceTestBase
             "createdBy",
             DateTimeOffset.UtcNow,
             "updatedBy",
-            false,
-            null,
-            null,
-            null,
-            null);
+            false);
 
         var chatroomUser = ChatRoomUser.CreateSuperUser("username");
         var existingChatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatroomUser }, existingTracker);
@@ -193,11 +181,7 @@ public class ChatRoomService_Delete_Tests : ChatRoomServiceTestBase
             "createdBy",
             DateTimeOffset.UtcNow,
             "updatedBy",
-            false,
-            null,
-            null,
-            null,
-            null);
+            false);
 
         var chatroomUser = ChatRoomUser.CreateSuperUser("username");
         var existingChatroom = Chatroom.Load(deleteCommand.ChatRoomId, new List<ChatRoomUser> { chatroomUser }, tracker);

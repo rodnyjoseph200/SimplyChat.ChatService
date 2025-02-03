@@ -9,7 +9,7 @@ namespace ChatService.Core.ChatRooms;
 [Service]
 public class ChatRoomService : IChatRoomService
 {
-    private readonly ILogger<ChatRoomService> _logger;
+    private readonly ILogger _logger;
     private readonly IChatroomRepository _chatRoomRepository;
 
     public ChatRoomService(ILogger<ChatRoomService> logger, IChatroomRepository chatRoomRepository)
