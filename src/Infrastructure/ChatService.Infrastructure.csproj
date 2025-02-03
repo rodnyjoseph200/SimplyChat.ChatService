@@ -1,11 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Services\**" />
     <EmbeddedResource Remove="Services\**" />
@@ -17,12 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devlooped.Extensions.DependencyInjection.Attributed" Version="2.0.0">
+    <PackageReference Include="Devlooped.Extensions.DependencyInjection.Attributed">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
-    <PackageReference Include="Simply.Track" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Simply.Track" />
   </ItemGroup>
 
   <ItemGroup>
