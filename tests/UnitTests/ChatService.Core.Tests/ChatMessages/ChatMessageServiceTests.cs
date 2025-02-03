@@ -73,7 +73,7 @@ public class ChatMessageService_Get_Tests : ChatMessageServiceTestBase
         var tracker = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
 
         var chatMessage = ChatMessage.Load(tracker, chatMessageId, chatRoomId, userId, content, createdAt, type);
 
@@ -123,7 +123,7 @@ public class ChatMessageService_GetByChatRoomId_Tests : ChatMessageServiceTestBa
         var trackerRoom = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
 
         var chatRoomUser = ChatRoomUser.CreateSuperUser("username");
         var chatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatRoomUser }, trackerRoom);
@@ -149,7 +149,7 @@ public class ChatMessageService_GetByChatRoomId_Tests : ChatMessageServiceTestBa
         var trackerRoom = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
 
         var chatRoomUser = ChatRoomUser.CreateSuperUser("username");
         var chatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatRoomUser }, trackerRoom);
@@ -160,7 +160,7 @@ public class ChatMessageService_GetByChatRoomId_Tests : ChatMessageServiceTestBa
         var trackerMsg = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
 
         var chatMessage1 = ChatMessage.Load(trackerMsg, "msg1", chatroomId, "user1", "Hello", DateTimeOffset.UtcNow, ChatMessageTypes.Text);
         var chatMessage2 = ChatMessage.Load(trackerMsg, "msg2", chatroomId, "user2", "Hi", DateTimeOffset.UtcNow, ChatMessageTypes.Text);
@@ -214,7 +214,7 @@ public class ChatMessageService_Create_Tests : ChatMessageServiceTestBase
         var trackerRoom = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
 
         var chatRoomUser = ChatRoomUser.CreateSuperUser("userId");
         var chatroom = Chatroom.Load(chatroomId, new List<ChatRoomUser> { chatRoomUser }, trackerRoom);
@@ -225,7 +225,7 @@ public class ChatMessageService_Create_Tests : ChatMessageServiceTestBase
         var trackerMsg = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
 
         var createdChatMessage = ChatMessage.Load(
             trackerMsg,
@@ -284,7 +284,7 @@ public class ChatMessageService_Update_Tests : ChatMessageServiceTestBase
         var tracker = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
         var existingChatMessage = ChatMessage.Load(
             tracker,
             chatMessageId,
@@ -337,7 +337,7 @@ public class ChatMessageService_Delete_Tests : ChatMessageServiceTestBase
         var tracker = Tracker.LoadTracking(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
-            false, null, null, null, null);
+            false);
         var existingChatMessage = ChatMessage.Load(
             tracker,
             chatMessageId,

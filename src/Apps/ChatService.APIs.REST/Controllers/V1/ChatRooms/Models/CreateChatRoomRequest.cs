@@ -6,8 +6,8 @@ namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
 public class CreateChatRoomRequest
 {
     [Required]
-    public required string username { get; set; }
+    public required string Username { get; set; }
 
     public static CreateChatRoomCommand Convert(CreateChatRoomRequest request) =>
-        CreateChatRoomCommand.Create(request.username);
+        CreateChatRoomCommand.Create(request.Username);
 }

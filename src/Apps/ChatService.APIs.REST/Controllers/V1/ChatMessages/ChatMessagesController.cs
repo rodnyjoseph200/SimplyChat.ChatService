@@ -1,7 +1,9 @@
 ﻿using Asp.Versioning;
 using ChatService.APIs.REST.Controllers.V1.ChatMessages.Models;
 using ChatService.Core.ChatMessages;
+using ChatService.Core.ChatMessages.Models;
 using Microsoft.AspNetCore.Mvc;
+using Simply.Log;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatMessages;
@@ -25,10 +27,13 @@ public class ChatMessagesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [SwaggerOperation(Summary = "Get Chat Message by ID", Description = "Gets a Chat Message by its ID")]
-    public async Task<ActionResult<GetChatMessageResponse>> Get(string messageId)
+    public async Task<ActionResult<GetChatMessageResponse>> Get(string id)
     {
+        using var _ = _logger.AddEntityId(typeof(ChatMessage), id);
         _logger.LogInformation("Received request to get chat message by messageId");
-        var chatMessage = await _chatMessageService.Get(messageId);
+
+        var chatMessage = await _chatMessageService.Get(id);
+
         _logger.LogInformation("Request to get chat message by messageId completed");
         return chatMessage is null ? NotFound() :
             GetChatMessageResponse.Convert(chatMessage);
@@ -42,9 +47,12 @@ public class ChatMessagesController : ControllerBase
     [SwaggerOperation(Summary = "Update Chat Message", Description = "Updates a Chat Message")]
     public async Task<ActionResult> Update([FromBody] UpdateChatMessageRequest request)
     {
+        using var _ = _logger.AddField($"{nameof(request.ChatMessageId)}", request.ChatMessageId);
         _logger.LogInformation("Received request to update chat message");
+
         var command = UpdateChatMessageRequest.Convert(request);
         await _chatMessageService.Update(command);
+
         _logger.LogInformation("Request to update chat message completed");
         return NoContent();
     }
@@ -57,9 +65,12 @@ public class ChatMessagesController : ControllerBase
     [SwaggerOperation(Summary = "Delete Chat Message", Description = "Deletes a Chat Message")]
     public async Task<ActionResult> Delete([FromBody] DeleteChatMessageRequest request)
     {
+        using var _ = _logger.AddField($"{nameof(request.ChatMessageId)}", request.ChatMessageId);
         _logger.LogInformation("Received request to delete chat message");
+
         var command = DeleteChatMessageRequest.Convert(request);
         await _chatMessageService.Delete(command);
+
         _logger.LogInformation("Request to delete chat message completed");
         return NoContent();
     }

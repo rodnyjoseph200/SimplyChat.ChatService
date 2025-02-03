@@ -1,4 +1,5 @@
 using ChatService.APIs.REST;
+using ChatService.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 

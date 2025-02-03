@@ -4,7 +4,9 @@ using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
 using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Commands;
+using ChatService.Core.ChatRooms.Models;
 using Microsoft.AspNetCore.Mvc;
+using Simply.Log;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms;
@@ -32,7 +34,9 @@ public class ChatRoomsController : ControllerBase
     [SwaggerOperation(Summary = "Get Chatroom by ID", Description = "Gets a chatroom by its ID")]
     public async Task<ActionResult<GetChatRoomResponse>> Get(string id)
     {
+        using var _ = _logger.AddEntityId(typeof(Chatroom), id);
         _logger.LogInformation("Received request to get chatroom by id");
+
         var chatroom = await _chatRoomService.Get(id);
         _logger.LogInformation("Request to get chatroom by id completed");
 
@@ -47,7 +51,9 @@ public class ChatRoomsController : ControllerBase
     [SwaggerOperation(Summary = "Create Chatroom", Description = "Creates a Chatroom")]
     public async Task<ActionResult<CreateChatRoomResponse>> Create([FromBody] CreateChatRoomRequest request)
     {
+        using var _ = _logger.AddField($"{nameof(request.Username)}", request.Username);
         _logger.LogInformation("Received request to create chatroom");
+
         var command = CreateChatRoomRequest.Convert(request);
         var chatroom = await _chatRoomService.Create(command);
 
@@ -64,7 +70,9 @@ public class ChatRoomsController : ControllerBase
     [SwaggerOperation(Summary = "Update Chatroom", Description = "Updates a Chatroom")]
     public async Task<ActionResult> Update([FromBody] UpdateChatRoomRequest request)
     {
+        using var _ = _logger.AddField($"{nameof(request.ChatRoomId)}", request.ChatRoomId);
         _logger.LogInformation("Received request to update chatroom");
+
         var command = UpdateChatRoomRequest.Convert(request);
         await _chatRoomService.Update(command);
 
@@ -79,7 +87,9 @@ public class ChatRoomsController : ControllerBase
     [SwaggerOperation(Summary = "Delete Chatroom", Description = "Deletes a Chatroom")]
     public async Task<ActionResult> Delete(string id)
     {
+        using var _ = _logger.AddField($"{nameof(id)}", id);
         _logger.LogInformation("Received request to delete chatroom");
+
         var command = DeleteChatRoomCommand.Create(id);
         await _chatRoomService.Delete(command);
 
@@ -94,10 +104,8 @@ public class ChatRoomsController : ControllerBase
     [SwaggerOperation(Summary = "Get Chat Messages by Chatroom ID", Description = "Gets Chat Messages by Chatroom ID")]
     public async Task<ActionResult<GetChatMessagesByChatroomIdResponse>> GetChatMessages(string chatroomId)
     {
+        using var _ = _logger.AddField($"{nameof(chatroomId)}", chatroomId);
         _logger.LogInformation("Received request to get chat messages by chatroomId");
-
-        if (string.IsNullOrWhiteSpace(chatroomId))
-            return BadRequest($"{nameof(chatroomId)} is required");
 
         var chatMessages = await _chatMessageService.GetByChatRoomId(chatroomId);
         var response = GetChatMessagesByChatroomIdResponse.Convert(chatroomId, chatMessages);
@@ -111,14 +119,19 @@ public class ChatRoomsController : ControllerBase
     [SwaggerOperation(Summary = "Create Chat Message", Description = "Creates Chat Message")]
     public async Task<ActionResult<CreateChatMessageResponse>> CreateChatMessage(string chatroomId, [FromBody] CreateChatMessageRequest request)
     {
-        _logger.LogInformation("Received request to create chat message");
-
-        if (string.IsNullOrWhiteSpace(chatroomId))
-            return BadRequest($"{nameof(chatroomId)} is required");
+        using var _ = _logger.AddField($"{nameof(chatroomId)}", chatroomId);
+        _logger.LogInformation("Received request to create chat message provided chatroomId");
 
         var command = CreateChatMessageRequest.Convert(chatroomId, request);
+
+        using var __ = _logger.AddFields(
+            ($"{nameof(command.UserId)}", command.UserId),
+            ($"{nameof(command.CreatedAt)}", command.CreatedAt.ToString()),
+            ($"{nameof(command.Type)}", command.Type.ToString()));
+
         var chatMessage = await _chatMessageService.Create(command);
         var response = CreateChatMessageResponse.Convert(chatMessage);
+        _logger.LogInformation("Request to create chat messages provided chatroomId completed");
         return Ok(response);
     }
 

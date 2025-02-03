@@ -8,6 +8,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Simply.Log" />
     <PackageReference Include="Simply.Track" />
   </ItemGroup>
 
