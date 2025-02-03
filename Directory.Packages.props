@@ -31,9 +31,6 @@
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Annotations" Version="7.2.0" />
 
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.1" />
-    <PackageVersion Include="Simply.Track" Version="1.0.2" />
-
     <!-- VisualStudio -->
     <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
       
@@ -43,6 +40,8 @@
     <PackageVersion Include="MSTest" Version="3.7.3" />
 
     <!-- Others -->
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+    <PackageVersion Include="Simply.Track" Version="1.0.2" />
     <PackageVersion Include="Devlooped.Extensions.DependencyInjection.Attributed" Version="2.0.0"/>
   </ItemGroup>
 </Project>
