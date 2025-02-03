@@ -44,41 +44,6 @@ public static class Extensions
         return builder;
     }
 
-    /// <summary>
-    /// Configures OpenTelemetry for metrics/tracing and sets up Serilog with an OpenTelemetry sink for logging.
-    /// </summary>
-    //public static TBuilder ConfigureOpenTelemetryWithSerilog<TBuilder>(this TBuilder builder)
-    //    where TBuilder : IHostApplicationBuilder
-    //{
-    //    _ = builder.Logging.ClearProviders();
-
-    //    var otlpEndpoint = builder.Configuration[OTEL_EXPORTER_OTLP_ENDPOINT_ENV_NAME];
-
-    //    Log.Logger = new LoggerConfiguration()
-    //        .MinimumLevel.Information()
-    //        //.MinimumLevel.Override("Microsoft.AspNetCore.Hosting.Diagnostics", LogEventLevel.Warning)
-    //        //.MinimumLevel.Override("Microsoft.AspNetCore.Routing.EndpointMiddleware", LogEventLevel.Warning)
-    //        //.MinimumLevel.Override("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker", LogEventLevel.Warning)
-    //        //.MinimumLevel.Override("Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor", LogEventLevel.Warning)
-    //        //.MinimumLevel.Override("Serilog.AspNetCore.RequestLoggingMiddleware", LogEventLevel.Warning)
-    //        .Enrich.FromLogContext()
-    //        .Enrich.WithProperty("deployment.environment", builder.Environment.EnvironmentName)
-    //        // Optional: Enrich trace/span info from Serilog.Enrichers.OpenTelemetry
-    //        // .Enrich.With<YourOpenTelemetryEnricher>()
-    //        // todo - Write to console only if development
-    //        .WriteTo.Console()
-    //        .WriteTo.OpenTelemetry(x =>
-    //        {
-    //            x.Endpoint = otlpEndpoint;
-    //            x.Protocol = OtlpProtocol.HttpProtobuf;
-    //        })
-    //        .CreateLogger();
-
-    //    _ = builder.ConfigureOpenTelemetryMetricsAndTracing();
-
-    //    return builder;
-    //}
-
     public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         _ = builder.Logging.AddOpenTelemetry(logging =>
@@ -101,7 +66,6 @@ public static class Extensions
         //_ = builder.Logging.AddFilter("Microsoft.AspNetCore.Routing.EndpointMiddleware", LogLevel.Warning);
         //_ = builder.Logging.AddFilter("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker", LogLevel.Warning);
         //_ = builder.Logging.AddFilter("Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor", LogLevel.Warning);
-        //_ = builder.Logging.AddFilter("Serilog.AspNetCore.RequestLoggingMiddleware", LogLevel.Warning);
 
         return builder;
     }
