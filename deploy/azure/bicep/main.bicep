@@ -1,4 +1,3 @@
-param environment string
 param envFriendlyName string
 param restApiContainerImage string
 param registryServer string
@@ -32,7 +31,7 @@ module containerAppEnvironment './modules/shared/container-app-environment.bicep
   }
 }
 
-module restApi './modules/apis-rest.bicep' = {
+module restApi './modules/container-app-rest-api.bicep' = {
   name: 'rest-api'
   params: {
     location: location
@@ -42,8 +41,9 @@ module restApi './modules/apis-rest.bicep' = {
     registryServer: registryServer
     registryUsername: username
     registryPassword: password
-    environment: environment
     envFriendlyName: envFriendlyName
+    keyVaultName: keyVault.outputs.name
+    cosmosDbConnectionStringName: keyVaultSecrets.outputs.cosmosDbConnectionStringName
   }
 }
 

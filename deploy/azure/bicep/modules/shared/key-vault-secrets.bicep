@@ -18,3 +18,5 @@ resource cosmosDbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2023-
     value: cosmosDbConnectionString
   }
 }
+
+output cosmosDbConnectionStringName string = cosmosDbConnectionStringSecret.name
