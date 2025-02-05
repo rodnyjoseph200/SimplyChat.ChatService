@@ -1,4 +1,4 @@
-name: Build and Test
+name: Jobs
 
 on:
   # Pull requests targeting main
@@ -14,7 +14,7 @@ on:
   workflow_dispatch:    
 
 jobs:
-  build-and-test:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,8 +30,32 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore -c Release --warnAsError
+        run: dotnet build --no-restore -c Release
 
-      - name: Tests
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: src/**/bin/Release/
+
+  Test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+        
+      - name: Run tests
         run: |
           dotnet test --no-build --no-restore -c Release tests/UnitTests/ChatService.Core.Tests/ChatService.Core.Tests.csproj

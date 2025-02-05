@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy-to-azure:
     runs-on: ubuntu-latest
 
     env:
@@ -64,7 +64,7 @@ jobs:
 
           parameters: |
             {
-              "environmentName": "dev",
+              "environment": "Development",
               "restApiContainerImage": "${{ env.REST_API_IMAGE_NAME }}:${{ env.IMAGE_TAG }}",
               "registryServer": "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}",
               "username": "${{ secrets.AZURE_REGISTRY_USERNAME }}",
