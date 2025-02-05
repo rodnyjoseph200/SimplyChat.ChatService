@@ -1,4 +1,5 @@
 param environment string
+param envFriendlyName string
 param restApiContainerImage string
 param registryServer string
 param location string = resourceGroup().location
@@ -10,14 +11,13 @@ param password string
 @secure()
 param objectId string
 
-var appName = 'simplychat'
 var serviceName = 'chat-service'
 
 module monitor './modules/shared/monitor.bicep' = {
   name: 'monitor'
   params: {
-    appName: appName
-    environment: environment
+    serviceName: serviceName
+    envFriendlyName: envFriendlyName
     location: location
   }
 }
@@ -25,8 +25,8 @@ module monitor './modules/shared/monitor.bicep' = {
 module containerAppEnvironment './modules/shared/container-app-environment.bicep' = {
   name: 'container-app-environment'
   params: {
-    appName: appName
-    environment: environment
+    serviceName: serviceName
+    envFriendlyName: envFriendlyName
     location: location
     logAnalyticsWorkspaceName: monitor.outputs.logAnalyticsWorkspaceName
   }
@@ -36,7 +36,6 @@ module restApi './modules/apis-rest.bicep' = {
   name: 'rest-api'
   params: {
     location: location
-    appName: appName
     serviceName: serviceName
     managedEnvironmentId: containerAppEnvironment.outputs.managedEnvironmentId
     containerImage: restApiContainerImage
@@ -44,24 +43,25 @@ module restApi './modules/apis-rest.bicep' = {
     registryUsername: username
     registryPassword: password
     environment: environment
+    envFriendlyName: envFriendlyName
   }
 }
 
 module cosmosDb './modules/shared/cosmosdb.bicep' = {
   name: 'cosmos-db'
   params: {
-    environment: environment
+    envFriendlyName: envFriendlyName
     location: location
-    appName: appName
+    serviceName: serviceName
   }
 }
 
 module keyVault './modules/shared/key-vault.bicep' = {
   name: 'key-vault'
   params: {
-    appName: appName
+    serviceName: serviceName
     location: location
-    environment: environment
+    envFriendlyName: envFriendlyName
     objectId: objectId
   }
 }

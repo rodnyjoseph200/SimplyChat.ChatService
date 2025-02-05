@@ -65,6 +65,7 @@ jobs:
           parameters: |
             {
               "environment": "Development",
+              "envFriendlyName": "dev",
               "restApiContainerImage": "${{ env.REST_API_IMAGE_NAME }}:${{ env.IMAGE_TAG }}",
               "registryServer": "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}",
               "username": "${{ secrets.AZURE_REGISTRY_USERNAME }}",
