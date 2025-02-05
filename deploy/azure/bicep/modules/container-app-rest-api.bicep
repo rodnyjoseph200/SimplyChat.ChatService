@@ -22,6 +22,7 @@ var secretValue = cosmosDbConnectionStringSecret.properties.value
 var containerAppName = '${serviceName}-rest-api-${envFriendlyName}'
 var containerRegistryPasswordName = 'container-registry-password'
 
+//todo - Reference secrets from Key Vault for added benefits like rotation
 resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
   name: containerAppName
   location: location
