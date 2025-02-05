@@ -11,13 +11,12 @@ param password string
 @secure()
 param objectId string
 
-var appName = 'simplychat'
 var serviceName = 'chat-service'
 
 module monitor './modules/shared/monitor.bicep' = {
   name: 'monitor'
   params: {
-    appName: appName
+    serviceName: serviceName
     envFriendlyName: envFriendlyName
     location: location
   }
@@ -26,7 +25,7 @@ module monitor './modules/shared/monitor.bicep' = {
 module containerAppEnvironment './modules/shared/container-app-environment.bicep' = {
   name: 'container-app-environment'
   params: {
-    appName: appName
+    serviceName: serviceName
     envFriendlyName: envFriendlyName
     location: location
     logAnalyticsWorkspaceName: monitor.outputs.logAnalyticsWorkspaceName
@@ -37,7 +36,6 @@ module restApi './modules/apis-rest.bicep' = {
   name: 'rest-api'
   params: {
     location: location
-    appName: appName
     serviceName: serviceName
     managedEnvironmentId: containerAppEnvironment.outputs.managedEnvironmentId
     containerImage: restApiContainerImage
@@ -54,14 +52,14 @@ module cosmosDb './modules/shared/cosmosdb.bicep' = {
   params: {
     envFriendlyName: envFriendlyName
     location: location
-    appName: appName
+    serviceName: serviceName
   }
 }
 
 module keyVault './modules/shared/key-vault.bicep' = {
   name: 'key-vault'
   params: {
-    appName: appName
+    serviceName: serviceName
     location: location
     envFriendlyName: envFriendlyName
     objectId: objectId

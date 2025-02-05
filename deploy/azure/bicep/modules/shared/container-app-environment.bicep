@@ -1,6 +1,6 @@
-param appName string
+param serviceName string
 param envFriendlyName string
-param managedEnvironmentName string = '${appName}-container-apps-environment-${envFriendlyName}'
+param managedEnvironmentName string = '${serviceName}-container-apps-environment-${envFriendlyName}'
 param location string
 param logAnalyticsWorkspaceName string
 
