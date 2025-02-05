@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy-to-azure:
     runs-on: ubuntu-latest
 
     env:
