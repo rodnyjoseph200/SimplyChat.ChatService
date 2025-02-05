@@ -29,10 +29,6 @@ resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
           name: containerRegistryPasswordName
           value: registryPassword
         }
-        {
-          name: 'ENV'
-          value: environment
-        }
       ]
       registries: [
         {

@@ -36,7 +36,7 @@ param secretsPermissions array = [
 ])
 param skuName string = 'standard'
 
-var keyVaultName = '${serviceName}-keyvault-${envFriendlyName}'
+var keyVaultName = '${serviceName}-kv-${envFriendlyName}'
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: keyVaultName
