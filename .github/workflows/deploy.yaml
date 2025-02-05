@@ -3,7 +3,7 @@ name: Deploy
 on: 
   # Push to main
   push:
-    branches: [ bugfix/1-fix-failed-deployment ]
+    branches: [ main ]
 
   # Manually triggered
   workflow_dispatch:
