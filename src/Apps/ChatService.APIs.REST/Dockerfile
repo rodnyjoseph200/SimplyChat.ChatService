@@ -12,6 +12,9 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+# Copy MSBuild property files
+COPY ["Directory.Build.props", "src/Apps/ChatService.APIs.REST/"]
+COPY ["Directory.Packages.props", "src/Apps/ChatService.APIs.REST/"]
 # Copy the csproj file and restore dependencies
 COPY ["src/Apps/ChatService.APIs.REST/ChatService.APIs.REST.csproj", "src/Apps/ChatService.APIs.REST/"]
 RUN dotnet restore "./src/Apps/ChatService.APIs.REST/ChatService.APIs.REST.csproj"
