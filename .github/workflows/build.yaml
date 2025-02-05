@@ -14,7 +14,7 @@ on:
   workflow_dispatch:    
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +38,7 @@ jobs:
           name: build-artifacts
           path: src/**/bin/Release/
 
-  test:
+  Test:
     runs-on: ubuntu-latest
     needs: build
 
