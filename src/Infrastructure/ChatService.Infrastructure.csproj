@@ -7,10 +7,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Azure\IaC\Containers\Environments\" />
+    <Folder Include="Azure\IaC\Containers\ContainerApps\" />
+    <Folder Include="Azure\IaC\KeyVaults\Secrets\" />
+    <Folder Include="Azure\IaC\Monitors\AppInsights\" />
+    <Folder Include="Azure\IaC\Monitors\LogAnalytics\" />
     <Folder Include="Slack\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Azure" />
     <PackageReference Include="Devlooped.Extensions.DependencyInjection.Attributed">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

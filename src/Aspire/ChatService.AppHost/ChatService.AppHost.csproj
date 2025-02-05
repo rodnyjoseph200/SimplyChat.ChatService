@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
 
@@ -10,10 +10,20 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.Azure" />
+    <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Apps\ChatService.APIs.REST\ChatService.APIs.REST.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\ChatService.Infrastructure.csproj">
+      <IsAspireProjectResource>false</IsAspireProjectResource>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configurations\Azure\CosmosDb\" />
+    <Folder Include="Configurations\Azure\" />
   </ItemGroup>
 
 </Project>
