@@ -1,7 +1,8 @@
-param accountName string = 'cosmos-account-${uniqueString(resourceGroup().id)}'
-param environmentName string
+param environment string
 param location string
 param appName string
+
+param accountName string = '${appName}-cosmos-account-${environment}'
 
 @description('The default consistency level of the Cosmos DB account.')
 @allowed([
@@ -23,8 +24,8 @@ param maxStalenessPrefix int = 100000
 @maxValue(86400)
 param maxIntervalInSeconds int = 300
 
-var databaseName = 'cosmos-db-${appName}-${environmentName}'
-var containerName = 'cosmos-container-${appName}-${environmentName}'
+var databaseName = '${appName}-cosmos-db-${environment}'
+var containerName = '${appName}-cosmos-container-${environment}'
 
 var consistencyPolicy = {
   Eventual: {

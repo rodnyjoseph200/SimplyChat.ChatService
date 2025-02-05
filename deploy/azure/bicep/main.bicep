@@ -1,4 +1,4 @@
-param environmentName string
+param environment string
 param restApiContainerImage string
 param registryServer string
 param location string = resourceGroup().location
@@ -16,7 +16,8 @@ var serviceName = 'chat-service'
 module monitor './modules/shared/monitor.bicep' = {
   name: 'monitor'
   params: {
-    environmentName: environmentName
+    appName: appName
+    environment: environment
     location: location
   }
 }
@@ -24,7 +25,8 @@ module monitor './modules/shared/monitor.bicep' = {
 module containerAppEnvironment './modules/shared/container-app-environment.bicep' = {
   name: 'container-app-environment'
   params: {
-    environmentName: environmentName
+    appName: appName
+    environment: environment
     location: location
     logAnalyticsWorkspaceName: monitor.outputs.logAnalyticsWorkspaceName
   }
@@ -41,13 +43,14 @@ module restApi './modules/apis-rest.bicep' = {
     registryServer: registryServer
     registryUsername: username
     registryPassword: password
+    environment: environment
   }
 }
 
 module cosmosDb './modules/shared/cosmosdb.bicep' = {
   name: 'cosmos-db'
   params: {
-    environmentName: environmentName
+    environment: environment
     location: location
     appName: appName
   }
@@ -58,7 +61,7 @@ module keyVault './modules/shared/key-vault.bicep' = {
   params: {
     appName: appName
     location: location
-    environmentName: environmentName
+    environment: environment
     objectId: objectId
   }
 }

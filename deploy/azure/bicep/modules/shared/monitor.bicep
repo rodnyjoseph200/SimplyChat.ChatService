@@ -1,8 +1,9 @@
-param environmentName string
+param appName string
+param environment string
 param location string
 
-param workspaceName string = 'loganalytics-workspace-${environmentName}'
-param applicationInsightsName string = 'appinsights-${environmentName}'
+param workspaceName string = '${appName}-loganalytics-workspace-${environment}'
+param applicationInsightsName string = '${appName}-appinsights-${environment}'
 
 // Creates a Log Analytics workspace
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {

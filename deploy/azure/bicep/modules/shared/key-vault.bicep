@@ -1,6 +1,6 @@
 param appName string
 param location string
-param environmentName string
+param environment string
 
 @description('Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. Get it by using Get-AzADUser or Get-AzADServicePrincipal cmdlets.')
 param objectId string
@@ -36,7 +36,7 @@ param secretsPermissions array = [
 ])
 param skuName string = 'standard'
 
-var keyVaultName = 'keyvault-${appName}-${environmentName}'
+var keyVaultName = '${appName}-keyvault-${environment}'
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: keyVaultName
