@@ -55,6 +55,12 @@ resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
         {
           image: containerImage
           name: containerAppName
+          env: [
+            {
+              name: cosmosDbConnectionStringName
+              secretRef: cosmosDbConnectionStringName
+            }
+          ]
         }
       ]
     }
