@@ -7,17 +7,12 @@ param containerImage string
 param registryServer string
 param registryUsername string
 
-param keyVaultName string
 param cosmosDbConnectionStringName string
 
 @secure()
 param registryPassword string
-
-resource cosmosDbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' existing = {
-  name: '${keyVaultName}/${cosmosDbConnectionStringName}'
-}
-
-var secretValue = cosmosDbConnectionStringSecret.properties.value
+@secure()
+param cosmosDbConnectionString string
 
 var containerAppName = '${serviceName}-rest-api-${envFriendlyName}'
 var containerRegistryPasswordName = 'container-registry-password'
@@ -40,7 +35,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
         }
         {
           name: cosmosDbConnectionStringName
-          value: secretValue
+          value: cosmosDbConnectionString
         }
       ]
       registries: [
