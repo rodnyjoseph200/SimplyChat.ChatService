@@ -57,17 +57,6 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
           secrets: secretsPermissions
         }
       }
-      // Access policy for Azure Resource Manager (ARM)
-      {
-        tenantId: tenantId
-        objectId: 'f248a218-1ef9-47bf-9928-ae47093fd442'
-        permissions: {
-          secrets: [
-            'get'
-            'list'
-          ]
-        }
-      }
     ]
     sku: {
       name: skuName
