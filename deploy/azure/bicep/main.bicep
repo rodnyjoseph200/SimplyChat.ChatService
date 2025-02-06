@@ -58,10 +58,6 @@ module keyVaultSecretsModule './modules/shared/key-vault-secrets.bicep' = {
   }
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
-  name: keyVaultModule.outputs.name
-}
-
 module restApiModule './modules/container-app-rest-api.bicep' = {
   name: 'rest-api'
   params: {
@@ -74,7 +70,7 @@ module restApiModule './modules/container-app-rest-api.bicep' = {
     registryPassword: password
     envFriendlyName: envFriendlyName
     cosmosDbConnectionStringName: keyVaultSecretsModule.outputs.cosmosDbConnectionStringName
-    cosmosDbConnectionString: keyVault.getSecret(keyVaultSecretsModule.outputs.cosmosDbConnectionStringName)
+    cosmosAccountName: cosmosDbModule.outputs.accountName
   }
 }
 
