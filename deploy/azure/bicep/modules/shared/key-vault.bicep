@@ -73,7 +73,7 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
       family: 'A'
     }
     networkAcls: {
-      defaultAction: 'Allow'
+      defaultAction: 'Deny'
       bypass: 'AzureServices'
     }
   }
