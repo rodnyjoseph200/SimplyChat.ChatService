@@ -13,8 +13,10 @@ var cosmosDbConnectionString = 'AccountEndpoint=${cosmosAccount.properties.docum
 
 resource cosmosDbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
-  name: 'cosmosDbConnectionString'
+  name: 'cosmos-db-connection-string'
   properties: {
     value: cosmosDbConnectionString
   }
 }
+
+output cosmosDbConnectionStringName string = cosmosDbConnectionStringSecret.name

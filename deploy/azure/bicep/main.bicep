@@ -1,4 +1,3 @@
-param environment string
 param envFriendlyName string
 param restApiContainerImage string
 param registryServer string
@@ -13,7 +12,7 @@ param objectId string
 
 var serviceName = 'chat-service'
 
-module monitor './modules/shared/monitor.bicep' = {
+module monitorModule './modules/shared/monitor.bicep' = {
   name: 'monitor'
   params: {
     serviceName: serviceName
@@ -22,32 +21,17 @@ module monitor './modules/shared/monitor.bicep' = {
   }
 }
 
-module containerAppEnvironment './modules/shared/container-app-environment.bicep' = {
+module containerAppEnvironmentModule './modules/shared/container-app-environment.bicep' = {
   name: 'container-app-environment'
   params: {
     serviceName: serviceName
     envFriendlyName: envFriendlyName
     location: location
-    logAnalyticsWorkspaceName: monitor.outputs.logAnalyticsWorkspaceName
+    logAnalyticsWorkspaceName: monitorModule.outputs.logAnalyticsWorkspaceName
   }
 }
 
-module restApi './modules/apis-rest.bicep' = {
-  name: 'rest-api'
-  params: {
-    location: location
-    serviceName: serviceName
-    managedEnvironmentId: containerAppEnvironment.outputs.managedEnvironmentId
-    containerImage: restApiContainerImage
-    registryServer: registryServer
-    registryUsername: username
-    registryPassword: password
-    environment: environment
-    envFriendlyName: envFriendlyName
-  }
-}
-
-module cosmosDb './modules/shared/cosmosdb.bicep' = {
+module cosmosDbModule './modules/shared/cosmosdb.bicep' = {
   name: 'cosmos-db'
   params: {
     envFriendlyName: envFriendlyName
@@ -56,7 +40,7 @@ module cosmosDb './modules/shared/cosmosdb.bicep' = {
   }
 }
 
-module keyVault './modules/shared/key-vault.bicep' = {
+module keyVaultModule './modules/shared/key-vault.bicep' = {
   name: 'key-vault'
   params: {
     serviceName: serviceName
@@ -66,11 +50,27 @@ module keyVault './modules/shared/key-vault.bicep' = {
   }
 }
 
-module keyVaultSecrets './modules/shared/key-vault-secrets.bicep' = {
+module keyVaultSecretsModule './modules/shared/key-vault-secrets.bicep' = {
   name: 'key-vault-secrets'
   params: {
-    keyVaultName: keyVault.outputs.name
-    cosmosAccountName: cosmosDb.outputs.accountName
+    keyVaultName: keyVaultModule.outputs.name
+    cosmosAccountName: cosmosDbModule.outputs.accountName
+  }
+}
+
+module restApiModule './modules/container-app-rest-api.bicep' = {
+  name: 'rest-api'
+  params: {
+    location: location
+    serviceName: serviceName
+    managedEnvironmentId: containerAppEnvironmentModule.outputs.managedEnvironmentId
+    containerImage: restApiContainerImage
+    registryServer: registryServer
+    registryUsername: username
+    registryPassword: password
+    envFriendlyName: envFriendlyName
+    cosmosDbConnectionStringName: keyVaultSecretsModule.outputs.cosmosDbConnectionStringName
+    cosmosAccountName: cosmosDbModule.outputs.accountName
   }
 }
 
