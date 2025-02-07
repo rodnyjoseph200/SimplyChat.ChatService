@@ -29,11 +29,8 @@ public class ChatMessageService : IChatMessageService
         if (string.IsNullOrWhiteSpace(chatroomId))
             throw new ArgumentException($"{nameof(chatroomId)} is required");
 
-        // todo - relax editorconfig rule
-#pragma warning disable IDE0046 // Convert to conditional expression
         if (string.IsNullOrWhiteSpace(chatMessageId))
             throw new ArgumentException($"{nameof(chatMessageId)} is required");
-#pragma warning restore IDE0046 // Convert to conditional expression
 
         return await _chatMessageRepository.Get(chatroomId, chatMessageId);
     }
