@@ -3,7 +3,7 @@ using ChatService.Core.Messages;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ChatService.Core.Tests.ChatMessages;
+namespace ChatService.Core.Tests.ChatMessages.models;
 
 [TestClass]
 public class NewChatMessageTests

@@ -71,6 +71,8 @@ module restApiModule './modules/container-app-rest-api.bicep' = {
     envFriendlyName: envFriendlyName
     cosmosDbConnectionStringName: keyVaultSecretsModule.outputs.cosmosDbConnectionStringName
     cosmosAccountName: cosmosDbModule.outputs.accountName
+    cosmosDbDatabaseName: cosmosDbModule.outputs.databaseName
+    cosmosDbContainerName: cosmosDbModule.outputs.containerName
   }
 }
 

@@ -1,4 +1,5 @@
 using ChatService.APIs.REST;
+using ChatService.Infrastructure.Azure.CosmosDB;
 using ChatService.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,20 @@ builder.Services
     .AddExceptionHandler<CustomHttpExceptionHandler>()
     .AddProblemDetails();
 
+var cosmosConnectionString = builder.Configuration["cosmos-connection-string"];
+if (string.IsNullOrWhiteSpace(cosmosConnectionString))
+    throw new InvalidOperationException("Cosmos DB connection string is missing");
+
+var databaseId = builder.Configuration["cosmos-database-name"];
+if (string.IsNullOrWhiteSpace(databaseId))
+    throw new InvalidOperationException("Cosmos DB database ID is missing");
+
+var containerId = builder.Configuration["cosmos-container-name"];
+if (string.IsNullOrWhiteSpace(containerId))
+    throw new InvalidOperationException("Cosmos DB container ID is missing");
+
+builder.Services.AddAzureCosmosDb(cosmosConnectionString, databaseId, containerId);
+
 builder.Services.AddControllers();
 builder.AddServiceDefaults();
 
@@ -28,12 +43,13 @@ try
     _ = app.MapDefaultEndpoints();
     _ = app.UseExceptionHandler();
 
-    if (!app.Environment.IsProduction())
-    {
-        _ = app
+    // In a real-world scenario, Swagger should not be enabled in production
+    //if (!app.Environment.IsProduction())
+    //{
+    _ = app
         .UseSwagger()
         .UseSwaggerUI();
-    }
+    //}
 
     _ = app
     .UseHttpsRedirection()

@@ -9,7 +9,7 @@ namespace ChatService.Core.Tests.Chatrooms.Models;
 public class ChatroomTests
 {
     // Helper to create a dummy tracker.
-    private Tracker CreateDummyTracker() => Tracker.LoadTracking(
+    private Tracker CreateDummyTracker() => Tracker.Load(
         DateTimeOffset.UtcNow, "creator",
         DateTimeOffset.UtcNow, "updater",
         false, null, null, null, null);

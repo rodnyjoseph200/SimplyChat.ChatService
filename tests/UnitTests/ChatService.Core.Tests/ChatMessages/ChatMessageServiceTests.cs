@@ -41,21 +41,33 @@ public class ChatMessageService_Get_Tests : ChatMessageServiceTestBase
     [DataRow(" ")]
     public async Task Get_WhenChatMessageIdIsEmptyOrWhitespace_ThrowsArgumentException(string chatMessageId)
     {
-        Func<Task> act = async () => await _chatMessageService.Get(chatMessageId);
+        Func<Task> act = async () => await _chatMessageService.Get("chatroomId", chatMessageId);
 
         _ = await act.Should().ThrowAsync<ArgumentException>()
-            .WithMessage("id is required");
+            .WithMessage("chatMessageId is required");
+    }
+
+    [TestMethod]
+    [DataRow("")]
+    [DataRow(" ")]
+    public async Task Get_WhenChatroomIdIsEmptyOrWhitespace_ThrowsArgumentException(string chatroomId)
+    {
+        Func<Task> act = async () => await _chatMessageService.Get(chatroomId, "chatMessageId");
+
+        _ = await act.Should().ThrowAsync<ArgumentException>()
+            .WithMessage("chatroomId is required");
     }
 
     [TestMethod]
     public async Task Get_WhenChatMessageNotFound_ReturnsNull()
     {
+        var chatroomId = "chatroomId";
         var chatMessageId = "chatMessageId";
         _ = _chatMessageRepositoryMock
-            .Setup(x => x.Get(chatMessageId))
+            .Setup(x => x.Get(chatroomId, chatMessageId))
             .ReturnsAsync((ChatMessage?)null);
 
-        var result = await _chatMessageService.Get(chatMessageId);
+        var result = await _chatMessageService.Get(chatroomId, chatMessageId);
 
         _ = result.Should().BeNull();
     }
@@ -70,7 +82,7 @@ public class ChatMessageService_Get_Tests : ChatMessageServiceTestBase
         var createdAt = DateTimeOffset.UtcNow;
         var type = ChatMessageTypes.Text;
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -78,10 +90,10 @@ public class ChatMessageService_Get_Tests : ChatMessageServiceTestBase
         var chatMessage = ChatMessage.Load(tracker, chatMessageId, chatRoomId, userId, content, createdAt, type);
 
         _ = _chatMessageRepositoryMock
-            .Setup(x => x.Get(chatMessageId))
+            .Setup(x => x.Get(chatRoomId, chatMessageId))
             .ReturnsAsync(chatMessage);
 
-        var result = await _chatMessageService.Get(chatMessageId);
+        var result = await _chatMessageService.Get(chatRoomId, chatMessageId);
 
         _ = result.Should().Be(chatMessage);
     }
@@ -120,7 +132,7 @@ public class ChatMessageService_GetByChatRoomId_Tests : ChatMessageServiceTestBa
     {
         var chatroomId = "chatroomId";
 
-        var trackerRoom = Tracker.LoadTracking(
+        var trackerRoom = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -146,7 +158,7 @@ public class ChatMessageService_GetByChatRoomId_Tests : ChatMessageServiceTestBa
     {
         var chatroomId = "chatroomId";
 
-        var trackerRoom = Tracker.LoadTracking(
+        var trackerRoom = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -157,7 +169,7 @@ public class ChatMessageService_GetByChatRoomId_Tests : ChatMessageServiceTestBa
             .Setup(x => x.Get(chatroomId))
             .ReturnsAsync(chatroom);
 
-        var trackerMsg = Tracker.LoadTracking(
+        var trackerMsg = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -211,7 +223,7 @@ public class ChatMessageService_Create_Tests : ChatMessageServiceTestBase
             DateTimeOffset.UtcNow,
             ChatMessageTypes.Text);
 
-        var trackerRoom = Tracker.LoadTracking(
+        var trackerRoom = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -222,7 +234,7 @@ public class ChatMessageService_Create_Tests : ChatMessageServiceTestBase
             .Setup(x => x.Get(chatroomId))
             .ReturnsAsync(chatroom);
 
-        var trackerMsg = Tracker.LoadTracking(
+        var trackerMsg = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -259,9 +271,23 @@ public class ChatMessageService_Update_Tests : ChatMessageServiceTestBase
     [TestMethod]
     public async Task Update_WhenChatMessageDoesNotExist_ThrowsResourceNotFoundException()
     {
-        var command = UpdateChatMessageCommand.Create("nonexistentMsgId", "Updated Content");
+        var command = UpdateChatMessageCommand.Create("chatroomId", "nonexistentMsgId", "Updated Content");
         _ = _chatMessageRepositoryMock
-            .Setup(x => x.Get(command.ChatMessageId))
+            .Setup(x => x.Get(command.ChatroomId, command.ChatMessageId))
+            .ReturnsAsync((ChatMessage?)null);
+
+        Func<Task> act = async () => await _chatMessageService.Update(command);
+
+        _ = await act.Should().ThrowAsync<ResourceNotFoundException>()
+            .WithMessage("ChatMessage");
+    }
+
+    [TestMethod]
+    public async Task Update_WhenChatroomDoesNotExist_ThrowsResourceNotFoundException()
+    {
+        var command = UpdateChatMessageCommand.Create("nonexistentChatroomId", "nonexistentMsgId", "Updated Content");
+        _ = _chatMessageRepositoryMock
+            .Setup(x => x.Get(command.ChatroomId, command.ChatMessageId))
             .ReturnsAsync((ChatMessage?)null);
 
         Func<Task> act = async () => await _chatMessageService.Update(command);
@@ -281,10 +307,11 @@ public class ChatMessageService_Update_Tests : ChatMessageServiceTestBase
         var createdAt = DateTimeOffset.UtcNow;
         var type = ChatMessageTypes.Text;
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
+
         var existingChatMessage = ChatMessage.Load(
             tracker,
             chatMessageId,
@@ -295,10 +322,10 @@ public class ChatMessageService_Update_Tests : ChatMessageServiceTestBase
             type);
 
         _ = _chatMessageRepositoryMock
-            .Setup(x => x.Get(chatMessageId))
+            .Setup(x => x.Get(chatroomId, chatMessageId))
             .ReturnsAsync(existingChatMessage);
 
-        var command = UpdateChatMessageCommand.Create(chatMessageId, updatedContent);
+        var command = UpdateChatMessageCommand.Create(chatroomId, chatMessageId, updatedContent);
 
         await _chatMessageService.Update(command);
 
@@ -313,9 +340,9 @@ public class ChatMessageService_Delete_Tests : ChatMessageServiceTestBase
     [TestMethod]
     public async Task Delete_WhenChatMessageDoesNotExist_ThrowsResourceNotFoundException()
     {
-        var command = DeleteChatMessageCommand.Create("nonexistentMsgId");
+        var command = DeleteChatMessageCommand.Create("chatroomId", "nonexistentMsgId");
         _ = _chatMessageRepositoryMock
-            .Setup(x => x.Get(command.ChatMessageId))
+            .Setup(x => x.Get(command.ChatroomId, command.ChatMessageId))
             .ReturnsAsync((ChatMessage?)null);
 
         Func<Task> act = async () => await _chatMessageService.Delete(command);
@@ -334,7 +361,7 @@ public class ChatMessageService_Delete_Tests : ChatMessageServiceTestBase
         var createdAt = DateTimeOffset.UtcNow;
         var type = ChatMessageTypes.Text;
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow, "createdBy",
             DateTimeOffset.UtcNow, "updatedBy",
             false);
@@ -348,13 +375,13 @@ public class ChatMessageService_Delete_Tests : ChatMessageServiceTestBase
             type);
 
         _ = _chatMessageRepositoryMock
-            .Setup(x => x.Get(chatMessageId))
+            .Setup(x => x.Get(chatroomId, chatMessageId))
             .ReturnsAsync(existingChatMessage);
 
-        var command = DeleteChatMessageCommand.Create(chatMessageId);
+        var command = DeleteChatMessageCommand.Create(chatroomId, chatMessageId);
 
         await _chatMessageService.Delete(command);
 
-        _chatMessageRepositoryMock.Verify(x => x.Delete(chatMessageId), Times.Once);
+        _chatMessageRepositoryMock.Verify(x => x.Delete(chatroomId, chatMessageId), Times.Once);
     }
 }

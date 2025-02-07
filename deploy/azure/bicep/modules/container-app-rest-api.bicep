@@ -8,6 +8,8 @@ param registryServer string
 param registryUsername string
 param cosmosAccountName string
 param cosmosDbConnectionStringName string
+param cosmosDbDatabaseName string
+param cosmosDbContainerName string
 
 @secure()
 param registryPassword string
@@ -41,6 +43,14 @@ resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
         {
           name: cosmosDbConnectionStringName
           value: cosmosDbConnectionString
+        }
+        {
+          name: 'cosmos-database-name'
+          value: cosmosDbDatabaseName
+        }
+        {
+          name: 'cosmos-container-name'
+          value: cosmosDbContainerName
         }
       ]
       registries: [

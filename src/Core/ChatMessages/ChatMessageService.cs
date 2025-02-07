@@ -22,18 +22,20 @@ public class ChatMessageService : IChatMessageService
         _chatRoomService = chatRoomService;
     }
 
-    public async Task<ChatMessage?> Get(string id)
+    public async Task<ChatMessage?> Get(string chatroomId, string chatMessageId)
     {
-        _logger.LogInformation("Getting chat message by id");
+        _logger.LogInformation("Getting chat message by chatroomId and chatMesasgeId");
 
-        if (string.IsNullOrWhiteSpace(id))
-            throw new ArgumentException($"{nameof(id)} is required");
+        if (string.IsNullOrWhiteSpace(chatroomId))
+            throw new ArgumentException($"{nameof(chatroomId)} is required");
 
-        var chatMessage = await _chatMessageRepository.Get(id);
-        if (chatMessage is not null)
-            _logger.LogInformation("Chat message found");
+        // todo - relax editorconfig rule
+#pragma warning disable IDE0046 // Convert to conditional expression
+        if (string.IsNullOrWhiteSpace(chatMessageId))
+            throw new ArgumentException($"{nameof(chatMessageId)} is required");
+#pragma warning restore IDE0046 // Convert to conditional expression
 
-        return chatMessage;
+        return await _chatMessageRepository.Get(chatroomId, chatMessageId);
     }
 
     public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
@@ -68,7 +70,7 @@ public class ChatMessageService : IChatMessageService
     {
         _logger.LogInformation("Updating chat message");
 
-        var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
+        var chatMessage = await _chatMessageRepository.Get(command.ChatroomId, command.ChatMessageId) ??
             throw new ResourceNotFoundException(nameof(ChatMessage));
 
         chatMessage.UpdateContent(command.Content);
@@ -81,10 +83,10 @@ public class ChatMessageService : IChatMessageService
     {
         _logger.LogInformation("Deleting chat message");
 
-        var chatMessage = await _chatMessageRepository.Get(command.ChatMessageId) ??
+        var chatMessage = await _chatMessageRepository.Get(command.ChatroomId, command.ChatMessageId) ??
             throw new ResourceNotFoundException(nameof(ChatMessage));
 
-        await _chatMessageRepository.Delete(command.ChatMessageId);
+        await _chatMessageRepository.Delete(command.ChatroomId, command.ChatMessageId);
         _logger.LogInformation("Chat message deleted");
     }
 }

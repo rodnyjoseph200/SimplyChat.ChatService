@@ -7,6 +7,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Azure\EventGrid\" />
+    <Folder Include="Azure\AI\" />
     <Folder Include="Slack\" />
   </ItemGroup>
 
@@ -15,7 +17,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Azure.Cosmos" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Simply.Log" />
     <PackageReference Include="Simply.Track" />
   </ItemGroup>
