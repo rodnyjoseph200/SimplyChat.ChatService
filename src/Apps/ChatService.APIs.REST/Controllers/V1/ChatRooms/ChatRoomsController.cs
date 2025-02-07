@@ -1,7 +1,5 @@
 ﻿using Asp.Versioning;
 using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
-using ChatService.APIs.REST.Controllers.V1.ChatRooms.Models.Messages;
-using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Commands;
 using ChatService.Core.ChatRooms.Models;
@@ -18,13 +16,11 @@ public class ChatRoomsController : ControllerBase
 {
     private readonly ILogger<ChatRoomsController> _logger;
     private readonly IChatRoomService _chatRoomService;
-    private readonly IChatMessageService _chatMessageService;
 
-    public ChatRoomsController(ILogger<ChatRoomsController> logger, IChatRoomService chatRoomService, IChatMessageService messageService)
+    public ChatRoomsController(ILogger<ChatRoomsController> logger, IChatRoomService chatRoomService)
     {
         _logger = logger;
         _chatRoomService = chatRoomService;
-        _chatMessageService = messageService;
     }
 
     [HttpGet("{id}")]
@@ -95,44 +91,6 @@ public class ChatRoomsController : ControllerBase
 
         _logger.LogInformation("Request to delete chatroom completed");
         return NoContent();
-    }
-
-    [HttpGet("{chatroomId}/messages")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation(Summary = "Get Chat Messages by Chatroom ID", Description = "Gets Chat Messages by Chatroom ID")]
-    public async Task<ActionResult<GetChatMessagesByChatroomIdResponse>> GetChatMessages(string chatroomId)
-    {
-        using var _ = _logger.AddField($"{nameof(chatroomId)}", chatroomId);
-        _logger.LogInformation("Received request to get chat messages by chatroomId");
-
-        var chatMessages = await _chatMessageService.GetByChatRoomId(chatroomId);
-        var response = GetChatMessagesByChatroomIdResponse.Convert(chatroomId, chatMessages);
-        return Ok(response);
-    }
-
-    [HttpPost("{chatroomId}/messages")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation(Summary = "Create Chat Message", Description = "Creates Chat Message")]
-    public async Task<ActionResult<CreateChatMessageResponse>> CreateChatMessage(string chatroomId, [FromBody] CreateChatMessageRequest request)
-    {
-        using var _ = _logger.AddField($"{nameof(chatroomId)}", chatroomId);
-        _logger.LogInformation("Received request to create chat message provided chatroomId");
-
-        var command = CreateChatMessageRequest.Convert(chatroomId, request);
-
-        using var __ = _logger.AddFields(
-            ($"{nameof(command.UserId)}", command.UserId),
-            ($"{nameof(command.CreatedAt)}", command.CreatedAt.ToString()),
-            ($"{nameof(command.Type)}", command.Type.ToString()));
-
-        var chatMessage = await _chatMessageService.Create(command);
-        var response = CreateChatMessageResponse.Convert(chatMessage);
-        _logger.LogInformation("Request to create chat messages provided chatroomId completed");
-        return Ok(response);
     }
 
     //todo

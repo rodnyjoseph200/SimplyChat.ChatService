@@ -1,12 +1,10 @@
 ﻿using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Simply.Track;
 
 namespace ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
 
-[Service]
 public class InMemoryDbChatroomRepository : IChatroomRepository
 {
     private readonly ILogger<InMemoryDbChatroomRepository> _logger;
@@ -35,7 +33,7 @@ public class InMemoryDbChatroomRepository : IChatroomRepository
         var chatroomUser = ChatRoomUser.Load(newChatRoom.Users.Single().Id, newChatRoom.Users.Single().Username, chatroomUserSettings, isSuperUser: true);
 
         var chatroom = Chatroom.Load(Guid.NewGuid().ToString(), new List<ChatRoomUser>() { chatroomUser },
-            Tracker.LoadTracking(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false, null, null, null, null));
+            Tracker.Load(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false, null, null, null, null));
 
         InMemoryDbChatroomsStore.Add(chatroom);
         _logger.LogInformation("Chatroom created");

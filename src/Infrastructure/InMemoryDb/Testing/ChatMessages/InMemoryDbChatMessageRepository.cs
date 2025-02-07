@@ -1,12 +1,10 @@
 ﻿using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatMessages.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Simply.Track;
 
 namespace ChatService.Infrastructure.InMemoryDb.Testing.ChatMessages;
 
-[Service]
 public class InMemoryDbChatMessageRepository : IChatMessageRepository
 {
     private readonly ILogger<InMemoryDbChatMessageRepository> _logger;
@@ -16,10 +14,10 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         _logger = logger;
     }
 
-    public async Task<ChatMessage?> Get(string id)
+    public async Task<ChatMessage?> Get(string chatroomId, string chatMessageId)
     {
         _logger.LogInformation("Getting chat message");
-        var chatMessage = InMemoryDbChatMessagesStore.InMemoryDbChatMessages.SingleOrDefault(x => x.Id == id);
+        var chatMessage = InMemoryDbChatMessagesStore.InMemoryDbChatMessages.SingleOrDefault(x => x.Id == chatMessageId);
         if (chatMessage is not null)
             _logger.LogInformation("Chat message found");
 
@@ -44,7 +42,7 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         _logger.LogInformation("Creating chat message");
 
         var chatMessage = ChatMessage.Load(
-            Tracker.LoadTracking(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false,
+            Tracker.Load(DateTimeOffset.UtcNow, "test", DateTimeOffset.UtcNow, "test", false,
             null, null, null, null), Guid.NewGuid().ToString(), newChatMessage.ChatroomId,
             newChatMessage.UserId, newChatMessage.Content, newChatMessage.CreatedAt, newChatMessage.Type);
 
@@ -66,10 +64,10 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         await Task.CompletedTask;
     }
 
-    public async Task Delete(string id)
+    public async Task Delete(string chatroomId, string chatMessageId)
     {
         _logger.LogInformation("Deleting chat message");
-        InMemoryDbChatMessagesStore.Remove(id);
+        InMemoryDbChatMessagesStore.Remove(chatMessageId);
         _logger.LogInformation("Chat message deleted");
 
         await Task.CompletedTask;

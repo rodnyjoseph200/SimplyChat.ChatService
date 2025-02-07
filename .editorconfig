@@ -210,7 +210,7 @@ dotnet_style_prefer_conditional_expression_over_assignment = true:warning
 # [FALSE]
 # if (condition) return "Yes";
 # return "No";
-dotnet_style_prefer_conditional_expression_over_return = true:warning
+dotnet_style_prefer_conditional_expression_over_return = true:suggestion
 
 # dotnet_style_prefer_foreach_explicit_cast_in_source sets the preference to cast the item in the foreach when the type is known.
 # Example:

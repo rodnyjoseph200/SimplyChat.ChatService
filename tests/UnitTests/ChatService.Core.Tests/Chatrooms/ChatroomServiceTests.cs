@@ -57,7 +57,7 @@ public class ChatRoomService_Get_Tests : ChatRoomServiceTestBase
     {
         var chatroomId = "chatroomId";
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow,
             "createdBy",
             DateTimeOffset.UtcNow,
@@ -85,7 +85,7 @@ public class ChatRoomService_Create_Tests : ChatRoomServiceTestBase
         var username = "TestUser";
         var createCommand = CreateChatRoomCommand.Create(username);
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow,
             "createdBy",
             DateTimeOffset.UtcNow,
@@ -132,7 +132,7 @@ public class ChatRoomService_Update_Tests : ChatRoomServiceTestBase
     {
         var chatroomId = "existingChatroomId";
 
-        var existingTracker = Tracker.LoadTracking(
+        var existingTracker = Tracker.Load(
             DateTimeOffset.UtcNow,
             "createdBy",
             DateTimeOffset.UtcNow,
@@ -176,7 +176,7 @@ public class ChatRoomService_Delete_Tests : ChatRoomServiceTestBase
     {
         var deleteCommand = DeleteChatRoomCommand.Create("chatroomId");
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow,
             "createdBy",
             DateTimeOffset.UtcNow,

@@ -4,7 +4,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simply.Track;
 
-namespace ChatService.Core.Tests.ChatMessages;
+namespace ChatService.Core.Tests.ChatMessages.models;
 
 [TestClass]
 public class ChatMessageTests
@@ -19,7 +19,7 @@ public class ChatMessageTests
         DateTimeOffset createdAt = DateTimeOffset.UtcNow;
         var type = ChatMessageTypes.Text;
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow, "creator",
             DateTimeOffset.UtcNow, "updater",
             false, null, null, null, null);
@@ -46,7 +46,7 @@ public class ChatMessageTests
         DateTimeOffset createdAt = DateTimeOffset.UtcNow;
         var type = ChatMessageTypes.Text;
 
-        var tracker = Tracker.LoadTracking(
+        var tracker = Tracker.Load(
             DateTimeOffset.UtcNow, "creator",
             DateTimeOffset.UtcNow, "updater",
             false, null, null, null, null);
