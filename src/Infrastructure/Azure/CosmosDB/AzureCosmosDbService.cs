@@ -4,13 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ChatService.Infrastructure.Azure.CosmosDB;
 
 [Service]
-public class CosmosDbService : ICosmosDbService
+public class AzureCosmosDbService : IAzureCosmosDbService
 {
     private readonly CosmosClient _cosmosClient;
     private readonly Database _database;
     private readonly string _containerId;
 
-    public CosmosDbService(CosmosClient cosmosClient, string databaseId, string containerId)
+    public AzureCosmosDbService(CosmosClient cosmosClient, string databaseId, string containerId)
     {
         _cosmosClient = cosmosClient;
         _database = _cosmosClient.GetDatabase(databaseId);

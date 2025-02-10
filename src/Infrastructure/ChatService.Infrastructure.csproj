@@ -7,7 +7,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Azure\EventGrid\" />
     <Folder Include="Azure\AI\" />
     <Folder Include="Slack\" />
   </ItemGroup>

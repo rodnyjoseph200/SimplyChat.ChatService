@@ -14,7 +14,7 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
     private readonly ILogger<AzureCosmosDbChatroomRepository> _logger;
     private readonly Container _container;
 
-    public AzureCosmosDbChatroomRepository(ICosmosDbService provider, ILogger<AzureCosmosDbChatroomRepository> logger)
+    public AzureCosmosDbChatroomRepository(IAzureCosmosDbService provider, ILogger<AzureCosmosDbChatroomRepository> logger)
     {
         _container = provider.GetContainer;
         _logger = logger;

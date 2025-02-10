@@ -2,7 +2,7 @@
 
 namespace ChatService.Infrastructure.Azure.CosmosDB;
 
-public interface ICosmosDbService
+public interface IAzureCosmosDbService
 {
     Database GetDatabase { get; }
 

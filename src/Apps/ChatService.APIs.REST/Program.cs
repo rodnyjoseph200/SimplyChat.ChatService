@@ -4,6 +4,12 @@ using ChatService.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
+//todo - use options
+builder.Services.Configure<AzureCosmosDbOptions>(
+    builder.Configuration.GetSection(AzureCosmosDbOptions.Name));
+
 // Automatic service discovery (annotated with a Service attribute)
 // Adds services (singleton by default) with no need for manual registration
 builder.Services.AddServices();
@@ -28,7 +34,7 @@ var containerId = builder.Configuration["cosmos-container-name"];
 if (string.IsNullOrWhiteSpace(containerId))
     throw new InvalidOperationException("Cosmos DB container ID is missing");
 
-builder.Services.AddAzureCosmosDb(cosmosConnectionString, databaseId, containerId);
+builder.Services.AddAzureCosmosDb(configuration);
 
 builder.Services.AddControllers();
 builder.AddServiceDefaults();

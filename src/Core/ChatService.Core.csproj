@@ -14,8 +14,6 @@
 
   <ItemGroup>
     <Folder Include="AI\" />
-    <Folder Include="Alerts\" />
-    <Folder Include="Events\" />
     <Folder Include="Storage\" />
   </ItemGroup>
 
