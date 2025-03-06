@@ -1,8 +1,8 @@
 ﻿namespace ChatService.Core.ChatMessages.Commands;
-public class DeleteChatMessageCommand
+public record DeleteChatMessageCommand
 {
-    public string ChatroomId { get; init; }
-    public string ChatMessageId { get; init; }
+    public string ChatroomId { get; }
+    public string ChatMessageId { get; }
 
     private DeleteChatMessageCommand(string chatroomId, string chatMessageId)
     {

@@ -1,11 +1,11 @@
 ﻿namespace ChatService.Core.ChatMessages.Commands;
-public class UpdateChatMessageCommand
+public record UpdateChatMessageCommand
 {
-    public string ChatroomId { get; init; }
+    public string ChatroomId { get; }
 
-    public string ChatMessageId { get; init; }
+    public string ChatMessageId { get; }
 
-    public string Content { get; init; }
+    public string Content { get; }
 
     private UpdateChatMessageCommand(string chatroomId, string chatMessageId, string content)
     {

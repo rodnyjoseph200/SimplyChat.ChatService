@@ -2,7 +2,7 @@
 
 namespace ChatService.Core.ChatMessages.Models;
 
-public class NewChatMessage : ChatMessageBase
+public record NewChatMessage : ChatMessageBase
 {
     public NewChatMessage(ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
         : base(chatRoomId, userId, content, createdAt, type)

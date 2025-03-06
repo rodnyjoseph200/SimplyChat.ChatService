@@ -1,8 +1,8 @@
 ﻿namespace ChatService.Core.ChatRooms.Commands;
 
-public class UpdateChatRoomCommand
+public record UpdateChatRoomCommand
 {
-    public string ChatRoomId { get; init; }
+    public string ChatRoomId { get; }
 
     private UpdateChatRoomCommand(string chatRoomId)
     {

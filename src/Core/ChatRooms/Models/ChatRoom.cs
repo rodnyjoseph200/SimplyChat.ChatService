@@ -3,11 +3,11 @@ using Simply.Track;
 
 namespace ChatService.Core.ChatRooms.Models;
 
-public class Chatroom : ChatRoomBase
+public record Chatroom : ChatRoomBase
 {
-    public ID Id { get; init; }
+    public ID Id { get; }
 
-    public Tracker Tracker { get; init; }
+    public Tracker Tracker { get; }
 
     public ChatRoomUser SuperUser => _users.SingleOrDefault(u => u.IsSuperUser) ??
         throw new InvalidOperationException("Super user does not exist in the chat room");

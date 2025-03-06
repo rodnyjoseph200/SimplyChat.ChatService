@@ -1,34 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ChatService.Core;
-using ChatService.Core.ChatMessages.Models;
+﻿using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.Messages;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatMessages.Models;
 
-public class GetChatMessageResponse
+public record GetChatMessageResponse(string ChatMessageId, string ChatroomId, string UserId,
+    string Content, DateTimeOffset CreatedAt, ChatMessageTypes Type)
 {
-    [Required]
-    public string ChatMessageId { get; init; }
-    [Required]
-    public string ChatroomId { get; init; }
-    [Required]
-    public string UserId { get; init; }
-    [Required]
-    public string Content { get; init; }
-    [Required]
-    public DateTimeOffset CreatedAt { get; init; }
-    [Required]
-    public ChatMessageTypes Type { get; init; }
-
-    private GetChatMessageResponse(ID chatMessageId, ID chatroomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
+    public static GetChatMessageResponse Convert(ChatMessage chatMessage)
     {
-        ChatMessageId = chatMessageId.ToString();
-        ChatroomId = chatroomId.ToString();
-        UserId = userId.ToString();
-        Content = content;
-        CreatedAt = createdAt;
-        Type = type;
+        return new GetChatMessageResponse(
+            ChatMessageId: chatMessage.Id.ToString(),
+            ChatroomId: chatMessage.ChatroomId.ToString(),
+            UserId: chatMessage.UserId.ToString(),
+            Content: chatMessage.Content,
+            CreatedAt: chatMessage.CreatedAt,
+            Type: chatMessage.Type);
     }
-    public static GetChatMessageResponse Convert(ChatMessage chatMessage) =>
-        new(chatMessage.Id, chatMessage.ChatroomId, chatMessage.UserId, chatMessage.Content, chatMessage.CreatedAt, chatMessage.Type);
 }

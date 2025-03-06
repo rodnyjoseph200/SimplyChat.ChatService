@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ChatService.Core.ChatMessages.Commands;
+﻿using ChatService.Core.ChatMessages.Commands;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatMessages.Models;
 
-public class UpdateChatMessageRequest
+public record UpdateChatMessageRequest(string Content)
 {
-    [Required]
-    public required string Content { get; set; }
-
-    internal static UpdateChatMessageCommand Convert(string chatroomId, string chatMessageId, UpdateChatMessageRequest request) =>
+    public static UpdateChatMessageCommand Convert(string chatroomId, string chatMessageId, UpdateChatMessageRequest request) =>
         UpdateChatMessageCommand.Create(chatroomId, chatMessageId, request.Content);
 }

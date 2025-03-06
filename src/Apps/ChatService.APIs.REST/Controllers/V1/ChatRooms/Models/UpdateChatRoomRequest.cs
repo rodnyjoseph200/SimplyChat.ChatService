@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ChatService.Core.ChatRooms.Commands;
+﻿using ChatService.Core.ChatRooms.Commands;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
 
-public class UpdateChatRoomRequest
+public record UpdateChatRoomRequest(string ChatRoomId)
 {
-    [Required]
-    public required string ChatRoomId { get; set; }
-
-    internal static UpdateChatRoomCommand Convert(UpdateChatRoomRequest request) =>
+    public static UpdateChatRoomCommand Convert(UpdateChatRoomRequest request) =>
         UpdateChatRoomCommand.Create(request.ChatRoomId);
 }

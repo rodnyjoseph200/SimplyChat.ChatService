@@ -1,12 +1,12 @@
 ﻿using Simply.Track;
 
-namespace ChatService.Core.Users;
+namespace ChatService.Core.Users.Models;
 
-public class User
+public record User
 {
-    public string Id { get; init; }
+    public string Id { get; }
     public string Name { get; private set; } = string.Empty;
-    public Tracker Tracker { get; init; }
+    public Tracker Tracker { get; }
 
     private User(string id, string name, Tracker tracker)
     {

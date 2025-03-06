@@ -1,8 +1,8 @@
 ﻿namespace ChatService.Core.ChatRooms.Commands;
 
-public class DeleteChatRoomCommand
+public record DeleteChatRoomCommand
 {
-    public string ChatRoomId { get; init; }
+    public string ChatRoomId { get; }
 
     private DeleteChatRoomCommand(string chatroomId)
     {

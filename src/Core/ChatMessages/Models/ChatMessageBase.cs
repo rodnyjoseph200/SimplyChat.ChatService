@@ -3,13 +3,13 @@ using ChatService.Core.Xes;
 
 namespace ChatService.Core.ChatMessages.Models;
 
-public abstract class ChatMessageBase
+public abstract record ChatMessageBase
 {
-    public ID ChatroomId { get; protected set; }
-    public ID UserId { get; protected set; }
+    public ID ChatroomId { get; }
+    public ID UserId { get; }
     public string Content { get; protected set; }
-    public DateTimeOffset CreatedAt { get; protected set; }
-    public ChatMessageTypes Type { get; protected set; }
+    public DateTimeOffset CreatedAt { get; }
+    public ChatMessageTypes Type { get; }
     //todo
     //user base, empty means all users
     private readonly string[] Visibility = [];

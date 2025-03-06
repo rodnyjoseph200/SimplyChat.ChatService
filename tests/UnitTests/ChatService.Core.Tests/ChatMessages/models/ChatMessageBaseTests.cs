@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChatService.Core.Tests.ChatMessages.models;
 
-public class DummyChatMessage : ChatMessageBase
+public record DummyChatMessage : ChatMessageBase
 {
     public DummyChatMessage(string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
         : base(chatRoomId, userId, content, createdAt, type)

@@ -1,8 +1,8 @@
 ﻿namespace ChatService.Core.ChatRooms.Commands;
 
-public class CreateChatRoomCommand
+public record CreateChatRoomCommand
 {
-    public string Username { get; init; }
+    public string Username { get; }
 
     private CreateChatRoomCommand(string username)
     {

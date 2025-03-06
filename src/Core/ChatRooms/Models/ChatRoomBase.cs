@@ -2,7 +2,7 @@
 
 namespace ChatService.Core.ChatRooms.Models;
 
-public abstract class ChatRoomBase
+public abstract record ChatRoomBase
 {
     private protected List<ChatRoomUser> _users = [];
 

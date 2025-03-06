@@ -3,10 +3,10 @@ using Simply.Track;
 
 namespace ChatService.Core.ChatMessages.Models;
 
-public class ChatMessage : ChatMessageBase
+public record ChatMessage : ChatMessageBase
 {
-    public ID Id { get; init; }
-    public Tracker Tracker { get; init; }
+    public ID Id { get; }
+    public Tracker Tracker { get; }
 
     private ChatMessage(Tracker tracker, ID id, ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
         : base(chatRoomId, userId, content, createdAt, type)

@@ -2,11 +2,10 @@
 
 namespace ChatService.Core.ChatRooms.Models;
 
-public class NewChatroom : ChatRoomBase
+public record NewChatroom : ChatRoomBase
 {
     private NewChatroom(ChatRoomUser chatroomUser) : base(chatroomUser)
-    {
-    }
+    { }
 
     public static NewChatroom Create(ChatRoomUser chatroomUser) => new(chatroomUser);
 }

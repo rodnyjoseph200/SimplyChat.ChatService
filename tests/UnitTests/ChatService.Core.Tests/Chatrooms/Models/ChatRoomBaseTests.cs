@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChatService.Core.Tests.Chatrooms.Models;
 
-public class DummyChatRoom : ChatRoomBase
+public record DummyChatRoom : ChatRoomBase
 {
     public DummyChatRoom(ChatRoomUser user)
         : base(user)

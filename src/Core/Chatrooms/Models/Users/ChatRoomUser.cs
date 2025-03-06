@@ -2,12 +2,12 @@
 
 namespace ChatService.Core.Chatrooms.Models.Users;
 
-public class ChatRoomUser
+public record ChatRoomUser
 {
-    public ID Id { get; init; }
-    public string Username { get; init; }
-    public ChatRoomUserSettings Settings { get; init; }
-    public bool IsSuperUser { get; init; }
+    public ID Id { get; }
+    public string Username { get; }
+    public ChatRoomUserSettings Settings { get; }
+    public bool IsSuperUser { get; }
 
     private ChatRoomUser(ID id, string username, ChatRoomUserSettings settings, bool isSuperUser)
     {
