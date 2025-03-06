@@ -1,4 +1,5 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using ChatService.Core.ChatRooms.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -17,9 +17,9 @@ public class GetChatMessagesByChatroomIdResponse
             ChatRoomId = chatroomId,
             ChatMessages = chatMessages.Select(chatMessage => new ChatMessageResponse
             {
-                Id = chatMessage.Id,
-                ChatRoomId = chatMessage.ChatroomId,
-                UserId = chatMessage.UserId,
+                Id = chatMessage.Id.ToString(),
+                ChatRoomId = chatMessage.ChatroomId.ToString(),
+                UserId = chatMessage.UserId.ToString(),
                 Content = chatMessage.Content,
                 CreatedAt = chatMessage.CreatedAt,
                 Type = chatMessage.Type

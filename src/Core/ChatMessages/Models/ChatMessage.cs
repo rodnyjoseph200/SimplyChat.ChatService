@@ -5,20 +5,20 @@ namespace ChatService.Core.ChatMessages.Models;
 
 public class ChatMessage : ChatMessageBase
 {
-    public string Id { get; init; }
+    public ID Id { get; init; }
     public Tracker Tracker { get; init; }
 
-    private ChatMessage(Tracker tracker, string id, string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
+    private ChatMessage(Tracker tracker, ID id, ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
         : base(chatRoomId, userId, content, createdAt, type)
     {
+        ArgumentNullException.ThrowIfNull(tracker);
+
         Id = id;
         Tracker = tracker;
     }
 
-    public static ChatMessage Load(Tracker tracker, string id, string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
-    {
-        return new ChatMessage(tracker, id, chatRoomId, userId, content, createdAt, type);
-    }
+    public static ChatMessage Load(Tracker tracker, ID id, ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type) =>
+        new(tracker, id, chatRoomId, userId, content, createdAt, type);
 
     public void UpdateContent(string content)
     {

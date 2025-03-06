@@ -1,4 +1,6 @@
-﻿namespace ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.ChatRooms;
+
+namespace ChatService.Core.Chatrooms.Models.Users;
 
 public class ChatRoomUserSettings
 {

@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Simply.Log" />
     <PackageReference Include="Simply.Track" />
+    <PackageReference Include="Ulid" />
   </ItemGroup>
 
   <ItemGroup>

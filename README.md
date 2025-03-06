@@ -21,19 +21,6 @@
 - GitHub Actions (Build, Test, Deploy to Azure)
 - Azure Bicep
 
-### `Coming Soon`
-- SignalR
-- Event Driven apps powered by 
-    - Background services and KEDA
-    - Event Grid
-- AI
-- Moving from manual Bicep files to Aspire orchestration and Infrastructure Deployments
-- Benchmarks and Profilers
-- Slack Alerting    
-- Dependebot
-- Sonarqube
-
-
 ### `Design Patterns`
 - Clean Architecture
 - Model Validations (Encapsulation)
@@ -47,6 +34,18 @@
 - Code Style enforcements
 - MSBuild props
 - Snyk
+
+### `Coming Soon`
+- SignalR
+- Event Driven apps powered by 
+    - Background services and KEDA
+    - Service Bus (Topics ad Queues)
+- AI
+- Moving from manual Bicep files to Aspire orchestration and Infrastructure Deployments
+- Benchmarks and Profilers
+- Slack Alerting    
+- Dependebot
+- Sonarqube
 
 ### `Backlog` 
 (see Projects tab for more details)

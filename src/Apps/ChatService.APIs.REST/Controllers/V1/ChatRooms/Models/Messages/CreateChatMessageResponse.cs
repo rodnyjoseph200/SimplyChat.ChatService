@@ -15,8 +15,8 @@ public class CreateChatMessageResponse
     internal static CreateChatMessageResponse Convert(ChatMessage chatMessage) =>
         new()
         {
-            ChatMessageId = chatMessage.Id,
-            ChatroomId = chatMessage.ChatroomId,
-            UserId = chatMessage.UserId,
+            ChatMessageId = chatMessage.Id.ToString(),
+            ChatroomId = chatMessage.ChatroomId.ToString(),
+            UserId = chatMessage.UserId.ToString(),
         };
 }

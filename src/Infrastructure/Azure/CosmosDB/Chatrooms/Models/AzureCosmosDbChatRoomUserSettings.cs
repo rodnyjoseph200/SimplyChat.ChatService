@@ -1,5 +1,5 @@
-﻿using ChatService.Core.ChatRooms;
-using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using ChatService.Core.ChatRooms;
 using Newtonsoft.Json;
 
 namespace ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;

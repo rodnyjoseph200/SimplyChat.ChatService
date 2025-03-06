@@ -5,8 +5,8 @@ namespace ChatService.Core.ChatMessages.Models;
 
 public abstract class ChatMessageBase
 {
-    public string ChatroomId { get; protected set; }
-    public string UserId { get; protected set; }
+    public ID ChatroomId { get; protected set; }
+    public ID UserId { get; protected set; }
     public string Content { get; protected set; }
     public DateTimeOffset CreatedAt { get; protected set; }
     public ChatMessageTypes Type { get; protected set; }
@@ -14,11 +14,9 @@ public abstract class ChatMessageBase
     //user base, empty means all users
     private readonly string[] Visibility = [];
 
-    protected ChatMessageBase(string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
+    protected ChatMessageBase(ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
     {
         X.StringIsNullOrWhitespace.ThrowArgumentException(
-            (nameof(chatRoomId), chatRoomId),
-            (nameof(userId), userId),
             (nameof(content), content));
 
         if (createdAt == default)
@@ -31,7 +29,6 @@ public abstract class ChatMessageBase
         UserId = userId;
         Content = content;
         CreatedAt = createdAt;
-        //Type = (ChatMessageTypes)type;
         Type = type;
     }
 }

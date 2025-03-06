@@ -1,4 +1,6 @@
-﻿namespace ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+
+namespace ChatService.Core.ChatRooms.Models;
 
 public abstract class ChatRoomBase
 {

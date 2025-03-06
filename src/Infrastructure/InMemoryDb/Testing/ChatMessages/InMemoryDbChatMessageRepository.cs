@@ -1,4 +1,5 @@
-﻿using ChatService.Core.ChatMessages;
+﻿using ChatService.Core;
+using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatMessages.Models;
 using Microsoft.Extensions.Logging;
 using Simply.Track;
@@ -14,7 +15,7 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         _logger = logger;
     }
 
-    public async Task<ChatMessage?> Get(string chatroomId, string chatMessageId)
+    public async Task<ChatMessage?> Get(ID chatroomId, ID chatMessageId)
     {
         _logger.LogInformation("Getting chat message");
         var chatMessage = InMemoryDbChatMessagesStore.InMemoryDbChatMessages.SingleOrDefault(x => x.Id == chatMessageId);
@@ -25,7 +26,7 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         return chatMessage;
     }
 
-    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
+    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(ID chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
         var chatMessages = InMemoryDbChatMessagesStore.InMemoryDbChatMessages.Where(x => x.ChatroomId == chatroomId)?.ToArray();
@@ -64,7 +65,7 @@ public class InMemoryDbChatMessageRepository : IChatMessageRepository
         await Task.CompletedTask;
     }
 
-    public async Task Delete(string chatroomId, string chatMessageId)
+    public async Task Delete(ID chatroomId, ID chatMessageId)
     {
         _logger.LogInformation("Deleting chat message");
         InMemoryDbChatMessagesStore.Remove(chatMessageId);

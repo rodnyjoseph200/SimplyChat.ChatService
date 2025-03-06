@@ -1,26 +1,24 @@
-﻿using Simply.Track;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using Simply.Track;
 
 namespace ChatService.Core.ChatRooms.Models;
 
 public class Chatroom : ChatRoomBase
 {
-    public string Id { get; init; }
+    public ID Id { get; init; }
 
     public Tracker Tracker { get; init; }
 
     public ChatRoomUser SuperUser => _users.SingleOrDefault(u => u.IsSuperUser) ??
         throw new InvalidOperationException("Super user does not exist in the chat room");
 
-    private Chatroom(string id, List<ChatRoomUser> users, Tracker tracker) : base(users)
+    private Chatroom(ID id, List<ChatRoomUser> users, Tracker tracker) : base(users)
     {
-        if (string.IsNullOrWhiteSpace(id))
-            throw new ArgumentException($"{nameof(id)} is required");
-
         Id = id;
         Tracker = tracker;
     }
 
-    public static Chatroom Load(string id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
+    public static Chatroom Load(ID id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
 
     public void AddUser(ChatRoomUser user)
     {
@@ -30,7 +28,7 @@ public class Chatroom : ChatRoomBase
         _users.Add(user);
     }
 
-    public void RemoveUser(string userId)
+    public void RemoveUser(ID userId)
     {
         var user = _users.FirstOrDefault(u => u.Id == userId) ??
             throw new InvalidOperationException($"{nameof(userId)} {userId} does not exist in the chat room");

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ChatService.Core;
 using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.Messages;
 
@@ -19,11 +20,11 @@ public class GetChatMessageResponse
     [Required]
     public ChatMessageTypes Type { get; init; }
 
-    private GetChatMessageResponse(string chatMessageId, string chatroomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
+    private GetChatMessageResponse(ID chatMessageId, ID chatroomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
     {
-        ChatMessageId = chatMessageId;
-        ChatroomId = chatroomId;
-        UserId = userId;
+        ChatMessageId = chatMessageId.ToString();
+        ChatroomId = chatroomId.ToString();
+        UserId = userId.ToString();
         Content = content;
         CreatedAt = createdAt;
         Type = type;

@@ -1,4 +1,5 @@
-﻿using ChatService.Core.ChatRooms.Commands;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using ChatService.Core.ChatRooms.Commands;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Core.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,12 +19,9 @@ public class ChatRoomService : IChatRoomService
         _chatRoomRepository = chatRoomRepository;
     }
 
-    public async Task<Chatroom?> Get(string id)
+    public async Task<Chatroom?> Get(ID id)
     {
         _logger.LogInformation("Getting chatroom by id");
-
-        if (string.IsNullOrWhiteSpace(id))
-            throw new ArgumentException($"{nameof(id)} is required");
 
         var chatroom = await _chatRoomRepository.Get(id);
 
@@ -70,4 +68,6 @@ public class ChatRoomService : IChatRoomService
         await _chatRoomRepository.Delete(command.ChatRoomId);
         _logger.LogInformation("Chatroom deleted");
     }
+
+    public Task<Chatroom?> Get(string id) => throw new NotImplementedException();
 }

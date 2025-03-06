@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ChatService.Core.Chatrooms.Models.Users;
 using ChatService.Core.ChatRooms.Models;
 
 namespace ChatService.APIs.REST.Controllers.V1.ChatRooms.Models;
@@ -12,7 +13,7 @@ public class GetChatRoomResponse
 
     private GetChatRoomResponse(Chatroom chatRoom)
     {
-        ChatRoomId = chatRoom.Id;
+        ChatRoomId = chatRoom.Id.ToString();
         Users = chatRoom.Users.Select(ChatRoomUsersResponse.Convert).ToArray();
     }
 
@@ -33,7 +34,7 @@ public class ChatRoomUsersResponse
 
     private ChatRoomUsersResponse(ChatRoomUser chatRoomUser)
     {
-        Id = chatRoomUser.Id;
+        Id = chatRoomUser.Id.ToString();
         Username = chatRoomUser.Username;
         Settings = ChatRoomUserSettingsResponse.Convert(chatRoomUser.Settings);
         IsSuperUser = chatRoomUser.IsSuperUser;

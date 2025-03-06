@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using ChatService.Core;
 using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatMessages.Models;
 using ChatService.Infrastructure.Azure.CosmosDB.ChatMessages.Models;
@@ -21,13 +22,13 @@ public class AzureCosmosDbChatMessageRepository : IChatMessageRepository
         _logger = logger;
     }
 
-    public async Task<ChatMessage?> Get(string chatroomId, string chatMessageId)
+    public async Task<ChatMessage?> Get(ID chatroomId, ID chatMessageId)
     {
         _logger.LogInformation("Getting chat message");
 
         try
         {
-            var response = await _container.ReadItemAsync<AzureCosmosDbChatMessage>(chatMessageId, AzureCosmosDbChatMessage.GetPartitionKey(chatroomId));
+            var response = await _container.ReadItemAsync<AzureCosmosDbChatMessage>(chatMessageId.ToString(), AzureCosmosDbChatMessage.GetPartitionKey(chatroomId));
             if (response.Resource is null)
                 throw new InvalidOperationException("resource is null");
 
@@ -41,7 +42,7 @@ public class AzureCosmosDbChatMessageRepository : IChatMessageRepository
         }
     }
 
-    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
+    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(ID chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
 
@@ -102,7 +103,7 @@ public class AzureCosmosDbChatMessageRepository : IChatMessageRepository
             var response = await _container.ReplaceItemAsync(
                 item: AzureCosmosDbChatMessage.Update(chatMessage),
                 partitionKey: AzureCosmosDbChatMessage.GetPartitionKey(chatMessage),
-                id: chatMessage.Id);
+                id: chatMessage.Id.ToString());
 
             if (response.Resource is null)
                 throw new InvalidOperationException("resource is null");
@@ -118,14 +119,14 @@ public class AzureCosmosDbChatMessageRepository : IChatMessageRepository
         }
     }
 
-    public async Task Delete(string chatroomId, string chatMessageId)
+    public async Task Delete(ID chatroomId, ID chatMessageId)
     {
         _logger.LogInformation("Deleting chat message");
 
         try
         {
             var response = await _container.DeleteItemAsync<AzureCosmosDbChatMessage>(
-                id: chatMessageId,
+                id: chatMessageId.ToString(),
                 partitionKey: AzureCosmosDbChatMessage.GetPartitionKey(chatroomId)
             );
 
