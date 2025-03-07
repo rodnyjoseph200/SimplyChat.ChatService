@@ -2,9 +2,10 @@
 
 namespace ChatService.APIs.REST;
 
-internal static class ServiceCollectionExtensions
+internal static class DefaultServiceCollectionExtensions
 {
     internal const string CORS_POLICY_NAME = "CorsPolicy";
+
     internal static IServiceCollection AddCorsPolicy(this IServiceCollection services)
     {
         return services.AddCors(options =>
