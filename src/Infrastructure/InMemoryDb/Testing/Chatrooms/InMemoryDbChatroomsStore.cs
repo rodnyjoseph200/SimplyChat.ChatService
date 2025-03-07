@@ -1,4 +1,5 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core;
+using ChatService.Core.ChatRooms.Models;
 
 namespace ChatService.Infrastructure.InMemoryDb.Testing.Chatrooms;
 
@@ -15,6 +16,6 @@ public static class InMemoryDbChatroomsStore
     public static void Add(Chatroom chatroom) =>
         Store = Store.Append(chatroom).ToArray();
 
-    public static void Remove(string id) =>
+    public static void Remove(ID id) =>
         Store = Store.Where(x => x.Id != id).ToArray();
 }

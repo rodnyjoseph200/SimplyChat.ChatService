@@ -1,4 +1,6 @@
-﻿using ChatService.Core.ChatRooms;
+﻿using ChatService.Core;
+using ChatService.Core.Chatrooms.Models.Users;
+using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
 using Microsoft.Extensions.Logging;
 using Simply.Track;
@@ -14,7 +16,7 @@ public class InMemoryDbChatroomRepository : IChatroomRepository
         _logger = logger;
     }
 
-    public async Task<Chatroom?> Get(string id)
+    public async Task<Chatroom?> Get(ID id)
     {
         _logger.LogInformation("Getting chatroom");
         var chatroom = InMemoryDbChatroomsStore.InMemoryDbChatrooms.SingleOrDefault(x => x.Id == id);
@@ -52,7 +54,7 @@ public class InMemoryDbChatroomRepository : IChatroomRepository
         await Task.CompletedTask;
     }
 
-    public async Task Delete(string id)
+    public async Task Delete(ID id)
     {
         _logger.LogInformation("Deleting chatroom");
         InMemoryDbChatroomsStore.Remove(id);

@@ -1,75 +1,65 @@
-﻿using ChatService.Core.ChatMessages.Models;
+﻿using ChatService.Core;
+using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.Messages;
+using Guarded.Guards;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
 using Simply.Track;
 
 namespace ChatService.Infrastructure.Azure.CosmosDB.ChatMessages.Models;
 
-public class AzureCosmosDbChatMessage
+public record AzureCosmosDbChatMessage(
+    [property: JsonProperty("id")] string Id,
+    [property: JsonProperty("partitionKey")] string PartitionKey,
+    [property: JsonProperty("chatroomId")] string ChatroomId,
+    [property: JsonProperty("userId")] string UserId,
+    [property: JsonProperty("content")] string Content,
+    [property: JsonProperty("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonProperty("type")] ChatMessageTypes Type,
+    [property: JsonProperty("tracker")] DbTracker Tracker)
 {
-    [JsonProperty("id")]
-    public required string Id { get; set; }
+    private const string IdType = "chatroom-message";
 
-    [JsonProperty("partitionKey")]
-    public required string PartitionKey { get; set; }
+    public static PartitionKey GetPartitionKey(ID chatroomId) => new(chatroomId.ToString());
 
-    [JsonProperty("chatroomId")]
-    public required string ChatroomId { get; set; }
+    public static PartitionKey GetPartitionKey(NewChatMessage newChatMessage) => new(newChatMessage.ChatroomId.ToString());
 
-    [JsonProperty("userId")]
-    public required string UserId { get; set; }
-
-    [JsonProperty("content")]
-    public required string Content { get; set; }
-
-    [JsonProperty("createdAt")]
-    public required DateTimeOffset CreatedAt { get; set; }
-
-    [JsonProperty("type")]
-    public required ChatMessageTypes Type { get; set; }
-
-    [JsonProperty("tracker")]
-    public required DbTracker Tracker { get; set; }
-
-    public static PartitionKey GetPartitionKey(string chatroomId) => new(chatroomId);
-
-    public static PartitionKey GetPartitionKey(NewChatMessage newChatMessage) => new(newChatMessage.ChatroomId);
-
-    public static PartitionKey GetPartitionKey(ChatMessage chatMessage) => new(chatMessage.ChatroomId);
+    public static PartitionKey GetPartitionKey(ChatMessage chatMessage) => new(chatMessage.ChatroomId.ToString());
 
     public static AzureCosmosDbChatMessage Convert(NewChatMessage newChatMessage)
     {
-        return new AzureCosmosDbChatMessage
-        {
-            Id = Guid.NewGuid().ToString(),
-            PartitionKey = newChatMessage.ChatroomId,
-            ChatroomId = newChatMessage.ChatroomId,
-            UserId = newChatMessage.UserId,
-            Content = newChatMessage.Content,
-            CreatedAt = newChatMessage.CreatedAt,
-            Type = newChatMessage.Type,
-            Tracker = DbTracker.Create(newChatMessage.UserId)
-        };
+        _ = Guard.AgainstNulls(newChatMessage);
+
+        return new AzureCosmosDbChatMessage(
+            Id: ID.Generate.ToString(),
+            PartitionKey: newChatMessage.ChatroomId.ToString(),
+            ChatroomId: newChatMessage.ChatroomId.ToString(),
+            UserId: newChatMessage.UserId.ToString(),
+            Content: newChatMessage.Content,
+            CreatedAt: newChatMessage.CreatedAt,
+            Type: newChatMessage.Type,
+            Tracker: DbTracker.Create(newChatMessage.UserId.ToString()));
     }
 
     public static AzureCosmosDbChatMessage Update(ChatMessage chatMessage)
     {
-        return new AzureCosmosDbChatMessage
-        {
-            Id = chatMessage.Id,
-            PartitionKey = chatMessage.ChatroomId,
-            ChatroomId = chatMessage.ChatroomId,
-            UserId = chatMessage.UserId,
-            Content = chatMessage.Content,
-            CreatedAt = chatMessage.CreatedAt,
-            Type = chatMessage.Type,
-            Tracker = DbTracker.Update(chatMessage.Tracker, chatMessage.UserId)
-        };
+        _ = Guard.AgainstNulls(chatMessage);
+
+        return new AzureCosmosDbChatMessage(
+            Id: chatMessage.Id.ToString(),
+            PartitionKey: chatMessage.ChatroomId.ToString(),
+            ChatroomId: chatMessage.ChatroomId.ToString(),
+            UserId: chatMessage.UserId.ToString(),
+            Content: chatMessage.Content,
+            CreatedAt: chatMessage.CreatedAt,
+            Type: chatMessage.Type,
+            Tracker: DbTracker.Update(chatMessage.Tracker, chatMessage.UserId.ToString()));
     }
 
     public static ChatMessage Convert(AzureCosmosDbChatMessage azureCosmosDbChatMessage)
     {
+        _ = Guard.AgainstNulls(azureCosmosDbChatMessage);
+
         return ChatMessage.Load(
             DbTracker.Convert(azureCosmosDbChatMessage.Tracker),
             azureCosmosDbChatMessage.Id,
@@ -82,6 +72,8 @@ public class AzureCosmosDbChatMessage
 
     public static ChatMessage[] Convert(List<AzureCosmosDbChatMessage> azureCosmosDbChatMessage)
     {
+        _ = Guard.AgainstNulls(azureCosmosDbChatMessage);
+
         var chatMessages = new List<ChatMessage>();
         foreach (var message in azureCosmosDbChatMessage)
         {

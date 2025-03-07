@@ -1,4 +1,4 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models.Users;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,7 +15,7 @@ public class ChatRoomUserTests
         var user = ChatRoomUser.Create(username);
 
         _ = user.Should().NotBeNull();
-        _ = user.Id.Should().NotBeNullOrWhiteSpace();
+        _ = user.Id.Should().NotBeNull();
         _ = user.Username.Should().Be(username);
         _ = user.Settings.Should().NotBeNull();
         _ = user.IsSuperUser.Should().BeFalse();
@@ -29,7 +29,7 @@ public class ChatRoomUserTests
         var superUser = ChatRoomUser.CreateSuperUser(username);
 
         _ = superUser.Should().NotBeNull();
-        _ = superUser.Id.Should().NotBeNullOrWhiteSpace();
+        _ = superUser.Id.Should().NotBeNull();
         _ = superUser.Username.Should().Be(username);
         _ = superUser.Settings.Should().NotBeNull();
 

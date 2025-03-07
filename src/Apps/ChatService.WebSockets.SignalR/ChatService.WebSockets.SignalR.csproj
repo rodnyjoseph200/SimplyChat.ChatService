@@ -5,6 +5,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Guarded" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Simply.Log" />
   </ItemGroup>

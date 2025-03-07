@@ -1,6 +1,7 @@
 ﻿using ChatService.Core.ChatMessages;
 using ChatService.Core.ChatMessages.Commands;
 using ChatService.Core.ChatMessages.Models;
+using ChatService.Core.Chatrooms.Models.Users;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Core.Exceptions;

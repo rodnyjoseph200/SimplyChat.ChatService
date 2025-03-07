@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using ChatService.Core;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;
+using Guarded.Guards;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,13 +22,13 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
         _logger = logger;
     }
 
-    public async Task<Chatroom?> Get(string id)
+    public async Task<Chatroom?> Get(ID id)
     {
         _logger.LogInformation("Getting chatroom");
 
         try
         {
-            var response = await _container.ReadItemAsync<AzureCosmosDbChatroom>(id, AzureCosmosDbChatroom.GetPartitionKey(id));
+            var response = await _container.ReadItemAsync<AzureCosmosDbChatroom>(id.ToString(), AzureCosmosDbChatroom.GetPartitionKey(id));
             if (response.Resource is null)
                 throw new InvalidOperationException("resource is null");
 
@@ -47,7 +49,7 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
         var dbChatroom = AzureCosmosDbChatroom.Convert(newChatroom);
         try
         {
-            var response = await _container.CreateItemAsync<AzureCosmosDbChatroom>(
+            var response = await _container.CreateItemAsync(
                 item: dbChatroom,
                 partitionKey: AzureCosmosDbChatroom.GetPartitionKey(dbChatroom.Id));
 
@@ -68,12 +70,14 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
     {
         _logger.LogInformation("Updating chatroom");
 
+        _ = Guard.AgainstNulls(chatroom);
+
         try
         {
             var response = await _container.ReplaceItemAsync(
                 item: AzureCosmosDbChatroom.Update(chatroom),
                 partitionKey: AzureCosmosDbChatroom.GetPartitionKey(chatroom),
-                id: chatroom.Id);
+                id: chatroom.Id.ToString());
 
             if (response.Resource is null)
                 throw new InvalidOperationException("resource is null");
@@ -87,14 +91,14 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
             throw;
         }
     }
-    public async Task Delete(string chatroomId)
+    public async Task Delete(ID chatroomId)
     {
         _logger.LogInformation("Deleting chatroom");
 
         try
         {
             var response = await _container.DeleteItemAsync<AzureCosmosDbChatroom>(
-                id: chatroomId,
+                id: chatroomId.ToString(),
                 partitionKey: AzureCosmosDbChatroom.GetPartitionKey(chatroomId));
 
             if (response.Resource is null)

@@ -73,7 +73,7 @@ public class ChatMessagesController : ControllerBase
         var command = CreateChatMessageRequest.Convert(chatroomId, request);
 
         using var __ = _logger.AddFields(
-            ($"{nameof(command.UserId)}", command.UserId),
+            ($"{nameof(command.UserId)}", command.UserId.ToString()),
             ($"{nameof(command.CreatedAt)}", command.CreatedAt.ToString()),
             ($"{nameof(command.Type)}", command.Type.ToString()));
 

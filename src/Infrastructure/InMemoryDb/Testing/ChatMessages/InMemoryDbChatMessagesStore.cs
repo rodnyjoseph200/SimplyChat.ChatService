@@ -1,4 +1,5 @@
-﻿using ChatService.Core.ChatMessages.Models;
+﻿using ChatService.Core;
+using ChatService.Core.ChatMessages.Models;
 
 namespace ChatService.Infrastructure.InMemoryDb.Testing.ChatMessages;
 
@@ -15,7 +16,7 @@ public class InMemoryDbChatMessagesStore
     public static void Add(ChatMessage chatMessage) =>
         Store = Store.Append(chatMessage).ToArray();
 
-    public static void Remove(string id) =>
+    public static void Remove(ID id) =>
         Store = Store.Where(x => x.Id != id).ToArray();
 
 }

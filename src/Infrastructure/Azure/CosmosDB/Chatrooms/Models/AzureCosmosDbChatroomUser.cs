@@ -1,39 +1,38 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using Guarded.Guards;
 using Newtonsoft.Json;
 
 namespace ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;
 
-public class AzureCosmosDbChatroomUser
+public record AzureCosmosDbChatroomUser(
+    [property: JsonProperty("id")] string Id,
+    [property: JsonProperty("username")] string Username,
+    [property: JsonProperty("settings")] AzureCosmosDbChatRoomUserSettings Settings,
+    [property: JsonProperty("isSuperUser")] bool IsSuperUser)
 {
-    [JsonProperty("id")]
-    public required string Id { get; set; }
+    private const string IdType = "chatroom-user";
 
-    [JsonProperty("username")]
-    public required string Username { get; set; }
-
-    [JsonProperty("settings")]
-    public required AzureCosmosDbChatRoomUserSettings Settings { get; set; }
-
-    [JsonProperty("isSuperUser")]
-    public required bool IsSuperUser { get; set; }
+    private static string GetId(Ulid ulid) => $"{IdType}-{ulid}";
 
     public static AzureCosmosDbChatroomUser Convert(ChatRoomUser chatRoomUser)
     {
-        return new AzureCosmosDbChatroomUser
-        {
-            Id = chatRoomUser.Id,
-            Username = chatRoomUser.Username,
-            Settings = AzureCosmosDbChatRoomUserSettings.Convert(chatRoomUser.Settings),
-            IsSuperUser = chatRoomUser.IsSuperUser
-        };
+        _ = Guard.AgainstNulls(chatRoomUser);
+
+        return new AzureCosmosDbChatroomUser(
+            Id: chatRoomUser.Id.ToString(),
+            Username: chatRoomUser.Username,
+            Settings: AzureCosmosDbChatRoomUserSettings.Convert(chatRoomUser.Settings),
+            IsSuperUser: chatRoomUser.IsSuperUser);
     }
 
-    public static ChatRoomUser Convert(AzureCosmosDbChatroomUser newChatRoomUser)
+    public static ChatRoomUser Convert(AzureCosmosDbChatroomUser chatRoomUser)
     {
+        _ = Guard.AgainstNulls(chatRoomUser);
+
         return ChatRoomUser.Load(
-            newChatRoomUser.Id,
-            newChatRoomUser.Username,
-            AzureCosmosDbChatRoomUserSettings.Convert(newChatRoomUser.Settings),
-            newChatRoomUser.IsSuperUser);
+            chatRoomUser.Id,
+            chatRoomUser.Username,
+            AzureCosmosDbChatRoomUserSettings.Convert(chatRoomUser.Settings),
+            chatRoomUser.IsSuperUser);
     }
 }

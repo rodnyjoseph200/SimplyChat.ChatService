@@ -1,6 +1,8 @@
-﻿namespace ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.ChatRooms;
 
-public class ChatRoomUserSettings
+namespace ChatService.Core.Chatrooms.Models.Users;
+
+public record ChatRoomUserSettings
 {
     public ChatRoomColorSchemes Scheme { get; private set; }
 

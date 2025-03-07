@@ -8,6 +8,7 @@
   <ItemGroup>
     <!-- Aspire -->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
+    <PackageVersion Include="Guarded" Version="1.0.0" />
     <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.46.1" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="$(AspireVersion)" />
     <!-- Microsoft -->
@@ -38,5 +39,6 @@
     <PackageVersion Include="Simply.Track" Version="2.1.0" />
     <PackageVersion Include="Simply.Log" Version="1.0.0" />
     <PackageVersion Include="Devlooped.Extensions.DependencyInjection.Attributed" Version="2.0.0" />
+    <PackageVersion Include="Ulid" Version="1.3.4" />
   </ItemGroup>
 </Project>

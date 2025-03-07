@@ -22,25 +22,16 @@ public class ChatMessageService : IChatMessageService
         _chatRoomService = chatRoomService;
     }
 
-    public async Task<ChatMessage?> Get(string chatroomId, string chatMessageId)
+    public async Task<ChatMessage?> Get(ID chatroomId, ID chatMessageId)
     {
         _logger.LogInformation("Getting chat message by chatroomId and chatMesasgeId");
-
-        if (string.IsNullOrWhiteSpace(chatroomId))
-            throw new ArgumentException($"{nameof(chatroomId)} is required");
-
-        if (string.IsNullOrWhiteSpace(chatMessageId))
-            throw new ArgumentException($"{nameof(chatMessageId)} is required");
 
         return await _chatMessageRepository.Get(chatroomId, chatMessageId);
     }
 
-    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId)
+    public async Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(ID chatroomId)
     {
         _logger.LogInformation("Getting chat messages by chatroomId");
-
-        if (string.IsNullOrWhiteSpace(chatroomId))
-            throw new ArgumentException($"{nameof(chatroomId)} is required");
 
         var chatroom = await _chatRoomService.Get(chatroomId) ?? throw new BadRequestException($"{nameof(Chatroom)} not found");
 
@@ -86,4 +77,7 @@ public class ChatMessageService : IChatMessageService
         await _chatMessageRepository.Delete(command.ChatroomId, command.ChatMessageId);
         _logger.LogInformation("Chat message deleted");
     }
+
+    public Task<ChatMessage?> Get(string chatroomId, string chatMessagId) => throw new NotImplementedException();
+    public Task<IReadOnlyCollection<ChatMessage>> GetByChatRoomId(string chatroomId) => throw new NotImplementedException();
 }

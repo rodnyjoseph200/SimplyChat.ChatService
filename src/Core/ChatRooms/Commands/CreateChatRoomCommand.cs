@@ -1,13 +1,14 @@
-﻿namespace ChatService.Core.ChatRooms.Commands;
+﻿using Guarded.Guards;
 
-public class CreateChatRoomCommand
+namespace ChatService.Core.ChatRooms.Commands;
+
+public record CreateChatRoomCommand
 {
-    public string Username { get; init; }
+    public string Username { get; }
 
     private CreateChatRoomCommand(string username)
     {
-        if (string.IsNullOrWhiteSpace(username))
-            throw new ArgumentException($"{nameof(username)} is required");
+        _ = Guard.AgainstNullsAndWhitespaces(username);
 
         Username = username;
     }

@@ -1,36 +1,39 @@
-﻿using Simply.Track;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using Guarded.Guards;
+using Simply.Track;
 
 namespace ChatService.Core.ChatRooms.Models;
 
-public class Chatroom : ChatRoomBase
+public record Chatroom : ChatRoomBase
 {
-    public string Id { get; init; }
+    public ID Id { get; }
 
-    public Tracker Tracker { get; init; }
+    public Tracker Tracker { get; }
 
     public ChatRoomUser SuperUser => _users.SingleOrDefault(u => u.IsSuperUser) ??
         throw new InvalidOperationException("Super user does not exist in the chat room");
 
-    private Chatroom(string id, List<ChatRoomUser> users, Tracker tracker) : base(users)
+    private Chatroom(ID id, List<ChatRoomUser> users, Tracker tracker) : base(users)
     {
-        if (string.IsNullOrWhiteSpace(id))
-            throw new ArgumentException($"{nameof(id)} is required");
+        _ = Guard.AgainstNulls(users, tracker);
 
         Id = id;
         Tracker = tracker;
     }
 
-    public static Chatroom Load(string id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
+    public static Chatroom Load(ID id, List<ChatRoomUser> users, Tracker tracker) => new(id, users, tracker);
 
     public void AddUser(ChatRoomUser user)
     {
+        _ = Guard.AgainstNulls(user);
+
         if (_users.Any(u => u.Id == user.Id))
             throw new InvalidOperationException($"{nameof(user)} {user.Id} already exists in the chat room");
 
         _users.Add(user);
     }
 
-    public void RemoveUser(string userId)
+    public void RemoveUser(ID userId)
     {
         var user = _users.FirstOrDefault(u => u.Id == userId) ??
             throw new InvalidOperationException($"{nameof(userId)} {userId} does not exist in the chat room");

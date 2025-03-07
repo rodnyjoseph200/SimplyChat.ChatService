@@ -1,10 +1,11 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core.Chatrooms.Models.Users;
+using ChatService.Core.ChatRooms.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChatService.Core.Tests.Chatrooms.Models;
 
-public class DummyChatRoom : ChatRoomBase
+public record DummyChatRoom : ChatRoomBase
 {
     public DummyChatRoom(ChatRoomUser user)
         : base(user)

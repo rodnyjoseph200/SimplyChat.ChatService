@@ -1,27 +1,29 @@
 ﻿using ChatService.Core.Messages;
+using Guarded.Guards;
 using Simply.Track;
 
 namespace ChatService.Core.ChatMessages.Models;
 
-public class ChatMessage : ChatMessageBase
+public record ChatMessage : ChatMessageBase
 {
-    public string Id { get; init; }
-    public Tracker Tracker { get; init; }
+    public ID Id { get; }
+    public Tracker Tracker { get; }
 
-    private ChatMessage(Tracker tracker, string id, string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
+    private ChatMessage(Tracker tracker, ID id, ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
         : base(chatRoomId, userId, content, createdAt, type)
     {
+        _ = Guard.AgainstNulls(tracker);
+
         Id = id;
         Tracker = tracker;
     }
 
-    public static ChatMessage Load(Tracker tracker, string id, string chatRoomId, string userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
-    {
-        return new ChatMessage(tracker, id, chatRoomId, userId, content, createdAt, type);
-    }
+    public static ChatMessage Load(Tracker tracker, ID id, ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type) =>
+        new(tracker, id, chatRoomId, userId, content, createdAt, type);
 
     public void UpdateContent(string content)
     {
+        _ = Guard.AgainstNullsAndWhitespaces(content);
         Content = content;
     }
 }

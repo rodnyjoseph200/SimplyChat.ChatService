@@ -1,19 +1,15 @@
 ﻿namespace ChatService.Core.ChatMessages.Commands;
-public class DeleteChatMessageCommand
+public record DeleteChatMessageCommand
 {
-    public string ChatroomId { get; init; }
-    public string ChatMessageId { get; init; }
+    public ID ChatroomId { get; }
+    public ID ChatMessageId { get; }
 
-    private DeleteChatMessageCommand(string chatroomId, string chatMessageId)
+    private DeleteChatMessageCommand(ID chatroomId, ID chatMessageId)
     {
-        if (string.IsNullOrWhiteSpace(chatroomId))
-            throw new ArgumentException($"{nameof(chatroomId)} is required");
-        if (string.IsNullOrWhiteSpace(chatMessageId))
-            throw new ArgumentException($"{nameof(chatMessageId)} is required");
-
         ChatMessageId = chatMessageId;
         ChatroomId = chatroomId;
     }
-    public static DeleteChatMessageCommand Create(string chatroomId, string chatMessageId) =>
+
+    public static DeleteChatMessageCommand Create(ID chatroomId, ID chatMessageId) =>
         new(chatroomId, chatMessageId);
 }

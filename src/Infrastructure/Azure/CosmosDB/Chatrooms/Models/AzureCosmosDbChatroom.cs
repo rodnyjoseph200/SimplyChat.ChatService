@@ -1,59 +1,64 @@
-﻿using ChatService.Core.ChatRooms.Models;
+﻿using ChatService.Core;
+using ChatService.Core.ChatRooms.Models;
+using Guarded.Guards;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
 using Simply.Track;
 
 namespace ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;
 
-public class AzureCosmosDbChatroom
+public record AzureCosmosDbChatroom(
+    [property: JsonProperty("id")] string Id,
+    [property: JsonProperty("partitionKey")] string PartitionKey,
+    [property: JsonProperty("users")] IReadOnlyCollection<AzureCosmosDbChatroomUser> Users,
+    [property: JsonProperty("tracker")] DbTracker Tracker)
 {
-    [JsonProperty("id")]
-    public required string Id { get; set; }
+    private const string EntityType = "chatroom";
 
-    [JsonProperty("partitionKey")]
-    public required string PartitionKey { get; set; }
+    public static string GetPartitionKeyString(ID chatroomId)
+    {
+        var date = chatroomId.Value.Time.ToString("yyyy-MM-dd");
+        return $"{EntityType}-{date}";
+    }
 
-    [JsonProperty("users")]
-    public required IReadOnlyCollection<AzureCosmosDbChatroomUser> Users { get; set; }
+    public static PartitionKey GetPartitionKey(ID chatroomId) => new(GetPartitionKeyString(chatroomId));
 
-    [JsonProperty("tracker")]
-    public required DbTracker Tracker { get; set; }
-
-    public static PartitionKey GetPartitionKey(string chatroomId) => new(chatroomId);
-
-    public static PartitionKey GetPartitionKey(Chatroom chatroom) => new(chatroom.Id);
+    public static PartitionKey GetPartitionKey(Chatroom chatroom) => new(GetPartitionKeyString(chatroom.Id));
 
     public static Chatroom Convert(AzureCosmosDbChatroom dbChatroom)
     {
+        _ = Guard.AgainstNulls(dbChatroom);
+
         return Chatroom.Load(
             dbChatroom.Id,
             dbChatroom.Users.Select(AzureCosmosDbChatroomUser.Convert).ToList(),
             DbTracker.Convert(dbChatroom.Tracker));
     }
 
-    public static AzureCosmosDbChatroom Convert(NewChatroom chatroom)
+    public static AzureCosmosDbChatroom Convert(NewChatroom newChatroom)
     {
-        var superUser = chatroom.Users.Single();
-        var id = Guid.NewGuid().ToString();
+        _ = Guard.AgainstNulls(newChatroom);
 
-        return new AzureCosmosDbChatroom
-        {
-            Id = id,
-            PartitionKey = id,
-            Users = chatroom.Users.Select(AzureCosmosDbChatroomUser.Convert).ToList(),
-            Tracker = DbTracker.Create(superUser.Username)
-        };
+        var superUser = newChatroom.Users.Single();
+        var id = ID.Generate;
+
+        return new AzureCosmosDbChatroom(
+            Id: id.ToString(),
+            PartitionKey: GetPartitionKeyString(id),
+            Users: newChatroom.Users.Select(AzureCosmosDbChatroomUser.Convert).ToList(),
+            //todo - overload (username, datetimeoffset as created at)
+            Tracker: DbTracker.Create(superUser.Username));
     }
 
     public static AzureCosmosDbChatroom Update(Chatroom chatroom)
     {
-        return new AzureCosmosDbChatroom
-        {
-            Id = chatroom.Id,
-            PartitionKey = chatroom.Id,
-            Users = chatroom.Users.Select(AzureCosmosDbChatroomUser.Convert).ToList(),
+        _ = Guard.AgainstNulls(chatroom);
+
+        return new AzureCosmosDbChatroom(
+            Id: chatroom.Id.ToString(),
+            PartitionKey: GetPartitionKeyString(chatroom.Id),
+            Users: chatroom.Users.Select(AzureCosmosDbChatroomUser.Convert).ToList(),
             //todo, updated by
-            Tracker = DbTracker.Update(chatroom.Tracker, chatroom.Users.First().Username)
-        };
+            Tracker: DbTracker.Update(chatroom.Tracker, chatroom.Users.First().Username));
     }
 }
