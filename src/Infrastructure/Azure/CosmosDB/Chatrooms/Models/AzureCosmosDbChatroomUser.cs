@@ -1,13 +1,14 @@
 ﻿using ChatService.Core.Chatrooms.Models.Users;
+using Guarded.Guards;
 using Newtonsoft.Json;
 
 namespace ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;
 
 public record AzureCosmosDbChatroomUser(
-    [JsonProperty("id")] string Id,
-    [JsonProperty("username")] string Username,
-    [JsonProperty("settings")] AzureCosmosDbChatRoomUserSettings Settings,
-    [JsonProperty("isSuperUser")] bool IsSuperUser)
+    [property: JsonProperty("id")] string Id,
+    [property: JsonProperty("username")] string Username,
+    [property: JsonProperty("settings")] AzureCosmosDbChatRoomUserSettings Settings,
+    [property: JsonProperty("isSuperUser")] bool IsSuperUser)
 {
     private const string IdType = "chatroom-user";
 
@@ -15,6 +16,8 @@ public record AzureCosmosDbChatroomUser(
 
     public static AzureCosmosDbChatroomUser Convert(ChatRoomUser chatRoomUser)
     {
+        _ = Guard.AgainstNulls(chatRoomUser);
+
         return new AzureCosmosDbChatroomUser(
             Id: chatRoomUser.Id.ToString(),
             Username: chatRoomUser.Username,
@@ -24,6 +27,8 @@ public record AzureCosmosDbChatroomUser(
 
     public static ChatRoomUser Convert(AzureCosmosDbChatroomUser chatRoomUser)
     {
+        _ = Guard.AgainstNulls(chatRoomUser);
+
         return ChatRoomUser.Load(
             chatRoomUser.Id,
             chatRoomUser.Username,

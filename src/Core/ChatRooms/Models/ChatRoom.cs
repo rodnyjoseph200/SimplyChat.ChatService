@@ -1,4 +1,5 @@
 ﻿using ChatService.Core.Chatrooms.Models.Users;
+using Guarded.Guards;
 using Simply.Track;
 
 namespace ChatService.Core.ChatRooms.Models;
@@ -14,6 +15,8 @@ public record Chatroom : ChatRoomBase
 
     private Chatroom(ID id, List<ChatRoomUser> users, Tracker tracker) : base(users)
     {
+        _ = Guard.AgainstNulls(users, tracker);
+
         Id = id;
         Tracker = tracker;
     }
@@ -22,6 +25,8 @@ public record Chatroom : ChatRoomBase
 
     public void AddUser(ChatRoomUser user)
     {
+        _ = Guard.AgainstNulls(user);
+
         if (_users.Any(u => u.Id == user.Id))
             throw new InvalidOperationException($"{nameof(user)} {user.Id} already exists in the chat room");
 

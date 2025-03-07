@@ -2,14 +2,14 @@
 
 public record UpdateChatRoomCommand
 {
-    public string ChatRoomId { get; }
+    public ID ChatRoomId { get; }
 
-    private UpdateChatRoomCommand(string chatRoomId)
+    private UpdateChatRoomCommand(ID chatRoomId)
     {
         ChatRoomId = chatRoomId;
     }
 
-    public static UpdateChatRoomCommand Create(string chatRoomId)
+    public static UpdateChatRoomCommand Create(ID chatRoomId)
     {
         return new UpdateChatRoomCommand(chatRoomId);
     }

@@ -1,4 +1,5 @@
 ﻿using ChatService.Core.ChatRooms;
+using Guarded.Guards;
 
 namespace ChatService.Core.Chatrooms.Models.Users;
 
@@ -11,8 +12,7 @@ public record ChatRoomUser
 
     private ChatRoomUser(ID id, string username, ChatRoomUserSettings settings, bool isSuperUser)
     {
-        if (string.IsNullOrWhiteSpace(username))
-            throw new ArgumentException($"{nameof(username)} is required");
+        _ = Guard.AgainstNullsAndWhitespaces(username, settings);
 
         Id = id;
         Username = username;

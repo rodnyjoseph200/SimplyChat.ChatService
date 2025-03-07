@@ -8,7 +8,7 @@
   <ItemGroup>
     <!-- Aspire -->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
-    <PackageVersion Include="Gaurded" Version="1.0.0" />
+    <PackageVersion Include="Guarded" Version="1.0.0" />
     <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.46.1" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="$(AspireVersion)" />
     <!-- Microsoft -->

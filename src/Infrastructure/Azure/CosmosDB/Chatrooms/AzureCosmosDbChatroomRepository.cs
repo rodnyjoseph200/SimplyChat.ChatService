@@ -3,6 +3,7 @@ using ChatService.Core;
 using ChatService.Core.ChatRooms;
 using ChatService.Core.ChatRooms.Models;
 using ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;
+using Guarded.Guards;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -48,7 +49,7 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
         var dbChatroom = AzureCosmosDbChatroom.Convert(newChatroom);
         try
         {
-            var response = await _container.CreateItemAsync<AzureCosmosDbChatroom>(
+            var response = await _container.CreateItemAsync(
                 item: dbChatroom,
                 partitionKey: AzureCosmosDbChatroom.GetPartitionKey(dbChatroom.Id));
 
@@ -68,6 +69,8 @@ public class AzureCosmosDbChatroomRepository : IChatroomRepository
     public async Task Update(Chatroom chatroom)
     {
         _logger.LogInformation("Updating chatroom");
+
+        _ = Guard.AgainstNulls(chatroom);
 
         try
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ChatService.Infrastructure.Azure.CosmosDB.Chatrooms.Models;
 
-public record AzureCosmosDbChatRoomUserSettings([JsonProperty("scheme")] string Scheme)
+public record AzureCosmosDbChatRoomUserSettings([property: JsonProperty("scheme")] string Scheme)
 {
     public static AzureCosmosDbChatRoomUserSettings Convert(ChatRoomUserSettings chatRoomUserSettings) =>
         new(chatRoomUserSettings.Scheme.ToString());

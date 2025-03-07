@@ -7,6 +7,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Azure\CosmosDB\Options\" />
     <Folder Include="Azure\EventGrid\" />
     <Folder Include="Azure\AI\" />
     <Folder Include="Slack\" />
@@ -17,7 +18,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Gaurded" />
+    <PackageReference Include="Guarded" />
     <PackageReference Include="Microsoft.Azure.Cosmos" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Newtonsoft.Json" />

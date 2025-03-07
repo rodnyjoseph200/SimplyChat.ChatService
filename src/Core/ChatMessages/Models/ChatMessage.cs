@@ -1,4 +1,5 @@
 ﻿using ChatService.Core.Messages;
+using Guarded.Guards;
 using Simply.Track;
 
 namespace ChatService.Core.ChatMessages.Models;
@@ -11,7 +12,7 @@ public record ChatMessage : ChatMessageBase
     private ChatMessage(Tracker tracker, ID id, ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
         : base(chatRoomId, userId, content, createdAt, type)
     {
-        ArgumentNullException.ThrowIfNull(tracker);
+        _ = Guard.AgainstNulls(tracker);
 
         Id = id;
         Tracker = tracker;
@@ -22,6 +23,7 @@ public record ChatMessage : ChatMessageBase
 
     public void UpdateContent(string content)
     {
+        _ = Guard.AgainstNullsAndWhitespaces(content);
         Content = content;
     }
 }

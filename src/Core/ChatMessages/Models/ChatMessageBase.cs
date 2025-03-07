@@ -1,5 +1,5 @@
 ﻿using ChatService.Core.Messages;
-using ChatService.Core.Xes;
+using Guarded.Guards;
 
 namespace ChatService.Core.ChatMessages.Models;
 
@@ -16,8 +16,7 @@ public abstract record ChatMessageBase
 
     protected ChatMessageBase(ID chatRoomId, ID userId, string content, DateTimeOffset createdAt, ChatMessageTypes type)
     {
-        X.StringIsNullOrWhitespace.ThrowArgumentException(
-            (nameof(content), content));
+        _ = Guard.AgainstNullsAndWhitespaces(chatRoomId, nameof(chatRoomId));
 
         if (createdAt == default)
             throw new ArgumentException($"{nameof(createdAt)} is required.");

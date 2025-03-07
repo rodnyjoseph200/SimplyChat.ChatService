@@ -1,6 +1,7 @@
 ﻿using ChatService.Core;
 using ChatService.Core.ChatMessages.Models;
 using ChatService.Core.Messages;
+using Guarded.Guards;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
 using Simply.Track;
@@ -8,14 +9,14 @@ using Simply.Track;
 namespace ChatService.Infrastructure.Azure.CosmosDB.ChatMessages.Models;
 
 public record AzureCosmosDbChatMessage(
-    [JsonProperty("id")] string Id,
-    [JsonProperty("partitionKey")] string PartitionKey,
-    [JsonProperty("chatroomId")] string ChatroomId,
-    [JsonProperty("userId")] string UserId,
-    [JsonProperty("content")] string Content,
-    [JsonProperty("createdAt")] DateTimeOffset CreatedAt,
-    [JsonProperty("type")] ChatMessageTypes Type,
-    [JsonProperty("tracker")] DbTracker Tracker)
+    [property: JsonProperty("id")] string Id,
+    [property: JsonProperty("partitionKey")] string PartitionKey,
+    [property: JsonProperty("chatroomId")] string ChatroomId,
+    [property: JsonProperty("userId")] string UserId,
+    [property: JsonProperty("content")] string Content,
+    [property: JsonProperty("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonProperty("type")] ChatMessageTypes Type,
+    [property: JsonProperty("tracker")] DbTracker Tracker)
 {
     private const string IdType = "chatroom-message";
 
@@ -27,6 +28,8 @@ public record AzureCosmosDbChatMessage(
 
     public static AzureCosmosDbChatMessage Convert(NewChatMessage newChatMessage)
     {
+        _ = Guard.AgainstNulls(newChatMessage);
+
         return new AzureCosmosDbChatMessage(
             Id: ID.Generate.ToString(),
             PartitionKey: newChatMessage.ChatroomId.ToString(),
@@ -40,6 +43,8 @@ public record AzureCosmosDbChatMessage(
 
     public static AzureCosmosDbChatMessage Update(ChatMessage chatMessage)
     {
+        _ = Guard.AgainstNulls(chatMessage);
+
         return new AzureCosmosDbChatMessage(
             Id: chatMessage.Id.ToString(),
             PartitionKey: chatMessage.ChatroomId.ToString(),
@@ -53,6 +58,8 @@ public record AzureCosmosDbChatMessage(
 
     public static ChatMessage Convert(AzureCosmosDbChatMessage azureCosmosDbChatMessage)
     {
+        _ = Guard.AgainstNulls(azureCosmosDbChatMessage);
+
         return ChatMessage.Load(
             DbTracker.Convert(azureCosmosDbChatMessage.Tracker),
             azureCosmosDbChatMessage.Id,
@@ -65,6 +72,8 @@ public record AzureCosmosDbChatMessage(
 
     public static ChatMessage[] Convert(List<AzureCosmosDbChatMessage> azureCosmosDbChatMessage)
     {
+        _ = Guard.AgainstNulls(azureCosmosDbChatMessage);
+
         var chatMessages = new List<ChatMessage>();
         foreach (var message in azureCosmosDbChatMessage)
         {
